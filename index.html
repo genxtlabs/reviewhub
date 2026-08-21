@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReviewHub — Movie release aggregator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span class="wordmark">ReviewHub</span>
+        <span class="tagline">Reviews, aggregated.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <span class="muted">This week &middot; 20 Aug 2026</span>
+        <a class="top-admin-link" href="admin-login.html">Admin</a>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="filter-row">
+      <span class="filter-label">Language</span>
+      <div class="chip-row" id="lang-filter"></div>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <h1>This week&rsquo;s releases</h1>
+    <span class="muted" id="results-label"></span>
+  </div>
+
+  <div class="grid" id="movie-grid"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="store.js"></script>
+<script>
+  let filterLang = 'All';
+
+  function renderFilters() {
+    const langs = ['All', ...getLanguages()];
+    const el = document.getElementById('lang-filter');
+    el.innerHTML = '';
+    langs.forEach((lang) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (lang === filterLang ? ' active' : '');
+      chip.textContent = lang;
+      chip.onclick = () => { filterLang = lang; render(); };
+      el.appendChild(chip);
+    });
+  }
+
+  function posterMarkup(movie) {
+    if (movie.posterImage) {
+      return `
+        <div class="poster">
+          <img src="${movie.posterImage}" alt="" style="width:100%; height:100%; object-fit:cover;">
+          <span class="lang-tag">${movie.language}</span>
+        </div>`;
+    }
+    return `
+      <div class="poster" style="background:${movie.posterGrad}">
+        <svg viewBox="0 0 200 300">
+          <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          <circle cx="100" cy="130" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+        </svg>
+        <span class="initial">${movie.title.charAt(0)}</span>
+        <span class="lang-tag">${movie.language}</span>
+      </div>`;
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('movie-grid');
+    const allMovies = getPublishedMovies();
+    const list = filterLang === 'All' ? allMovies : allMovies.filter((m) => m.language === filterLang);
+    document.getElementById('results-label').textContent = `${list.length} of ${allMovies.length} releases`;
+
+    grid.innerHTML = list.map((m) => {
+      const v = VERDICTS[m.verdictKey];
+      return `
+        <div class="card" onclick="location.href='movie.html?id=${m.id}'">
+          ${posterMarkup(m)}
+          <div>
+            <div class="card-title">${m.title}</div>
+            <div class="card-meta">${m.industry} &middot; ${m.releaseDate}</div>
+            <div class="score-row">
+              <span><span class="score">${m.score}</span><span class="score-suffix">/10</span></span>
+              <span class="muted">${m.reviewCount} reviews</span>
+            </div>
+            <div class="verdict-row">
+              <span class="dot" style="background:${v.color}"></span>
+              <span class="verdict-label">${v.label}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published movies match this filter yet.</div>`;
+  }
+
+  function render() {
+    renderFilters();
+    renderGrid();
+  }
+
+  render();
+</script>
+</body>
+</html>

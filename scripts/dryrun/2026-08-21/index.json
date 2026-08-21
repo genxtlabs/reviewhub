@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Harrd Disk",
+    "language": "Hindi",
+    "industry": "Bollywood",
+    "releaseDate": "21 Aug 2026",
+    "file": "Harrd_Disk.json",
+    "videoCount": 0
+  },
+  {
+    "title": "Modha Rathiri",
+    "language": "Tamil",
+    "industry": "Kollywood",
+    "releaseDate": "21 Aug 2026",
+    "file": "Modha_Rathiri.json",
+    "videoCount": 11
+  },
+  {
+    "title": "Pyaar Prema Kalyanam",
+    "language": "Tamil",
+    "industry": "Kollywood",
+    "releaseDate": "21 Aug 2026",
+    "file": "Pyaar_Prema_Kalyanam.json",
+    "videoCount": 10
+  },
+  {
+    "title": "Ram and Leela",
+    "language": "Tamil",
+    "industry": "Kollywood",
+    "releaseDate": "21 Aug 2026",
+    "file": "Ram_and_Leela.json",
+    "videoCount": 10
+  },
+  {
+    "title": "Irumudi",
+    "language": "Telugu",
+    "industry": "Tollywood",
+    "releaseDate": "21 Aug 2026",
+    "file": "Irumudi.json",
+    "videoCount": 13
+  }
+]

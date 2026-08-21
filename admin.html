@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReviewHub Admin — Movies</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="wordmark">ReviewHub</span>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="admin-header-right">
+      <a class="top-admin-link" href="index.html" target="_blank">View public site ↗</a>
+      <span>Signed in as Admin</span>
+      <a class="top-admin-link" href="#" id="logout-link">Log out</a>
+    </div>
+  </div>
+
+  <div class="section-heading" style="padding-top:8px;">
+    <h1>Movies</h1>
+    <button class="btn btn-primary" onclick="location.href='admin-edit.html?id=new'">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Add new movie
+    </button>
+  </div>
+
+  <div class="card-box" style="overflow:hidden;">
+    <table class="admin-table" id="movie-table">
+      <thead>
+        <tr>
+          <th>Movie</th>
+          <th>Language</th>
+          <th>Reviewed / Added</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="movie-tbody"></tbody>
+    </table>
+    <div class="empty-state" id="empty-state" style="display:none;">No movies yet — add your first one.</div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="store.js"></script>
+<script>
+  requireLogin();
+
+  document.getElementById('logout-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    logout();
+    location.href = 'admin-login.html';
+  });
+
+  function posterCell(m) {
+    if (m.posterImage) {
+      return `<img class="row-thumb" src="${m.posterImage}" alt="">`;
+    }
+    return `<div class="row-thumb-fallback" style="background:${m.posterGrad || 'linear-gradient(135deg,#6b7280,#374151)'}">${(m.title || '?').charAt(0)}</div>`;
+  }
+
+  function render() {
+    const movies = getMovies().slice().sort((a, b) => Number(b.id) - Number(a.id));
+    const tbody = document.getElementById('movie-tbody');
+    document.getElementById('empty-state').style.display = movies.length ? 'none' : 'block';
+
+    tbody.innerHTML = movies.map((m) => `
+      <tr>
+        <td>
+          <div class="row-title-cell">
+            ${posterCell(m)}
+            <div>
+              <div class="row-title">${m.title || '(untitled)'}</div>
+              <div class="card-meta">${m.industry || '—'} &middot; ${m.releaseDate || '—'}</div>
+            </div>
+          </div>
+        </td>
+        <td>${m.language || '—'}</td>
+        <td>${(m.videos || []).filter((v) => v.verdictKey).length} / ${(m.videos || []).length}</td>
+        <td><span class="status-pill status-${m.status}">${m.status === 'published' ? 'Published' : 'Draft'}</span></td>
+        <td>
+          <div class="row-actions">
+            <button class="btn btn-secondary btn-sm" onclick="location.href='admin-edit.html?id=${m.id}'">Edit</button>
+            <button class="btn btn-secondary btn-sm" onclick="togglePublish('${m.id}')">${m.status === 'published' ? 'Unpublish' : 'Publish'}</button>
+            <button class="btn btn-danger btn-sm" onclick="removeMovie('${m.id}')">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function togglePublish(id) {
+    const m = getMovie(id);
+    if (!m) return;
+    m.status = m.status === 'published' ? 'draft' : 'published';
+    upsertMovie(m);
+    render();
+  }
+
+  function removeMovie(id) {
+    const m = getMovie(id);
+    if (!m) return;
+    if (!confirm(`Delete "${m.title}"? This cannot be undone.`)) return;
+    deleteMovieById(id);
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>

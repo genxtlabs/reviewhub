@@ -1,0 +1,7 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 1900 },
+    { "file": "MovieDetail.dc.html", "x": 1520, "y": 0, "w": 1440, "h": 2300 }
+  ],
+  "launch": { "view": "canvas" }
+}

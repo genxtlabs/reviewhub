@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #faf7f1; font-family: 'Work Sans', system-ui, sans-serif; }
+    a { color: #c1571f; text-decoration: none; }
+    a:hover { color: #a6481a; }
+    ::selection { background: #f0dcc8; }
+  </style>
+</helmet>
+
+<div style="width:1440px; min-height:1900px; background:#faf7f1; color:#262019; position:relative;">
+
+  <!-- Header -->
+  <div style="display:flex; flex-direction:column; gap:28px; padding:44px 56px 0 56px;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:'Newsreader', serif; font-style:italic; font-weight:500; font-size:30px; letter-spacing:-0.01em;">ReviewHub</span>
+        <span style="font-size:13px; color:#8a8072; letter-spacing:0.02em;">Reviews, aggregated.</span>
+      </div>
+      <div style="font-size:13px; color:#8a8072;">This week &middot; 20 Aug 2026</div>
+    </div>
+
+    <div style="height:1px; background:#e6ded1;"></div>
+
+    <!-- Language filter -->
+    <div style="display:flex; align-items:center; gap:16px;">
+      <span style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#8a8072; font-weight:600;">Language</span>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <sc-for list="{{langChips}}" as="chip" hint-placeholder-count="6">
+          <div
+            onClick="{{chip.select}}"
+            style="{{chip.pillStyle}}">
+            {{chip.label}}
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section heading -->
+  <div style="display:flex; align-items:baseline; justify-content:space-between; padding:36px 56px 24px 56px;">
+    <h1 style="font-family:'Newsreader', serif; font-weight:500; font-size:28px; margin:0;">This week&rsquo;s releases</h1>
+    <span style="font-size:13px; color:#8a8072;">{{resultsLabel}}</span>
+  </div>
+
+  <!-- Movie grid -->
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:32px 28px; padding:0 56px 80px 56px;">
+    <sc-for list="{{filteredMovies}}" as="m" hint-placeholder-count="9">
+      <div
+        onClick="{{m.open}}"
+        style="display:flex; flex-direction:column; gap:12px; cursor:pointer; background:#fffdf9; border:1px solid #e6ded1; border-radius:4px; padding:14px; transition:border-color .15s ease;">
+
+        <!-- Poster placeholder -->
+        <div style="position:relative; width:100%; aspect-ratio:2/3; border-radius:2px; overflow:hidden; background:{{m.posterGrad}};">
+          <svg viewBox="0 0 200 300" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.5;">
+            <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+            <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+            <circle cx="100" cy="130" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          </svg>
+          <span style="position:absolute; left:12px; bottom:6px; font-family:'Newsreader', serif; font-size:64px; color:rgba(255,255,255,0.9); line-height:1;">{{m.initial}}</span>
+          <div style="position:absolute; top:10px; right:10px; background:rgba(38,32,25,0.55); color:#fff; font-size:11px; padding:3px 8px; border-radius:2px; letter-spacing:0.02em;">{{m.language}}</div>
+        </div>
+
+        <!-- Info -->
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-family:'Newsreader', serif; font-weight:500; font-size:19px; line-height:1.25;">{{m.title}}</span>
+          <span style="font-size:12px; color:#8a8072;">{{m.industry}} &middot; {{m.releaseDate}}</span>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+            <div style="display:flex; align-items:baseline; gap:6px;">
+              <span style="font-family:'Newsreader', serif; font-weight:600; font-size:22px;">{{m.score}}</span>
+              <span style="font-size:12px; color:#8a8072;">/10</span>
+            </div>
+            <span style="font-size:12px; color:#8a8072;">{{m.reviewCount}} reviews</span>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
+            <span style="width:7px; height:7px; border-radius:50%; background:{{m.verdictColor}}; flex-shrink:0;"></span>
+            <span style="font-size:12.5px; font-weight:600; color:#3a332a;">{{m.verdictLabel}}</span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Quick preview modal -->
+  <sc-if value="{{hasSelected}}" hint-placeholder-val="{{false}}">
+    <div style="position:fixed; inset:0; z-index:50;">
+      <div onClick="{{closeModal}}" style="position:absolute; inset:0; background:rgba(38,32,25,0.55);"></div>
+      <div onClick="{{stopPanelClick}}" style="position:absolute; top:80px; left:50%; transform:translateX(-50%); width:720px; max-width:92%; background:#fffdf9; border:1px solid #e6ded1; border-radius:6px; box-shadow:0 24px 60px rgba(38,32,25,0.25); padding:32px; display:flex; gap:28px;">
+
+        <div style="width:180px; flex-shrink:0; position:relative; aspect-ratio:2/3; border-radius:3px; overflow:hidden; background:{{selectedMovie.posterGrad}};">
+          <svg viewBox="0 0 200 300" style="position:absolute; inset:0; width:100%; height:100%; opacity:0.5;">
+            <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+            <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          </svg>
+          <span style="position:absolute; left:10px; bottom:4px; font-family:'Newsreader', serif; font-size:48px; color:rgba(255,255,255,0.9); line-height:1;">{{selectedMovie.initial}}</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px; flex-grow:1; min-width:0;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <span style="font-family:'Newsreader', serif; font-weight:500; font-size:24px;">{{selectedMovie.title}}</span>
+              <span style="font-size:12.5px; color:#8a8072;">{{selectedMovie.industry}} &middot; {{selectedMovie.language}} &middot; {{selectedMovie.releaseDate}}</span>
+            </div>
+            <div onClick="{{closeModal}}" style="cursor:pointer; padding:4px; color:#8a8072;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:18px;">
+            <div style="display:flex; align-items:baseline; gap:5px;">
+              <span style="font-family:'Newsreader', serif; font-weight:600; font-size:26px;">{{selectedMovie.score}}</span>
+              <span style="font-size:12px; color:#8a8072;">/10</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="width:8px; height:8px; border-radius:50%; background:{{selectedMovie.verdictColor}};"></span>
+              <span style="font-size:13px; font-weight:600;">{{selectedMovie.verdictLabel}}</span>
+            </div>
+            <span style="font-size:12.5px; color:#8a8072;">{{selectedMovie.reviewCount}} reviews</span>
+          </div>
+
+          <p style="font-size:13.5px; line-height:1.6; color:#4a4234; margin:0;">{{selectedMovie.synopsis}}</p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:4px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#8a8072; font-weight:600;">Pros</span>
+              <sc-for list="{{selectedMovie.pros}}" as="p" hint-placeholder-count="3">
+                <div style="display:flex; gap:6px; align-items:flex-start; font-size:12.5px; color:#3a332a;">
+                  <svg width="13" height="13" viewBox="0 0 16 16" style="margin-top:2px; flex-shrink:0;" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#2f8f5b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{{p.text}}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#8a8072; font-weight:600;">Cons</span>
+              <sc-for list="{{selectedMovie.cons}}" as="c" hint-placeholder-count="3">
+                <div style="display:flex; gap:6px; align-items:flex-start; font-size:12.5px; color:#3a332a;">
+                  <svg width="13" height="13" viewBox="0 0 16 16" style="margin-top:2px; flex-shrink:0;" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="#b3402f" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  <span>{{c.text}}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <a href="#" style="display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; margin-top:6px;">
+            View full breakdown
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#c1571f","options":["#c1571f","#a6481a","#155e63","#8a3b2f"]}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filterLang: 'All', selectedMovieId: null };
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#c1571f';
+
+    const VERDICTS = {
+      must: { label: 'Must Watch', color: '#2f8f5b' },
+      good: { label: 'Good Watch', color: '#6a9e2f' },
+      onetime: { label: 'One-Time Watch', color: '#c98a1c' },
+      wait: { label: 'Wait for OTT', color: '#3b6ea5' },
+      skip: { label: 'Skip', color: '#b3402f' }
+    };
+
+    const RAW_MOVIES = [
+      { id: 1, title: 'Silver Monsoon', industry: 'Bollywood', language: 'Hindi', releaseDate: '15 Aug', score: '8.4', reviewCount: 18, verdictKey: 'must', posterGrad: 'linear-gradient(135deg,#6b7280,#374151)',
+        synopsis: 'A family drama set across three monsoons in a Mumbai chawl, following a father and daughter rebuilding trust after a decade apart.',
+        pros: ['Lead performances carry the emotional weight', 'Restrained, unhurried direction', 'Sound design in the monsoon scenes is exceptional'],
+        cons: ['Runtime sags in the second act', 'Subplot with the neighbour feels unresolved', 'Background score is occasionally intrusive'] },
+      { id: 2, title: 'Court No. 4', industry: 'Tollywood', language: 'Telugu', releaseDate: '14 Aug', score: '7.6', reviewCount: 14, verdictKey: 'good', posterGrad: 'linear-gradient(135deg,#92400e,#451a03)',
+        synopsis: 'A courtroom procedural following a young public prosecutor taking on a politically connected land-grab case.',
+        pros: ['Sharp, well-researched courtroom writing', 'Strong supporting cast', 'Ending avoids easy resolution'],
+        cons: ['Pacing drags before the interval', 'A few legal shortcuts strain credibility'] },
+      { id: 3, title: 'Veyilodu', industry: 'Kollywood', language: 'Tamil', releaseDate: '14 Aug', score: '6.2', reviewCount: 11, verdictKey: 'onetime', posterGrad: 'linear-gradient(135deg,#b45309,#78350f)',
+        synopsis: 'A small-town heist comedy about three friends trying to fund a wedding in 48 hours.',
+        pros: ['Genuinely funny first half', 'Fresh faces in the lead cast'],
+        cons: ['Loses steam after the interval', 'Comedy leans on repeated gags', 'Predictable climax'] },
+      { id: 4, title: 'Kaggada Beedi', industry: 'Sandalwood', language: 'Kannada', releaseDate: '13 Aug', score: '5.1', reviewCount: 9, verdictKey: 'wait', posterGrad: 'linear-gradient(135deg,#1e3a5f,#0f1f33)',
+        synopsis: 'A noir-tinted thriller about a beat cop investigating disappearances in a Bengaluru back-alley market.',
+        pros: ['Strong atmosphere and cinematography', 'Interesting premise'],
+        cons: ['Plot logic falls apart in the final act', 'Underwritten side characters', 'Uneven pacing throughout'] },
+      { id: 5, title: 'The Last Ledger', industry: 'Indie', language: 'English', releaseDate: '12 Aug', score: '4.0', reviewCount: 7, verdictKey: 'skip', posterGrad: 'linear-gradient(135deg,#57534e,#292524)',
+        synopsis: 'A startup-founder drama about a fintech collapse, told through depositions and flashbacks.',
+        pros: ['Ambitious non-linear structure'],
+        cons: ['Dialogue feels like a first draft', 'Central performance is flat', 'Twist is telegraphed early'] },
+      { id: 6, title: 'Rangeen Raaste', industry: 'Bollywood', language: 'Hindi', releaseDate: '08 Aug', score: '7.9', reviewCount: 22, verdictKey: 'good', posterGrad: 'linear-gradient(135deg,#9d174d,#500724)',
+        synopsis: 'A road-trip musical following three sisters driving from Jaipur to Goa for a family wedding.',
+        pros: ['Soundtrack is the best of the year so far', 'Warm, believable sibling chemistry', 'Gorgeous location work'],
+        cons: ['A few musical numbers overstay their welcome', 'Side plot with the fiance is thin'] },
+      { id: 7, title: 'Nadhi Kadhalan', industry: 'Kollywood', language: 'Tamil', releaseDate: '07 Aug', score: '8.8', reviewCount: 8, verdictKey: 'must', posterGrad: 'linear-gradient(135deg,#155e63,#0b3335)',
+        synopsis: 'A quiet, riverside coming-of-age story about a fisherman’s son choosing between tradition and a music scholarship.',
+        pros: ['Career-best lead performance', 'Cinematography frames the river beautifully', 'Score by a debut composer is remarkable'],
+        cons: ['Very slow first thirty minutes', 'Some viewers may find the ending too quiet'] },
+      { id: 8, title: 'Chandamama Nights', industry: 'Tollywood', language: 'Telugu', releaseDate: '01 Aug', score: '6.8', reviewCount: 13, verdictKey: 'onetime', posterGrad: 'linear-gradient(135deg,#4c1d95,#2e1065)',
+        synopsis: 'An anthology of three loosely connected ghost stories set in a single apartment building.',
+        pros: ['Third segment is genuinely unsettling', 'Strong production design'],
+        cons: ['First segment is forgettable', 'Uneven tone between segments', 'Framing device feels tacked on'] },
+      { id: 9, title: 'Belaku', industry: 'Sandalwood', language: 'Kannada', releaseDate: '31 Jul', score: '8.1', reviewCount: 10, verdictKey: 'must', posterGrad: 'linear-gradient(135deg,#a16207,#713f12)',
+        synopsis: 'A biopic of a rural schoolteacher who built a library from discarded books over three decades.',
+        pros: ['Deeply humane, unsentimental writing', 'Lead performance avoids biopic cliches', 'Ends on an earned, quiet note'],
+        cons: ['Some archival-style scenes feel dated'] }
+    ];
+
+    const movies = RAW_MOVIES.map((m) => ({
+      ...m,
+      initial: m.title.charAt(0),
+      verdictLabel: VERDICTS[m.verdictKey].label,
+      verdictColor: VERDICTS[m.verdictKey].color,
+      pros: m.pros.map((t) => ({ text: t })),
+      cons: m.cons.map((t) => ({ text: t })),
+      open: () => this.setState({ selectedMovieId: m.id })
+    }));
+
+    const filterLang = this.state.filterLang ?? 'All';
+    const filteredMovies = filterLang === 'All' ? movies : movies.filter((m) => m.language === filterLang);
+
+    const LANGS = ['All', 'Hindi', 'Telugu', 'Tamil', 'Kannada', 'English'];
+    const langChips = LANGS.map((lang) => {
+      const active = lang === filterLang;
+      return {
+        label: lang,
+        select: () => this.setState({ filterLang: lang }),
+        pillStyle: `padding:7px 16px; border-radius:100px; font-size:13px; cursor:pointer; border:1px solid ${active ? accent : '#e6ded1'}; background:${active ? accent : 'transparent'}; color:${active ? '#fffdf9' : '#4a4234'}; font-weight:${active ? '600' : '500'};`
+      };
+    });
+
+    const selectedMovieId = this.state.selectedMovieId;
+    const hasSelected = !!selectedMovieId;
+    const selectedMovie = hasSelected ? movies.find((m) => m.id === selectedMovieId) : { pros: [], cons: [] };
+
+    return {
+      langChips,
+      filteredMovies,
+      resultsLabel: `${filteredMovies.length} of ${movies.length} releases`,
+      hasSelected,
+      selectedMovie,
+      closeModal: () => this.setState({ selectedMovieId: null }),
+      stopPanelClick: (e) => { if (e && e.stopPropagation) e.stopPropagation(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

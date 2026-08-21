@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReviewHub Admin — Edit movie</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="wordmark">ReviewHub</span>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="admin-header-right">
+      <a class="top-admin-link" href="admin.html">← Movies</a>
+    </div>
+  </div>
+
+  <h1 id="page-title" class="serif" style="font-weight:500; font-size:28px; margin:0 0 4px 0;"></h1>
+  <p class="muted" style="margin:0 0 8px 0;">Changes here only take effect after you Save draft or Publish.</p>
+
+  <div class="card-box" style="padding:0 28px;">
+
+    <!-- Basic info -->
+    <div class="form-section">
+      <span class="section-label">Movie details</span>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="field-label">Title</label>
+          <input class="input" id="title-input" type="text" placeholder="e.g. Nadhi Kadhalan">
+        </div>
+        <div class="form-field">
+          <label class="field-label">Industry</label>
+          <input class="input" id="industry-input" type="text" list="industry-options" placeholder="e.g. Kollywood">
+          <datalist id="industry-options">
+            <option value="Bollywood"><option value="Tollywood"><option value="Kollywood">
+            <option value="Sandalwood"><option value="Mollywood"><option value="Indie">
+          </datalist>
+        </div>
+        <div class="form-field">
+          <label class="field-label">Release date</label>
+          <input class="input" id="date-input" type="text" placeholder="e.g. 20 Aug 2026">
+        </div>
+        <div class="form-field">
+          <label class="field-label">Language</label>
+          <div class="lang-inline">
+            <select class="select" id="language-select"></select>
+            <span class="lang-add-toggle" id="lang-add-toggle">+ Add language</span>
+          </div>
+          <div class="lang-add-box" id="lang-add-box">
+            <input class="input" id="new-lang-input" type="text" placeholder="e.g. Malayalam">
+            <button class="btn btn-secondary btn-sm" id="lang-add-confirm" type="button">Add</button>
+          </div>
+        </div>
+        <div class="form-field" style="grid-column:1 / -1;">
+          <label class="field-label">Synopsis</label>
+          <textarea class="textarea" id="synopsis-input" rows="2" placeholder="One or two sentences a viewer would read before watching."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Poster -->
+    <div class="form-section">
+      <span class="section-label">Poster / thumbnail</span>
+      <div class="upload-box">
+        <div class="upload-preview" id="poster-preview"></div>
+        <div class="upload-controls">
+          <input type="file" id="poster-input" accept="image/*">
+          <button class="btn btn-secondary btn-sm" id="remove-poster-btn" type="button" style="width:fit-content;">Remove image</button>
+          <span class="field-hint">JPG or PNG. Resized automatically. Falls back to a placeholder if none is set.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- YouTube links -->
+    <div class="form-section">
+      <span class="section-label">Review videos</span>
+      <div class="form-field">
+        <label class="field-label">Paste YouTube review links (one per line)</label>
+        <textarea class="textarea" id="links-textarea" rows="4" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.youtube.com/watch?v=..."></textarea>
+        <div id="link-warning" class="field-hint" style="color:#a12e1c;"></div>
+      </div>
+      <button class="btn btn-primary btn-sm" id="process-btn" type="button">Add links</button>
+      <p class="field-hint" style="margin-top:10px;">No paid transcription/LLM API is used. Each link becomes a row below with real channel/view/subscriber data where available (via Import, next) — watch the video yourself and fill in its verdict, rating, and a one-line quote.</p>
+
+      <div style="margin-top:20px; padding-top:18px; border-top:1px solid #e6ded1;">
+        <span class="lang-add-toggle" id="import-toggle">+ Import from youtube_reviews.py output</span>
+        <div class="lang-add-box" id="import-box" style="flex-direction:column; align-items:stretch;">
+          <textarea class="textarea" id="import-textarea" rows="5" placeholder='Paste the JSON output of scripts/youtube_reviews.py here'></textarea>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button class="btn btn-secondary btn-sm" id="import-btn" type="button">Import</button>
+            <span class="field-hint" id="import-status" style="margin-top:0;"></span>
+          </div>
+          <p class="field-hint">Fills in title/language/industry (if empty) and adds every video from the JSON below with its real channel name, view count, and subscriber count already filled in — you still add the verdict/rating/quote yourself.</p>
+        </div>
+      </div>
+
+      <div class="video-list" id="video-list" style="margin-top:20px;"></div>
+    </div>
+
+    <!-- Aggregate + summary -->
+    <div class="form-section">
+      <span class="section-label">Aggregate &amp; AI summary</span>
+      <div class="aggregate-panel" id="aggregate-panel"></div>
+
+      <div class="form-field">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+          <label class="field-label" style="margin-bottom:0;">Summary ("The Verdict")</label>
+          <button class="btn btn-secondary btn-sm" id="suggest-summary-btn" type="button">Suggest from reviews</button>
+        </div>
+        <textarea class="textarea" id="summary-textarea" rows="3"></textarea>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="field-label">Pros</label>
+          <div id="pros-list"></div>
+          <button class="btn btn-secondary btn-sm" id="add-pro-btn" type="button" style="width:fit-content;">+ Add pro</button>
+        </div>
+        <div class="form-field">
+          <label class="field-label">Cons</label>
+          <div id="cons-list"></div>
+          <button class="btn btn-secondary btn-sm" id="add-con-btn" type="button" style="width:fit-content;">+ Add con</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary" id="cancel-btn" type="button">Cancel</button>
+      <button class="btn btn-secondary" id="save-draft-btn" type="button">Save draft</button>
+      <button class="btn btn-primary" id="publish-btn" type="button">Publish</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="store.js"></script>
+<script>
+requireLogin();
+
+const PLACEHOLDER_GRADIENTS = [
+  'linear-gradient(135deg,#6b7280,#374151)',
+  'linear-gradient(135deg,#92400e,#451a03)',
+  'linear-gradient(135deg,#155e63,#0b3335)',
+  'linear-gradient(135deg,#9d174d,#500724)',
+  'linear-gradient(135deg,#4c1d95,#2e1065)',
+  'linear-gradient(135deg,#a16207,#713f12)',
+];
+
+function escHtml(s) {
+  return String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+}
+function escAttr(s) {
+  return escHtml(s).replace(/"/g, '&quot;');
+}
+
+// ---- Load or create movie ----
+const params = new URLSearchParams(location.search);
+const idParam = params.get('id');
+let movie;
+
+if (!idParam || idParam === 'new') {
+  movie = {
+    id: nextMovieId(), title: '', industry: '', language: getLanguages()[0], releaseDate: '',
+    synopsis: '', summaryText: '', pros: [''], cons: [''],
+    score: 0, verdictKey: 'onetime', reviewCount: 0,
+    posterGrad: PLACEHOLDER_GRADIENTS[Math.floor(Math.random() * PLACEHOLDER_GRADIENTS.length)],
+    posterImage: null, status: 'draft', videos: [],
+  };
+  document.getElementById('page-title').textContent = 'Add new movie';
+} else {
+  const existing = getMovie(idParam);
+  if (!existing) {
+    location.href = 'admin.html';
+    throw new Error('movie not found');
+  }
+  movie = JSON.parse(JSON.stringify(existing));
+  if (!movie.pros || !movie.pros.length) movie.pros = [''];
+  if (!movie.cons || !movie.cons.length) movie.cons = [''];
+  document.getElementById('page-title').textContent = `Edit: ${movie.title}`;
+}
+
+// ---- Basic fields ----
+function bindBasicFields() {
+  const titleInput = document.getElementById('title-input');
+  titleInput.value = movie.title || '';
+  titleInput.addEventListener('input', (e) => { movie.title = e.target.value; renderPosterPreview(); });
+
+  const industryInput = document.getElementById('industry-input');
+  industryInput.value = movie.industry || '';
+  industryInput.addEventListener('input', (e) => { movie.industry = e.target.value; });
+
+  const dateInput = document.getElementById('date-input');
+  dateInput.value = movie.releaseDate || '';
+  dateInput.addEventListener('input', (e) => { movie.releaseDate = e.target.value; });
+
+  const synopsisInput = document.getElementById('synopsis-input');
+  synopsisInput.value = movie.synopsis || '';
+  synopsisInput.addEventListener('input', (e) => { movie.synopsis = e.target.value; });
+}
+
+// ---- Language ----
+function renderLanguageSelect() {
+  const languages = getLanguages();
+  const sel = document.getElementById('language-select');
+  sel.innerHTML = languages.map((l) => `<option value="${escAttr(l)}" ${l === movie.language ? 'selected' : ''}>${escHtml(l)}</option>`).join('');
+}
+function bindLanguageControl() {
+  renderLanguageSelect();
+  document.getElementById('language-select').addEventListener('change', (e) => { movie.language = e.target.value; });
+  document.getElementById('lang-add-toggle').addEventListener('click', () => {
+    document.getElementById('lang-add-box').classList.toggle('open');
+  });
+  document.getElementById('lang-add-confirm').addEventListener('click', () => {
+    const input = document.getElementById('new-lang-input');
+    const val = input.value.trim();
+    if (!val) return;
+    addLanguage(val);
+    movie.language = val;
+    renderLanguageSelect();
+    input.value = '';
+    document.getElementById('lang-add-box').classList.remove('open');
+  });
+}
+
+// ---- Poster ----
+function renderPosterPreview() {
+  const box = document.getElementById('poster-preview');
+  document.getElementById('remove-poster-btn').style.display = movie.posterImage ? 'inline-flex' : 'none';
+  if (movie.posterImage) {
+    box.style.background = 'transparent';
+    box.innerHTML = `<img src="${movie.posterImage}" alt="">`;
+  } else {
+    box.style.background = movie.posterGrad;
+    box.innerHTML = `<span class="initial">${escHtml((movie.title || '?').charAt(0))}</span>`;
+  }
+}
+function bindPosterControl() {
+  document.getElementById('poster-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxW = 480;
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        movie.posterImage = canvas.toDataURL('image/jpeg', 0.85);
+        renderPosterPreview();
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('remove-poster-btn').addEventListener('click', () => {
+    movie.posterImage = null;
+    document.getElementById('poster-input').value = '';
+    renderPosterPreview();
+  });
+}
+
+// ---- Video rows (manual review — no paid transcription/LLM API) ----
+const AVATAR_COLORS = ['#155e63', '#57534e', '#92400e', '#9d174d', '#4c1d95', '#1e3a5f', '#a16207', '#b3402f'];
+function colorForChannel(name) {
+  const h = String(name || '').split('').reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) | 0, 0);
+  return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+}
+
+function renderVideoRowHTML(v) {
+  const reviewed = !!v.verdictKey;
+  const refBits = [];
+  if (typeof v.viewCount === 'number') refBits.push(`${v.viewCount.toLocaleString()} views`);
+  if (typeof v.subscriberCount === 'number') refBits.push(`${v.subscriberCount.toLocaleString()} subscribers`);
+  if (v.matchedBy && v.matchedBy.length) refBits.push(`ranked by ${v.matchedBy.join(' & ')}`);
+  const refLine = refBits.length ? `<div class="field-hint" style="margin-top:6px;">${escHtml(refBits.join(' · '))}</div>` : '';
+
+  return `
+    <div class="card-box video-row" data-video-id="${v.id}">
+      <div class="video-row-head">
+        <div>
+          <span class="status-pill ${reviewed ? 'status-published' : 'status-draft'}">${reviewed ? 'Reviewed' : 'Needs review'}</span>
+          &nbsp;<a class="video-url" href="${escAttr(v.url)}" target="_blank" rel="noopener">${escHtml(v.url)}</a>
+          ${refLine}
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn remove-btn" title="Remove" type="button">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="video-edit-grid">
+        <div>
+          <label class="field-label">Channel</label>
+          <input class="input channel-input" type="text" value="${escAttr(v.channel)}" placeholder="Channel name">
+        </div>
+        <div>
+          <label class="field-label">Language</label>
+          <select class="select language-select-row">${getLanguages().map((l) => `<option value="${escAttr(l)}" ${l === v.language ? 'selected' : ''}>${escHtml(l)}</option>`).join('')}</select>
+        </div>
+        <div>
+          <label class="field-label">Verdict</label>
+          <select class="select verdict-select-row">
+            <option value="">— After watching —</option>
+            ${VERDICT_ORDER.map((k) => `<option value="${k}" ${k === v.verdictKey ? 'selected' : ''}>${VERDICTS[k].label}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Rating</label>
+          <input class="input rating-input" type="text" value="${escAttr(v.rating)}" placeholder="e.g. 8/10">
+        </div>
+        <div class="full">
+          <label class="field-label">Mini verdict / quote</label>
+          <textarea class="textarea quote-input" rows="2" placeholder="One or two lines summarizing what this reviewer said">${escHtml(v.quote)}</textarea>
+        </div>
+      </div>
+    </div>`;
+}
+
+function attachVideoRowHandlers(v) {
+  const rowEl = document.querySelector(`[data-video-id="${v.id}"]`);
+  if (!rowEl) return;
+  const removeBtn = rowEl.querySelector('.remove-btn');
+  if (removeBtn) removeBtn.addEventListener('click', () => {
+    movie.videos = movie.videos.filter((x) => x.id !== v.id);
+    rowEl.remove();
+    recalcAggregate();
+    maybeShowEmptyVideoState();
+  });
+  const channelInput = rowEl.querySelector('.channel-input');
+  if (channelInput) channelInput.addEventListener('input', (e) => { v.channel = e.target.value; v.avatarColor = colorForChannel(e.target.value); });
+  const langSel = rowEl.querySelector('.language-select-row');
+  if (langSel) langSel.addEventListener('change', (e) => { v.language = e.target.value; });
+  const verdictSel = rowEl.querySelector('.verdict-select-row');
+  if (verdictSel) verdictSel.addEventListener('change', (e) => {
+    v.verdictKey = e.target.value;
+    const pill = rowEl.querySelector('.status-pill');
+    if (pill) {
+      const reviewed = !!v.verdictKey;
+      pill.className = `status-pill ${reviewed ? 'status-published' : 'status-draft'}`;
+      pill.textContent = reviewed ? 'Reviewed' : 'Needs review';
+    }
+    recalcAggregate();
+  });
+  const ratingInput = rowEl.querySelector('.rating-input');
+  if (ratingInput) ratingInput.addEventListener('input', (e) => { v.rating = e.target.value; recalcAggregate(); });
+  const quoteInput = rowEl.querySelector('.quote-input');
+  if (quoteInput) quoteInput.addEventListener('input', (e) => { v.quote = e.target.value; });
+}
+
+function renderVideoList() {
+  const container = document.getElementById('video-list');
+  if (!movie.videos.length) {
+    container.innerHTML = `<div class="empty-state">No review links added yet — paste YouTube URLs above, or import the ranking script's output.</div>`;
+    return;
+  }
+  container.innerHTML = movie.videos.map(renderVideoRowHTML).join('');
+  movie.videos.forEach(attachVideoRowHandlers);
+}
+function maybeShowEmptyVideoState() {
+  if (!movie.videos.length) renderVideoList();
+}
+
+const YT_RE = /(youtube\.com|youtu\.be)/i;
+
+function addLinks(urls, metaByUrl) {
+  metaByUrl = metaByUrl || {};
+  const invalid = [];
+  const duplicates = [];
+  urls.forEach((url) => {
+    if (!YT_RE.test(url)) { invalid.push(url); return; }
+    if (movie.videos.some((v) => v.url === url)) { duplicates.push(url); return; }
+    const meta = metaByUrl[url] || {};
+    const v = {
+      id: uid(),
+      url,
+      channel: meta.channelTitle || '',
+      avatarColor: colorForChannel(meta.channelTitle || ''),
+      language: meta.language || movie.language,
+      verdictKey: '',
+      rating: '',
+      quote: '',
+      viewCount: typeof meta.viewCount === 'number' ? meta.viewCount : undefined,
+      subscriberCount: typeof meta.subscriberCount === 'number' ? meta.subscriberCount : undefined,
+      matchedBy: meta.matchedBy || undefined,
+    };
+    movie.videos.push(v);
+  });
+  const warnings = [];
+  if (duplicates.length) warnings.push(`Skipped ${duplicates.length} duplicate link(s) already added.`);
+  if (invalid.length) warnings.push(`Skipped ${invalid.length} line(s) that don't look like YouTube links.`);
+  document.getElementById('link-warning').textContent = warnings.join(' ');
+  renderVideoList();
+  return { added: urls.length - invalid.length - duplicates.length, duplicates: duplicates.length, invalid: invalid.length };
+}
+
+document.getElementById('process-btn').addEventListener('click', () => {
+  const raw = document.getElementById('links-textarea').value;
+  const lines = raw.split('\n').map((s) => s.trim()).filter(Boolean);
+  document.getElementById('links-textarea').value = '';
+  addLinks(lines);
+});
+
+document.getElementById('import-toggle').addEventListener('click', () => {
+  document.getElementById('import-box').classList.toggle('open');
+});
+document.getElementById('import-btn').addEventListener('click', () => {
+  const statusEl = document.getElementById('import-status');
+  const raw = document.getElementById('import-textarea').value.trim();
+  if (!raw) { statusEl.textContent = 'Paste JSON first.'; statusEl.style.color = '#a12e1c'; return; }
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (e) {
+    statusEl.textContent = 'That isn\'t valid JSON.';
+    statusEl.style.color = '#a12e1c';
+    return;
+  }
+  if (!Array.isArray(data.videos)) {
+    statusEl.textContent = 'No "videos" array found in that JSON.';
+    statusEl.style.color = '#a12e1c';
+    return;
+  }
+  if (data.title && !movie.title.trim()) {
+    movie.title = data.title;
+    document.getElementById('title-input').value = data.title;
+    renderPosterPreview();
+  }
+  if (data.industry && !movie.industry.trim()) {
+    movie.industry = data.industry;
+    document.getElementById('industry-input').value = data.industry;
+  }
+  if (data.releaseDate && !movie.releaseDate.trim()) {
+    movie.releaseDate = data.releaseDate;
+    document.getElementById('date-input').value = data.releaseDate;
+  }
+  if (data.language) {
+    addLanguage(data.language);
+    movie.language = data.language;
+    renderLanguageSelect();
+  }
+  const urls = data.videos.map((v) => v.url).filter(Boolean);
+  const metaByUrl = {};
+  data.videos.forEach((v) => {
+    if (!v.url) return;
+    metaByUrl[v.url] = {
+      channelTitle: v.channelTitle,
+      viewCount: v.viewCount,
+      subscriberCount: v.subscriberCount,
+      matchedBy: v.matchedBy,
+      language: data.language,
+    };
+  });
+  const result = addLinks(urls, metaByUrl);
+  statusEl.style.color = '#8a8072';
+  statusEl.textContent = `Imported ${result.added} link(s)${result.duplicates ? `, skipped ${result.duplicates} duplicate(s)` : ''}.`;
+  document.getElementById('import-textarea').value = '';
+  document.getElementById('import-box').classList.remove('open');
+});
+
+// ---- Aggregate ----
+function recalcAggregate() {
+  const counts = countVerdicts(movie.videos);
+  const doneRatings = movie.videos.filter((v) => v.verdictKey).map((v) => parseFloat(v.rating)).filter((n) => !isNaN(n));
+  movie.reviewCount = counts.total;
+  movie.verdictKey = dominantVerdict(counts);
+  movie.score = doneRatings.length ? +(doneRatings.reduce((a, b) => a + b, 0) / doneRatings.length).toFixed(1) : 0;
+  const v = VERDICTS[movie.verdictKey];
+  document.getElementById('aggregate-panel').innerHTML = `
+    <div class="aggregate-item"><span class="aggregate-value">${movie.score || '—'}<span style="font-size:13px;color:#8a8072;"> /10</span></span><span class="field-hint">Aggregate score</span></div>
+    <div class="aggregate-item"><span class="aggregate-value" style="display:flex;align-items:center;gap:7px;font-size:16px;"><span class="dot" style="background:${v.color}"></span>${v.label}</span><span class="field-hint">Dominant verdict</span></div>
+    <div class="aggregate-item"><span class="aggregate-value">${counts.total} / ${movie.videos.length}</span><span class="field-hint">Reviewed / added</span></div>
+    <div class="aggregate-item"><span class="aggregate-value" style="font-size:14px;">${counts.positive} pos &middot; ${counts.mixed} mixed &middot; ${counts.negative} neg</span><span class="field-hint">Spread</span></div>
+  `;
+}
+
+// ---- Summary ----
+function bindSummary() {
+  const box = document.getElementById('summary-textarea');
+  box.value = movie.summaryText || '';
+  box.addEventListener('input', (e) => { movie.summaryText = e.target.value; });
+  document.getElementById('suggest-summary-btn').addEventListener('click', () => {
+    if (movie.summaryText && movie.summaryText.trim() && !confirm('Replace the current summary with a new suggestion generated from the pros/cons and reviews?')) return;
+    const counts = countVerdicts(movie.videos);
+    const suggestion = buildSummaryText(movie, counts);
+    movie.summaryText = suggestion;
+    box.value = suggestion;
+  });
+}
+
+// ---- Pros / Cons ----
+function renderListEditor(containerId, arr) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = arr.map((text, i) => `
+    <div class="pc-edit-row" data-idx="${i}">
+      <input class="input pc-input" type="text" value="${escAttr(text)}">
+      <button class="icon-btn pc-remove" title="Remove" type="button"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </div>`).join('');
+  container.querySelectorAll('.pc-edit-row').forEach((row) => {
+    const idx = Number(row.dataset.idx);
+    row.querySelector('.pc-input').addEventListener('input', (e) => { arr[idx] = e.target.value; });
+    row.querySelector('.pc-remove').addEventListener('click', () => { arr.splice(idx, 1); renderProsCons(); });
+  });
+}
+function renderProsCons() {
+  renderListEditor('pros-list', movie.pros);
+  renderListEditor('cons-list', movie.cons);
+}
+document.getElementById('add-pro-btn').addEventListener('click', () => { movie.pros.push(''); renderProsCons(); });
+document.getElementById('add-con-btn').addEventListener('click', () => { movie.cons.push(''); renderProsCons(); });
+
+// ---- Save / Publish ----
+function collectAndSave(status) {
+  movie.status = status;
+  movie.pros = movie.pros.map((s) => s.trim()).filter(Boolean);
+  movie.cons = movie.cons.map((s) => s.trim()).filter(Boolean);
+  recalcAggregate();
+  upsertMovie(movie);
+  location.href = 'admin.html';
+}
+document.getElementById('cancel-btn').addEventListener('click', () => { location.href = 'admin.html'; });
+document.getElementById('save-draft-btn').addEventListener('click', () => collectAndSave('draft'));
+document.getElementById('publish-btn').addEventListener('click', () => {
+  if (!movie.title.trim()) { alert('Add a title before publishing.'); return; }
+  if (!movie.videos.some((v) => v.verdictKey)) {
+    if (!confirm('No reviewed videos yet — publish this movie anyway?')) return;
+  }
+  collectAndSave('published');
+});
+
+// ---- Init ----
+bindBasicFields();
+bindLanguageControl();
+bindPosterControl();
+renderPosterPreview();
+renderVideoList();
+recalcAggregate();
+bindSummary();
+renderProsCons();
+</script>
+</body>
+</html>
