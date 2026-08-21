@@ -328,10 +328,10 @@ a:hover { color: var(--accent-solid-hover); }
 a.hub-tile.active::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 0%, rgba(255,45,111,0.16), transparent 60%); pointer-events: none; }
 a.hub-tile.active { border-color: rgba(255,90,130,0.25); }
 a.hub-tile.active:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(255,45,111,0.18); }
-.hub-tile.disabled { opacity: 0.6; cursor: default; }
-.hub-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 14px; position: relative; z-index: 1; }
-.hub-icon.active-icon { background: var(--accent-gradient); box-shadow: 0 8px 24px rgba(255,45,111,0.35); }
-.hub-icon.muted-icon { background: var(--bg-elevated-2); border: 1px solid var(--border); color: var(--text-faint); }
+.hub-tile.disabled { opacity: 0.85; cursor: default; }
+.hub-mascot { width: 130px; height: auto; position: relative; z-index: 1; transition: transform .2s ease; }
+a.hub-tile.active:hover .hub-mascot { transform: translateY(-2px); }
+.hub-tile.disabled .hub-mascot { filter: grayscale(1); opacity: 0.5; }
 .hub-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 21px; position: relative; z-index: 1; }
 .hub-tile.disabled .hub-name { color: var(--text-faint); }
 .hub-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; position: relative; z-index: 1; }
