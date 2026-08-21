@@ -335,7 +335,18 @@ a:hover { color: var(--accent-solid-hover); }
   inset: 0;
   background: linear-gradient(180deg, rgba(13,11,10,0.35) 0%, rgba(13,11,10,0.55) 55%, var(--bg) 100%);
 }
-.hub-hero-content { position: relative; z-index: 1; text-align: center; padding: 60px 40px; max-width: 720px; }
+.hub-hero-content { position: relative; z-index: 1; text-align: center; padding: 60px 40px; max-width: 820px; }
+.hub-headline { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 48px; line-height: 1.18; text-transform: uppercase; letter-spacing: -0.01em; color: #fff; text-shadow: 0 4px 28px rgba(0,0,0,0.65); margin: 0 0 18px 0; }
+.hub-headline .grad { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hub-pills { display: flex; gap: 12px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+.hub-pill { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.06); backdrop-filter: blur(6px); color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; letter-spacing: 0.03em; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.hub-pill:hover { border-color: var(--accent-solid); background: rgba(255,255,255,0.12); transform: translateY(-1px); color: #fff; }
+.hub-pill.muted { color: rgba(255,255,255,0.4); cursor: default; }
+.hub-pill.muted:hover { border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.06); transform: none; color: rgba(255,255,255,0.4); }
+
+.hub-footer-bar { text-align: center; padding: 8px 40px 64px; }
+.hub-footer-bar .fw { font-family: 'Fraunces', serif; font-weight: 700; font-size: 19px; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hub-footer-bar .ft { font-size: 11px; letter-spacing: 0.14em; color: var(--text-faint); margin-top: 8px; text-transform: uppercase; }
 .hub-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 56px; margin: 0 0 14px 0; letter-spacing: -0.01em; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5)); }
 .hub-tagline { font-size: 17px; color: var(--text-secondary); text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
 .hub-nav-top { position: absolute; top: 32px; left: 40px; right: 40px; z-index: 2; display: flex; align-items: center; justify-content: space-between; }
