@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ReviewHub — Movie detail</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
@@ -27,8 +27,8 @@
   <div id="content"></div>
 </div>
 
-<script src="data.js"></script>
-<script src="store.js"></script>
+<script src="../data.js"></script>
+<script src="../store.js"></script>
 <script>
   const params = new URLSearchParams(location.search);
   const requested = getMovie(params.get('id'));

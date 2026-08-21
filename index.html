@@ -3,110 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ReviewHub — Movie release aggregator</title>
+<title>ReviewHub — Aggregated reviews, across everything</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .hub-wrap { max-width: 960px; margin: 0 auto; padding: 100px 40px 120px 40px; }
+  .hub-header { text-align: center; margin-bottom: 64px; }
+  .hub-title { font-family: 'Newsreader', serif; font-style: italic; font-weight: 500; font-size: 48px; margin: 0 0 10px 0; }
+  .hub-tagline { font-size: 15px; color: #8a8072; }
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .hub-tile { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 40px 24px; background: #fffdf9; border: 1px solid #e6ded1; border-radius: 8px; text-align: center; text-decoration: none; color: inherit; transition: border-color .15s ease, transform .1s ease; }
+  a.hub-tile:hover { border-color: #c1571f; }
+  .hub-tile.disabled { opacity: 0.55; cursor: default; }
+  .hub-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; color: #c1571f; }
+  .hub-tile.disabled .hub-icon { color: #8a8072; }
+  .hub-name { font-family: 'Newsreader', serif; font-weight: 500; font-size: 21px; }
+  .hub-desc { font-size: 13px; color: #8a8072; line-height: 1.5; }
+  .hub-badge { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: #8a8072; border: 1px solid #e6ded1; padding: 3px 9px; border-radius: 100px; }
+  .hub-footer { text-align: center; margin-top: 56px; }
+</style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="header">
-    <div class="header-top">
-      <div style="display:flex; align-items:baseline; gap:14px;">
-        <span class="wordmark">ReviewHub</span>
-        <span class="tagline">Reviews, aggregated.</span>
+<div class="hub-wrap">
+  <div class="hub-header">
+    <h1 class="hub-title">ReviewHub</h1>
+    <p class="hub-tagline">Aggregated reviews, across everything.</p>
+  </div>
+
+  <div class="hub-grid">
+    <a class="hub-tile" href="movies/index.html">
+      <div class="hub-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="24" cy="24" r="11" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
       </div>
-      <div style="display:flex; align-items:center; gap:18px;">
-        <span class="muted">This week &middot; 20 Aug 2026</span>
-        <a class="top-admin-link" href="admin-login.html">Admin</a>
+      <div class="hub-name">Movies</div>
+      <div class="hub-desc">Aggregated YouTube reviews, verdicts, and ratings for new releases.</div>
+    </a>
+
+    <div class="hub-tile disabled">
+      <div class="hub-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <path d="M8 28L11 18C11.6 16 13.4 14.7 15.5 14.7H32.5C34.6 14.7 36.4 16 37 18L40 28" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="6" y="28" width="36" height="9" rx="3" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="14" cy="37" r="3" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="34" cy="37" r="3" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
       </div>
+      <div class="hub-name">Cars</div>
+      <div class="hub-desc">Aggregated reviews for new car launches.</div>
+      <span class="hub-badge">Coming soon</span>
     </div>
-    <div class="rule"></div>
-    <div class="filter-row">
-      <span class="filter-label">Language</span>
-      <div class="chip-row" id="lang-filter"></div>
+
+    <div class="hub-tile disabled">
+      <div class="hub-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <path d="M7 33L18 22L25 29L41 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M31 13H41V23" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hub-name">Stocks</div>
+      <div class="hub-desc">Aggregated analyst and creator takes on market moves.</div>
+      <span class="hub-badge">Coming soon</span>
     </div>
   </div>
 
-  <div class="section-heading">
-    <h1>This week&rsquo;s releases</h1>
-    <span class="muted" id="results-label"></span>
+  <div class="hub-footer">
+    <a class="top-admin-link" href="admin-login.html">Admin</a>
   </div>
-
-  <div class="grid" id="movie-grid"></div>
 </div>
 
-<script src="data.js"></script>
-<script src="store.js"></script>
-<script>
-  let filterLang = 'All';
-
-  function renderFilters() {
-    const langs = ['All', ...getLanguages()];
-    const el = document.getElementById('lang-filter');
-    el.innerHTML = '';
-    langs.forEach((lang) => {
-      const chip = document.createElement('button');
-      chip.className = 'chip' + (lang === filterLang ? ' active' : '');
-      chip.textContent = lang;
-      chip.onclick = () => { filterLang = lang; render(); };
-      el.appendChild(chip);
-    });
-  }
-
-  function posterMarkup(movie) {
-    if (movie.posterImage) {
-      return `
-        <div class="poster">
-          <img src="${movie.posterImage}" alt="" style="width:100%; height:100%; object-fit:cover;">
-          <span class="lang-tag">${movie.language}</span>
-        </div>`;
-    }
-    return `
-      <div class="poster" style="background:${movie.posterGrad}">
-        <svg viewBox="0 0 200 300">
-          <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
-          <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
-          <circle cx="100" cy="130" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle>
-        </svg>
-        <span class="initial">${movie.title.charAt(0)}</span>
-        <span class="lang-tag">${movie.language}</span>
-      </div>`;
-  }
-
-  function renderGrid() {
-    const grid = document.getElementById('movie-grid');
-    const allMovies = getPublishedMovies();
-    const list = filterLang === 'All' ? allMovies : allMovies.filter((m) => m.language === filterLang);
-    document.getElementById('results-label').textContent = `${list.length} of ${allMovies.length} releases`;
-
-    grid.innerHTML = list.map((m) => {
-      const v = VERDICTS[m.verdictKey];
-      return `
-        <div class="card" onclick="location.href='movie.html?id=${m.id}'">
-          ${posterMarkup(m)}
-          <div>
-            <div class="card-title">${m.title}</div>
-            <div class="card-meta">${m.industry} &middot; ${m.releaseDate}</div>
-            <div class="score-row">
-              <span><span class="score">${m.score}</span><span class="score-suffix">/10</span></span>
-              <span class="muted">${m.reviewCount} reviews</span>
-            </div>
-            <div class="verdict-row">
-              <span class="dot" style="background:${v.color}"></span>
-              <span class="verdict-label">${v.label}</span>
-            </div>
-          </div>
-        </div>`;
-    }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published movies match this filter yet.</div>`;
-  }
-
-  function render() {
-    renderFilters();
-    renderGrid();
-  }
-
-  render();
-</script>
 </body>
 </html>
