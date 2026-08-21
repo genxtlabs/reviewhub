@@ -9,125 +9,44 @@
 </head>
 <body>
 
-<div class="hub-wrap">
-  <div class="hub-header">
+<div class="hub-hero" style="background-image:url('assets/hero-banner.jpg');">
+  <div class="hub-nav-top">
+    <span style="font-size:13px; font-weight:600; color:var(--text-secondary); text-shadow:0 2px 8px rgba(0,0,0,0.6);">ReviewHub</span>
+    <a class="top-admin-link" href="admin-login.html" style="text-shadow:0 2px 8px rgba(0,0,0,0.6);">Admin</a>
+  </div>
+  <div class="hub-hero-content">
     <h1 class="hub-title">ReviewHub</h1>
     <p class="hub-tagline">Aggregated reviews, across everything.</p>
   </div>
+</div>
 
+<div class="hub-wrap">
   <div class="hub-grid">
     <a class="hub-tile active" href="movies/index.html">
-      <svg class="hub-mascot" viewBox="0 0 200 260">
-        <defs>
-          <linearGradient id="hairGrad1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#ff7a45"/><stop offset="1" stop-color="#ff2d6f"/>
-          </linearGradient>
-        </defs>
-        <path d="M62 172 Q62 146 100 146 Q138 146 138 172 L144 246 Q144 256 134 256 L66 256 Q56 256 56 246 Z" fill="#2a231d"/>
-        <path d="M80 154 Q100 170 120 154 L120 166 Q100 182 80 166 Z" fill="url(#hairGrad1)"/>
-        <path d="M60 190 Q40 196 36 214 Q34 224 44 226 Q56 228 60 214 Z" fill="#2a231d"/>
-        <path d="M140 190 Q160 196 164 214 Q166 224 156 226 Q144 228 140 214 Z" fill="#2a231d"/>
-        <circle cx="100" cy="100" r="54" fill="#ffd9b0"/>
-        <path d="M48 92 Q46 54 100 50 Q154 54 152 92 Q140 66 100 64 Q60 66 48 92 Z" fill="#241f1a"/>
-        <path d="M46 100 Q42 70 56 54 Q52 78 58 104 Z" fill="#241f1a"/>
-        <path d="M154 100 Q158 70 144 54 Q148 78 142 104 Z" fill="#241f1a"/>
-        <ellipse cx="106" cy="42" rx="34" ry="16" fill="#1c1712"/>
-        <ellipse cx="106" cy="38" rx="30" ry="13" fill="#2a231d"/>
-        <circle cx="132" cy="34" r="4" fill="#1c1712"/>
-        <ellipse cx="80" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <ellipse cx="120" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <circle cx="77" cy="98" r="3.4" fill="#fff"/><circle cx="117" cy="98" r="3.4" fill="#fff"/>
-        <ellipse cx="70" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <ellipse cx="130" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <path d="M92 126 Q100 132 108 126" stroke="#7a5a45" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <g transform="translate(72,196)">
-          <rect x="0" y="10" width="56" height="34" rx="4" fill="#f2ede6"/>
-          <rect x="0" y="0" width="56" height="12" rx="2" fill="#1c1712"/>
-          <rect x="0" y="0" width="10" height="12" fill="#f2ede6"/><rect x="20" y="0" width="10" height="12" fill="#f2ede6"/><rect x="40" y="0" width="10" height="12" fill="#f2ede6"/>
-          <line x1="6" y1="22" x2="50" y2="22" stroke="#d8cfc0" stroke-width="1.5"/>
-          <line x1="6" y1="32" x2="50" y2="32" stroke="#d8cfc0" stroke-width="1.5"/>
-        </g>
-      </svg>
-      <div class="hub-name">Movies</div>
-      <div class="hub-desc">Aggregated YouTube reviews, verdicts, and ratings for new releases.</div>
+      <img class="hub-tile-image" src="assets/tile-movies.jpg" alt="">
+      <div class="hub-tile-body">
+        <div class="hub-name">Movies</div>
+        <div class="hub-desc">Aggregated YouTube reviews, verdicts, and ratings for new releases.</div>
+      </div>
     </a>
 
     <div class="hub-tile disabled">
-      <svg class="hub-mascot" viewBox="0 0 200 260">
-        <defs>
-          <linearGradient id="hairGrad2" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#3b82f6"/>
-          </linearGradient>
-        </defs>
-        <path d="M62 172 Q62 146 100 146 Q138 146 138 172 L144 246 Q144 256 134 256 L66 256 Q56 256 56 246 Z" fill="#2a231d"/>
-        <path d="M80 154 Q100 170 120 154 L120 166 Q100 182 80 166 Z" fill="url(#hairGrad2)"/>
-        <path d="M60 190 Q40 196 36 214 Q34 224 44 226 Q56 228 60 214 Z" fill="#2a231d"/>
-        <path d="M140 190 Q160 196 164 214 Q166 224 156 226 Q144 228 140 214 Z" fill="#2a231d"/>
-        <circle cx="100" cy="100" r="54" fill="#ffd9b0"/>
-        <path d="M46 96 Q42 48 100 46 Q158 48 154 96 Q150 60 100 58 Q50 60 46 96 Z" fill="#3a2f26"/>
-        <path d="M62 56 Q70 40 84 46 Q76 52 62 56 Z" fill="#3a2f26"/>
-        <path d="M138 56 Q130 40 116 46 Q124 52 138 56 Z" fill="#3a2f26"/>
-        <path d="M50 78 Q54 40 100 38 Q146 40 150 78 Q124 62 100 62 Q76 62 50 78 Z" fill="url(#hairGrad2)"/>
-        <path d="M100 62 Q130 62 150 78 Q152 86 140 82 Q120 70 100 70 Z" fill="#2f6ad1"/>
-        <ellipse cx="80" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <ellipse cx="120" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <circle cx="77" cy="98" r="3.4" fill="#fff"/><circle cx="117" cy="98" r="3.4" fill="#fff"/>
-        <ellipse cx="70" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <ellipse cx="130" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <path d="M90 126 Q100 134 110 124" stroke="#7a5a45" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <g transform="translate(72,192)">
-          <circle cx="28" cy="28" r="26" fill="none" stroke="#f2ede6" stroke-width="7"/>
-          <circle cx="28" cy="28" r="8" fill="#f2ede6"/>
-          <line x1="28" y1="10" x2="28" y2="20" stroke="#f2ede6" stroke-width="6"/>
-          <line x1="12" y1="38" x2="20" y2="32" stroke="#f2ede6" stroke-width="6"/>
-          <line x1="44" y1="38" x2="36" y2="32" stroke="#f2ede6" stroke-width="6"/>
-        </g>
-      </svg>
-      <div class="hub-name">Cars</div>
-      <div class="hub-desc">Aggregated reviews for new car launches.</div>
-      <span class="hub-badge">Coming soon</span>
+      <img class="hub-tile-image" src="assets/tile-cars.jpg" alt="">
+      <div class="hub-tile-body">
+        <div class="hub-name">Cars</div>
+        <div class="hub-desc">Aggregated reviews for new car launches.</div>
+        <span class="hub-badge">Coming soon</span>
+      </div>
     </div>
 
     <div class="hub-tile disabled">
-      <svg class="hub-mascot" viewBox="0 0 200 260">
-        <defs>
-          <linearGradient id="hairGrad3" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/>
-          </linearGradient>
-        </defs>
-        <path d="M62 172 Q62 146 100 146 Q138 146 138 172 L144 246 Q144 256 134 256 L66 256 Q56 256 56 246 Z" fill="#2a231d"/>
-        <path d="M84 148 L100 172 L92 190 L74 156 Z" fill="#1c1712"/>
-        <path d="M116 148 L100 172 L108 190 L126 156 Z" fill="#1c1712"/>
-        <path d="M92 152 Q100 164 108 152 L108 160 Q100 172 92 160 Z" fill="url(#hairGrad3)"/>
-        <path d="M60 190 Q40 196 36 214 Q34 224 44 226 Q56 228 60 214 Z" fill="#2a231d"/>
-        <path d="M140 190 Q160 196 164 214 Q166 224 156 226 Q144 228 140 214 Z" fill="#2a231d"/>
-        <circle cx="100" cy="100" r="54" fill="#ffd9b0"/>
-        <path d="M48 90 Q44 48 100 46 Q152 48 152 88 Q138 58 100 56 Q64 58 48 90 Z" fill="#241f1a"/>
-        <path d="M46 98 Q42 66 58 52 Q50 74 56 100 Z" fill="#241f1a"/>
-        <path d="M154 98 Q158 66 142 52 Q150 74 144 100 Z" fill="#241f1a"/>
-        <ellipse cx="80" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <ellipse cx="120" cy="104" rx="10" ry="14" fill="#241f1a"/>
-        <circle cx="77" cy="98" r="3.4" fill="#fff"/><circle cx="117" cy="98" r="3.4" fill="#fff"/>
-        <rect x="66" y="98" width="28" height="14" rx="7" fill="none" stroke="#1c1712" stroke-width="2.4"/>
-        <rect x="106" y="98" width="28" height="14" rx="7" fill="none" stroke="#1c1712" stroke-width="2.4"/>
-        <line x1="94" y1="104" x2="106" y2="104" stroke="#1c1712" stroke-width="2.4"/>
-        <ellipse cx="70" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <ellipse cx="130" cy="120" rx="8" ry="5" fill="#ff8a8a" opacity="0.35"/>
-        <path d="M92 126 Q100 131 108 126" stroke="#7a5a45" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <g transform="translate(66,198)">
-          <rect x="0" y="0" width="68" height="42" rx="4" fill="#f2ede6"/>
-          <polyline points="8,32 22,20 34,26 48,10 60,16" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <polygon points="60,16 60,8 52,12" fill="#10b981"/>
-        </g>
-      </svg>
-      <div class="hub-name">Stocks</div>
-      <div class="hub-desc">Aggregated analyst and creator takes on market moves.</div>
-      <span class="hub-badge">Coming soon</span>
+      <img class="hub-tile-image" src="assets/tile-stocks.jpg" alt="">
+      <div class="hub-tile-body">
+        <div class="hub-name">Stocks</div>
+        <div class="hub-desc">Aggregated analyst and creator takes on market moves.</div>
+        <span class="hub-badge">Coming soon</span>
+      </div>
     </div>
-  </div>
-
-  <div class="hub-footer">
-    <a class="top-admin-link" href="admin-login.html">Admin</a>
   </div>
 </div>
 
