@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ReviewHub — Movie detail</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
   <div class="header">
     <div class="header-top">
       <div style="display:flex; align-items:baseline; gap:14px;">
-        <span class="wordmark">ReviewHub</span>
-        <span class="tagline">Reviews, aggregated.</span>
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Movies &middot; Reviews, aggregated.</span>
       </div>
     </div>
     <a class="back-link" href="index.html">
@@ -46,13 +46,13 @@
   let filterLang = 'All';
 
   function checkIcon() {
-    return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#2f8f5b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#34d399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }
   function crossIcon() {
-    return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="#b3402f" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+    return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="#f87171" stroke-width="1.6" stroke-linecap="round"/></svg>`;
   }
   function playIcon() {
-    return `<svg width="13" height="13" viewBox="0 0 16 16" fill="#262019"><path d="M4 2.5L13 8L4 13.5V2.5Z"/></svg>`;
+    return `<svg width="13" height="13" viewBox="0 0 16 16" fill="#0d0b0a"><path d="M4 2.5L13 8L4 13.5V2.5Z"/></svg>`;
   }
   function externalIcon() {
     return `<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -105,9 +105,9 @@
           <div class="spread-wrap">
             <span class="filter-label">Reviewer spread</span>
             <div class="spread-bar">
-              <div style="width:${pct(c.positive)}%; background:#2f8f5b;"></div>
-              <div style="width:${pct(c.mixed)}%; background:#c98a1c;"></div>
-              <div style="width:${pct(c.negative)}%; background:#b3402f;"></div>
+              <div style="width:${pct(c.positive)}%; background:#34d399;"></div>
+              <div style="width:${pct(c.mixed)}%; background:#fbbf24;"></div>
+              <div style="width:${pct(c.negative)}%; background:#f87171;"></div>
             </div>
             <span class="spread-legend">${c.positive} positive &middot; ${c.mixed} mixed &middot; ${c.negative} negative</span>
           </div>
@@ -169,7 +169,7 @@
               <div class="channel-lang">${x.language}</div>
             </div>
           </div>
-          <div class="thumb" style="background:linear-gradient(135deg, ${x.avatarColor}, #1a1410)">
+          <div class="thumb" style="background:linear-gradient(135deg, ${x.avatarColor}, #1e1912)">
             <div class="play"><div class="play-btn">${playIcon()}</div></div>
           </div>
           <div class="video-meta-row">

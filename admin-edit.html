@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ReviewHub Admin — Edit movie</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -82,12 +82,12 @@
       <div class="form-field">
         <label class="field-label">Paste YouTube review links (one per line)</label>
         <textarea class="textarea" id="links-textarea" rows="4" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.youtube.com/watch?v=..."></textarea>
-        <div id="link-warning" class="field-hint" style="color:#a12e1c;"></div>
+        <div id="link-warning" class="field-hint" style="color:#f88b8b;"></div>
       </div>
       <button class="btn btn-primary btn-sm" id="process-btn" type="button">Add links</button>
       <p class="field-hint" style="margin-top:10px;">No paid transcription/LLM API is used. Each link becomes a row below with real channel/view/subscriber data where available (via Import, next) — watch the video yourself and fill in its verdict, rating, and a one-line quote.</p>
 
-      <div style="margin-top:20px; padding-top:18px; border-top:1px solid #e6ded1;">
+      <div style="margin-top:20px; padding-top:18px; border-top:1px solid #2a231d;">
         <span class="lang-add-toggle" id="import-toggle">+ Import from youtube_reviews.py output</span>
         <div class="lang-add-box" id="import-box" style="flex-direction:column; align-items:stretch;">
           <textarea class="textarea" id="import-textarea" rows="5" placeholder='Paste the JSON output of scripts/youtube_reviews.py here'></textarea>
@@ -414,18 +414,18 @@ document.getElementById('import-toggle').addEventListener('click', () => {
 document.getElementById('import-btn').addEventListener('click', () => {
   const statusEl = document.getElementById('import-status');
   const raw = document.getElementById('import-textarea').value.trim();
-  if (!raw) { statusEl.textContent = 'Paste JSON first.'; statusEl.style.color = '#a12e1c'; return; }
+  if (!raw) { statusEl.textContent = 'Paste JSON first.'; statusEl.style.color = '#f88b8b'; return; }
   let data;
   try {
     data = JSON.parse(raw);
   } catch (e) {
     statusEl.textContent = 'That isn\'t valid JSON.';
-    statusEl.style.color = '#a12e1c';
+    statusEl.style.color = '#f88b8b';
     return;
   }
   if (!Array.isArray(data.videos)) {
     statusEl.textContent = 'No "videos" array found in that JSON.';
-    statusEl.style.color = '#a12e1c';
+    statusEl.style.color = '#f88b8b';
     return;
   }
   if (data.title && !movie.title.trim()) {
@@ -459,7 +459,7 @@ document.getElementById('import-btn').addEventListener('click', () => {
     };
   });
   const result = addLinks(urls, metaByUrl);
-  statusEl.style.color = '#8a8072';
+  statusEl.style.color = '#9b9188';
   statusEl.textContent = `Imported ${result.added} link(s)${result.duplicates ? `, skipped ${result.duplicates} duplicate(s)` : ''}.`;
   document.getElementById('import-textarea').value = '';
   document.getElementById('import-box').classList.remove('open');
@@ -474,7 +474,7 @@ function recalcAggregate() {
   movie.score = doneRatings.length ? +(doneRatings.reduce((a, b) => a + b, 0) / doneRatings.length).toFixed(1) : 0;
   const v = VERDICTS[movie.verdictKey];
   document.getElementById('aggregate-panel').innerHTML = `
-    <div class="aggregate-item"><span class="aggregate-value">${movie.score || '—'}<span style="font-size:13px;color:#8a8072;"> /10</span></span><span class="field-hint">Aggregate score</span></div>
+    <div class="aggregate-item"><span class="aggregate-value">${movie.score || '—'}<span style="font-size:13px;color:#9b9188;"> /10</span></span><span class="field-hint">Aggregate score</span></div>
     <div class="aggregate-item"><span class="aggregate-value" style="display:flex;align-items:center;gap:7px;font-size:16px;"><span class="dot" style="background:${v.color}"></span>${v.label}</span><span class="field-hint">Dominant verdict</span></div>
     <div class="aggregate-item"><span class="aggregate-value">${counts.total} / ${movie.videos.length}</span><span class="field-hint">Reviewed / added</span></div>
     <div class="aggregate-item"><span class="aggregate-value" style="font-size:14px;">${counts.positive} pos &middot; ${counts.mixed} mixed &middot; ${counts.negative} neg</span><span class="field-hint">Spread</span></div>
