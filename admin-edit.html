@@ -169,7 +169,8 @@ if (!idParam || idParam === 'new') {
     synopsis: '', summaryText: '', pros: [''], cons: [''],
     score: 0, verdictKey: 'onetime', reviewCount: 0,
     posterGrad: PLACEHOLDER_GRADIENTS[Math.floor(Math.random() * PLACEHOLDER_GRADIENTS.length)],
-    posterImage: null, status: 'draft', videos: [],
+    posterImage: null, posterUrl: null, bannerUrl: null, trailerId: null,
+    status: 'draft', videos: [],
   };
   document.getElementById('page-title').textContent = 'Add new movie';
 } else {
@@ -228,12 +229,15 @@ function bindLanguageControl() {
 }
 
 // ---- Poster ----
+// Priority: a manually uploaded image wins, then a poster pulled from
+// cinemaip.ai, then the gradient placeholder as a last resort.
 function renderPosterPreview() {
   const box = document.getElementById('poster-preview');
-  document.getElementById('remove-poster-btn').style.display = movie.posterImage ? 'inline-flex' : 'none';
-  if (movie.posterImage) {
+  const imgSrc = movie.posterImage || movie.posterUrl;
+  document.getElementById('remove-poster-btn').style.display = imgSrc ? 'inline-flex' : 'none';
+  if (imgSrc) {
     box.style.background = 'transparent';
-    box.innerHTML = `<img src="${movie.posterImage}" alt="">`;
+    box.innerHTML = `<img src="${escAttr(imgSrc)}" alt="">`;
   } else {
     box.style.background = movie.posterGrad;
     box.innerHTML = `<span class="initial">${escHtml((movie.title || '?').charAt(0))}</span>`;
@@ -262,6 +266,7 @@ function bindPosterControl() {
   });
   document.getElementById('remove-poster-btn').addEventListener('click', () => {
     movie.posterImage = null;
+    movie.posterUrl = null;
     document.getElementById('poster-input').value = '';
     renderPosterPreview();
   });
@@ -441,11 +446,21 @@ document.getElementById('import-btn').addEventListener('click', () => {
     movie.releaseDate = data.releaseDate;
     document.getElementById('date-input').value = data.releaseDate;
   }
+  if (data.synopsis && !movie.synopsis.trim()) {
+    movie.synopsis = data.synopsis;
+    document.getElementById('synopsis-input').value = data.synopsis;
+  }
   if (data.language) {
     addLanguage(data.language);
     movie.language = data.language;
     renderLanguageSelect();
   }
+  if (data.posterUrl && !movie.posterImage) {
+    movie.posterUrl = data.posterUrl;
+    renderPosterPreview();
+  }
+  if (data.bannerUrl) movie.bannerUrl = data.bannerUrl;
+  if (data.trailerId) movie.trailerId = data.trailerId;
   const urls = data.videos.map((v) => v.url).filter(Boolean);
   const metaByUrl = {};
   data.videos.forEach((v) => {

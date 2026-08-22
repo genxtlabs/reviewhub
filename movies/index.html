@@ -54,10 +54,11 @@
   }
 
   function posterMarkup(movie) {
-    if (movie.posterImage) {
+    const imgSrc = movie.posterImage || movie.posterUrl;
+    if (imgSrc) {
       return `
         <div class="poster">
-          <img src="${movie.posterImage}" alt="" style="width:100%; height:100%; object-fit:cover;">
+          <img src="${imgSrc}" alt="" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
           <span class="lang-tag">${movie.language}</span>
         </div>`;
     }
