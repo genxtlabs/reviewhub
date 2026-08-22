@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReviewHub Admin — Site Images</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero-preview { width: 100%; aspect-ratio: 21/9; border-radius: 8px; overflow: hidden; position: relative; background: var(--bg-elevated-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .hero-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-preview .empty { font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px; }
+  .hero-source-tag { position: absolute; top: 10px; left: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; padding: 3px 9px; border-radius: 100px; background: rgba(13,11,10,0.6); color: #fff; }
+  .vertical-card { padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .vertical-card:last-child { border-bottom: none; }
+  .vertical-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .vertical-card-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; }
+</style>
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="wordmark">ReviewHub</span>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="admin-header-right">
+      <a class="top-admin-link" href="admin.html">← Movies</a>
+      <a class="top-admin-link" href="movies/index.html" target="_blank">View Movies site ↗</a>
+    </div>
+  </div>
+
+  <div class="section-heading" style="padding-top:8px;">
+    <h1>Site images</h1>
+  </div>
+  <p class="muted" style="margin:-12px 0 24px 0;">Upload a new hero photo for each vertical's page whenever you want to refresh it — no code changes needed. Changes apply the moment you save, for anyone browsing on this device.</p>
+
+  <div class="card-box" style="padding:0 28px;">
+    <div class="vertical-card">
+      <div class="vertical-card-head">
+        <span class="vertical-card-title">Movies — page hero</span>
+        <span class="field-hint" id="movies-hero-status" style="margin-top:0;"></span>
+      </div>
+      <div class="hero-preview" id="movies-hero-preview"></div>
+      <div style="display:flex; gap:10px; align-items:center; margin-top:14px;">
+        <input type="file" id="movies-hero-input" accept="image/*">
+        <button class="btn btn-secondary btn-sm" id="movies-hero-reset" type="button">Reset to default</button>
+      </div>
+      <p class="field-hint">Recommended: a wide landscape photo (at least 1200px wide). It's resized automatically.</p>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="store.js"></script>
+<script>
+requireLogin();
+
+const DEFAULT_MOVIES_HERO = 'assets/movies-hero.jpg';
+
+function renderMoviesHero() {
+  const custom = getHeroImage('movies');
+  const preview = document.getElementById('movies-hero-preview');
+  const status = document.getElementById('movies-hero-status');
+  const src = custom || DEFAULT_MOVIES_HERO;
+  preview.innerHTML = `<img src="${src}" alt=""><span class="hero-source-tag">${custom ? 'Custom' : 'Default'}</span>`;
+  status.textContent = custom ? 'Using your uploaded image' : 'Using the built-in default';
+}
+
+document.getElementById('movies-hero-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 1600;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      setHeroImage('movies', dataUrl);
+      renderMoviesHero();
+      document.getElementById('movies-hero-input').value = '';
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('movies-hero-reset').addEventListener('click', () => {
+  clearHeroImage('movies');
+  renderMoviesHero();
+});
+
+renderMoviesHero();
+</script>
+</body>
+</html>

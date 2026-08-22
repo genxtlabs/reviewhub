@@ -92,6 +92,41 @@ function addLanguage(name) {
   return langs;
 }
 
+const HERO_KEY = 'reviewhub_hero_images_v1';
+
+// One custom hero image per vertical (e.g. "movies"), base64 data URL.
+// Falls back to null (caller uses the shipped default asset) if never set.
+function getHeroImage(vertical) {
+  const raw = localStorage.getItem(HERO_KEY);
+  if (!raw) return null;
+  try {
+    const map = JSON.parse(raw);
+    return map[vertical] || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setHeroImage(vertical, dataUrl) {
+  const raw = localStorage.getItem(HERO_KEY);
+  let map = {};
+  if (raw) {
+    try { map = JSON.parse(raw); } catch (e) { map = {}; }
+  }
+  map[vertical] = dataUrl;
+  localStorage.setItem(HERO_KEY, JSON.stringify(map));
+}
+
+function clearHeroImage(vertical) {
+  const raw = localStorage.getItem(HERO_KEY);
+  if (!raw) return;
+  try {
+    const map = JSON.parse(raw);
+    delete map[vertical];
+    localStorage.setItem(HERO_KEY, JSON.stringify(map));
+  } catch (e) { /* ignore */ }
+}
+
 function isLoggedIn() {
   return sessionStorage.getItem(AUTH_KEY) === '1';
 }

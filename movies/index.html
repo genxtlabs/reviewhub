@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="vhero" style="--vaccent:#a78bfa; background-image:url('../assets/movies-hero.jpg');">
+<div class="vhero" id="movies-vhero" style="--vaccent:#a78bfa; background-image:url('../assets/movies-hero.jpg');">
   <div class="vhero-nav">
     <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
     <a class="top-admin-link" href="../admin-login.html">Admin</a>
@@ -100,7 +100,15 @@
     }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published movies match this filter yet.</div>`;
   }
 
+  function applyCustomHero() {
+    const custom = getHeroImage('movies');
+    if (custom) {
+      document.getElementById('movies-vhero').style.backgroundImage = `url('${custom}')`;
+    }
+  }
+
   function render() {
+    applyCustomHero();
     renderFilters();
     renderGrid();
   }
