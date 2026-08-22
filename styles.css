@@ -379,3 +379,15 @@ a.hub-tile.active:hover { transform: translateY(-4px); box-shadow: 0 20px 44px r
 .hub-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
 .hub-tile.disabled .hub-desc { color: var(--text-faint); }
 .hub-badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: var(--text-faint); border: 1px solid var(--border); padding: 2px 8px; border-radius: 100px; width: fit-content; margin-top: 2px; }
+
+/* ---- Vertical hero (movies/index.html and future verticals) ---- */
+.vhero { position: relative; min-height: 320px; display: flex; flex-direction: column; background-size: cover; background-position: center 22%; overflow: hidden; }
+.vhero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,11,10,0.25) 0%, rgba(13,11,10,0.55) 55%, var(--bg) 100%); }
+.vhero-nav { position: relative; z-index: 1; max-width: 1360px; width: 100%; margin: 0 auto; padding: 28px 40px 0 40px; display: flex; align-items: center; justify-content: space-between; }
+.vhero-nav .wordmark { text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.vhero-nav .top-admin-link { text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.vhero-content { position: relative; z-index: 1; max-width: 1360px; width: 100%; margin: 0 auto; padding: 40px 40px 36px 40px; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end; }
+.vhero-eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.vhero-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 38px; color: #fff; margin: 0 0 10px 0; text-shadow: 0 4px 24px rgba(0,0,0,0.65); }
+.vhero-title .accent { color: var(--vaccent, #a78bfa); }
+.vhero-sub { font-size: 14.5px; color: var(--text-secondary); max-width: 480px; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
