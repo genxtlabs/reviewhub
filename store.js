@@ -14,7 +14,10 @@ function uid() {
 
 function seedStore() {
   const seeded = MOVIES.map((m) => {
-    const videos = generateVideosForMovie(m).map((v, i) => ({
+    // Movies with real videos already attached (pulled from cinemaip.ai) keep
+    // them as-is; the original 9 demo movies get the simulated generator.
+    const rawVideos = (m.videos && m.videos.length) ? m.videos : generateVideosForMovie(m);
+    const videos = rawVideos.map((v, i) => ({
       id: uid(),
       url: `https://www.youtube.com/watch?v=seed-${m.id}-${i}`,
       ...v,
@@ -24,7 +27,7 @@ function seedStore() {
       ...m,
       posterImage: null,
       status: 'published',
-      summaryText: buildSummaryText(m, counts),
+      summaryText: m.summaryText || buildSummaryText(m, counts),
       videos,
     };
   });
