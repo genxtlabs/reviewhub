@@ -14,7 +14,9 @@ function uid() {
 
 // Movies with real videos already attached (pulled from cinemaip.ai) keep
 // them as-is; the original 9 demo movies get the simulated generator.
-function seedOneMovie(m) {
+// `existing` is this movie's previously-cached copy, if any — its admin-set
+// posterImage/summaryText survive a refresh instead of being wiped back to defaults.
+function seedOneMovie(m, existing) {
   const rawVideos = (m.videos && m.videos.length) ? m.videos : generateVideosForMovie(m);
   const videos = rawVideos.map((v, i) => ({
     id: uid(),
@@ -24,11 +26,15 @@ function seedOneMovie(m) {
   const counts = countVerdicts(videos);
   return {
     ...m,
-    posterImage: null,
+    posterImage: (existing && existing.posterImage) || null,
     status: 'published',
-    summaryText: m.summaryText || buildSummaryText(m, counts),
+    summaryText: (existing && existing.summaryText) || m.summaryText || buildSummaryText(m, counts),
     videos,
   };
+}
+
+function reviewedVideoCount(m) {
+  return (m.videos || []).filter((v) => v.verdictKey).length;
 }
 
 function seedStore() {
@@ -43,15 +49,31 @@ function seedStore() {
 const RETIRED_DEMO_IDS = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 // A returning visitor's localStorage was seeded before new movies were added
-// to data.js's MOVIES list (or before the old demo movies were retired) —
-// reconcile it: drop retired demo movies, append whichever real ones are
-// missing (by id), without touching anything else they've published/edited.
+// to data.js's MOVIES list (or before the old demo movies were retired, or
+// before a since-cached movie had its reviews written) — reconcile it: drop
+// retired demo movies, refresh any cached movie that data.js has since gained
+// more reviews for, and append whichever real ones are missing entirely (by
+// id), without touching anything else they've published/edited.
 function migrateNewSeedMovies(existing) {
   const withoutDemo = existing.filter((m) => !RETIRED_DEMO_IDS.has(Number(m.id)));
+  const sourceById = new Map(MOVIES.map((m) => [String(m.id), m]));
   const existingIds = new Set(withoutDemo.map((m) => String(m.id)));
+
+  let changed = withoutDemo.length !== existing.length;
+  const refreshed = withoutDemo.map((m) => {
+    const src = sourceById.get(String(m.id));
+    if (src && reviewedVideoCount(src) > reviewedVideoCount(m)) {
+      changed = true;
+      return seedOneMovie(src, m);
+    }
+    return m;
+  });
+
   const missing = MOVIES.filter((m) => !existingIds.has(String(m.id)));
-  if (withoutDemo.length === existing.length && !missing.length) return existing;
-  const merged = [...withoutDemo, ...missing.map(seedOneMovie)];
+  if (missing.length) changed = true;
+
+  if (!changed) return existing;
+  const merged = [...refreshed, ...missing.map((m) => seedOneMovie(m))];
   saveMovies(merged);
   return merged;
 }
