@@ -74,9 +74,15 @@
       </div>`;
   }
 
+  const MONTHS = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+  function parseReleaseDate(str) {
+    const [day, mon, year] = (str || '').split(' ');
+    return new Date(Number(year), MONTHS[mon] ?? 0, Number(day));
+  }
+
   function renderGrid() {
     const grid = document.getElementById('movie-grid');
-    const allMovies = getPublishedMovies();
+    const allMovies = getPublishedMovies().slice().sort((a, b) => parseReleaseDate(b.releaseDate) - parseReleaseDate(a.releaseDate));
     const list = filterLang === 'All' ? allMovies : allMovies.filter((m) => m.language === filterLang);
     document.getElementById('results-label').textContent = `${list.length} of ${allMovies.length} releases`;
 
