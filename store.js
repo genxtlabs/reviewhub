@@ -4,7 +4,10 @@
 // admin pages and the public site (index.html / movie.html) must be opened from
 // the same browser profile to see each other's data. Depends on data.js.
 
-const STORE_KEY = 'reviewhub_movies_v1';
+// Bumped to v2 when movie ids were renumbered from the legacy 10-28 range
+// down to 1-19 — any v1 cache would otherwise carry forward orphaned
+// entries under the old ids alongside the same movies under their new ids.
+const STORE_KEY = 'reviewhub_movies_v2';
 const LANG_KEY = 'reviewhub_languages_v1';
 const AUTH_KEY = 'reviewhub_admin_session';
 
@@ -43,24 +46,17 @@ function seedStore() {
   return seeded;
 }
 
-// ids 1-9 were the original placeholder/demo movies (fictional titles,
-// gradient posters) — retired once real movies replaced them. Strip them
-// out of any browser that still has them cached from before.
-const RETIRED_DEMO_IDS = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
 // A returning visitor's localStorage was seeded before new movies were added
-// to data.js's MOVIES list (or before the old demo movies were retired, or
-// before a since-cached movie had its reviews written) — reconcile it: drop
-// retired demo movies, refresh any cached movie that data.js has since gained
-// more reviews for, and append whichever real ones are missing entirely (by
-// id), without touching anything else they've published/edited.
+// to data.js's MOVIES list (or before a since-cached movie had its reviews
+// written) — reconcile it: refresh any cached movie that data.js has since
+// gained more reviews for, and append whichever real ones are missing
+// entirely (by id), without touching anything else they've published/edited.
 function migrateNewSeedMovies(existing) {
-  const withoutDemo = existing.filter((m) => !RETIRED_DEMO_IDS.has(Number(m.id)));
   const sourceById = new Map(MOVIES.map((m) => [String(m.id), m]));
-  const existingIds = new Set(withoutDemo.map((m) => String(m.id)));
+  const existingIds = new Set(existing.map((m) => String(m.id)));
 
-  let changed = withoutDemo.length !== existing.length;
-  const refreshed = withoutDemo.map((m) => {
+  let changed = false;
+  const refreshed = existing.map((m) => {
     const src = sourceById.get(String(m.id));
     if (src && reviewedVideoCount(src) > reviewedVideoCount(m)) {
       changed = true;
