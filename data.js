@@ -447,10 +447,10 @@ const CAR_ASPECTS = [
 ];
 
 const CARS = [
-  { id: 1, title: "Tata Sierra EV", brand: "Tata", fuelType: "Electric", priceRange: "₹18.79L - ₹25.79L", launchDate: "30 Jun 2026", score: 7.4, reviewCount: 14, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#155e63,#0b3335)",
+  { id: 1, title: "Tata Sierra EV", brand: "Tata", fuelType: "Electric", priceRange: "₹18.79L - ₹25.79L", launchDate: "30 Jun 2026", score: 7.4, reviewCount: 15, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#155e63,#0b3335)",
     posterUrl: "https://img.youtube.com/vi/mFJgqAwZoPA/maxresdefault.jpg", bannerUrl: "https://img.youtube.com/vi/mFJgqAwZoPA/maxresdefault.jpg", trailerId: "mFJgqAwZoPA",
     synopsis: "Tata's mid-size electric SUV built on the revived Sierra nameplate, offered with rear-wheel or all-wheel-drive (QWD) layouts and a choice of 63kWh or 75kWh battery packs, for buyers who want the Sierra experience without a petrol or diesel engine.",
-    aspectScores: { looks: 8.5, performance: 8, comfort: 7, efficiency: 7, features: 9, value: 7 },
+    aspectScores: { looks: 8.5, performance: 8, comfort: 7, efficiency: 7, features: 9, value: 6.5 },
     pros: [
       "Bold, distinctive design with genuinely practical proportions - 622-liter boot and a spacious cabin",
       "Strong, confident performance: 5.8-second 0-100 acceleration and genuinely capable all-wheel-drive off-roading",
@@ -458,10 +458,11 @@ const CARS = [
       "Real owners report genuine satisfaction, backed by Tata's 15-year unlimited-km battery warranty"
     ],
     cons: [
-      "Real-world range (420-510km depending on battery) consistently falls short of the claimed 565-665km figures",
+      "Real-world range (420-530km depending on battery) consistently falls short of the claimed 535-665km figures",
       "Ride and dynamic feel draw real criticism from at least one detailed review - busy rear suspension, audible motor whine, and a chassis some call disconnected",
       "Pricing overlaps uncomfortably with the larger Harrier EV, and several reviewers wanted a more aggressive starting price",
-      "Fit-and-finish inconsistencies reported across multiple review units - panel gaps, an off-center steering wheel, and one owner-reported tyre alignment issue"
+      "Fit-and-finish inconsistencies reported across multiple review units - panel gaps, an off-center steering wheel, and one owner-reported tyre alignment issue",
+      "No spare wheel is provided at all, and all-wheel-drive (QWD) is locked to a single, most expensive top variant"
     ],
     videos: [
       { url: "https://www.youtube.com/watch?v=mFJgqAwZoPA", channel: "Autocar India", avatarColor: "#155e63", language: "English", verdictKey: 'must', rating: "8.5/10", quote: "A detailed, largely glowing First Drive praising the design, spacious 622-liter boot, genuine off-road capability, and Google Maps EV-route integration, while flagging cluttered infotainment graphics, a crooked steering wheel, and an awkwardly-timed powered tailgate. Bottom line: 'An absolute triumph' that beats its own Harrier EV sibling on balance, price aside.", viewCount: 211083, subscriberCount: 2540000, matchedBy: ["views", "subscribers"] },
@@ -478,6 +479,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=SxacOy2tHwk", channel: "MEHER GEAR HEAD", avatarColor: "#57534e", language: "Telugu", verdictKey: 'good', rating: "7/10", quote: "An off-road-focused test that clears steep inclines and log hurdles easily thanks to 504Nm of instant torque, calling the ride the most comfortable it's tested. Flags that pricing overlaps confusingly with the Harrier and Safari at the showroom. Bottom line: A capable, comfortable SUV, if you can look past the sibling rivalry.", viewCount: 68930, subscriberCount: 202000, matchedBy: ["curated"] },
       { url: "https://www.youtube.com/watch?v=btX56MV_OMk", channel: "Vebtorque Motors", avatarColor: "#92400e", language: "Hindi", verdictKey: 'must', rating: "8/10", quote: "Makes a specific, confident case for the mid-tier Adventure variant at ₹21-22.19 lakh, citing its panoramic sunroof, Dolby Atmos sound, and full safety suite as making it 'one of the most value for money' options in the segment. Bottom line: Skip the top-end model - this is the smart buy.", viewCount: 1455, subscriberCount: 5160, matchedBy: ["curated"] },
       { url: "https://www.youtube.com/watch?v=7DZZ2Ec_XXU", channel: "Tech Explorer 31", avatarColor: "#9d174d", language: "English", verdictKey: 'good', rating: "7/10", quote: "A structured variant-by-variant comparison across the 5-trim lineup, honestly noting that real-world highway range will run below the claimed test-cycle figures. Bottom line: A genuinely useful buying guide - the 75kWh Adventure variant emerges as the smartest all-round pick.", viewCount: 9283, subscriberCount: 2960, matchedBy: ["curated"] },
+      { url: "https://www.team-bhp.com/forum/electric-cars/310365-tata-sierra-ev-review.html", channel: "Team-BHP", avatarColor: "#a16207", language: "English", verdictKey: 'good', rating: "7/10", quote: "A detailed, professional Team-BHP forum review praising the striking design, all-wheel-drive performance, spacious 622-litre boot, and extensive feature and safety list, while flagging sub-par fit-and-finish, a firmer low-speed ride than the ICE Sierra, and the surprising absence of any spare wheel. Bottom line: A well-rounded, feature-rich EV let down by real-world execution details Tata still needs to iron out.", viewCount: 149389, subscriberCount: 0, matchedBy: ["curated"] },
     ] },
 ];
 
