@@ -448,7 +448,7 @@ const CAR_ASPECTS = [
 
 const CARS = [
   { id: 1, title: "Tata Sierra EV", brand: "Tata", fuelType: "Electric", priceRange: "₹18.79L - ₹25.79L", launchDate: "30 Jun 2026", score: 7.4, reviewCount: 14, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#155e63,#0b3335)",
-    posterUrl: "https://img.youtube.com/vi/mFJgqAwZoPA/maxresdefault.jpg", bannerUrl: "https://img.youtube.com/vi/mFJgqAwZoPA/maxresdefault.jpg", trailerId: "mFJgqAwZoPA",
+    posterUrl: "/assets/cars/tata-sierra-ev.jpg", bannerUrl: "/assets/cars/tata-sierra-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/tata-sierra-ev-brochure.pdf",
     synopsis: "Tata's mid-size electric SUV built on the revived Sierra nameplate, offered with rear-wheel or all-wheel-drive (QWD) layouts and a choice of 63kWh or 75kWh battery packs, for buyers who want the Sierra experience without a petrol or diesel engine.",
     aspectScores: { looks: 8.5, performance: 8, comfort: 7, efficiency: 7, features: 9, value: 6.5 },
     pros: [

@@ -74,9 +74,16 @@ def render(page, entry, out_path, entry_type="movie"):
         eyebrow = f"{entry['industry']} &middot; {entry['language']} &middot; Now in Theatres"
         verdict_label = MOVIE_VERDICT_LABELS[entry["verdictKey"]]
 
+    poster_url = entry.get("bannerUrl") or entry.get("posterUrl") or ""
+    if poster_url.startswith("/"):
+        # Root-relative site path (e.g. "/assets/cars/x.jpg") - resolve against
+        # the repo root as a real file:// path, since this renders standalone
+        # via file://, not through the site's actual HTTP root.
+        poster_url = f"file://{ROOT / poster_url.lstrip('/')}"
+
     html = TEMPLATE_PATH.read_text(encoding="utf-8")
     replacements = {
-        "POSTER_URL": entry.get("bannerUrl") or entry.get("posterUrl") or "",
+        "POSTER_URL": poster_url,
         "EYEBROW_TEXT": eyebrow,
         "TITLE_TEXT": entry["title"],
         "SCORE_TEXT": str(entry["score"]),
