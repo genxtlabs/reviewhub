@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>ReviewHub — Movie release aggregator</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
@@ -12,7 +13,10 @@
 <div class="vhero" id="movies-vhero" style="--vaccent:#a78bfa; background-image:url('../assets/movies-hero.jpg');">
   <div class="vhero-nav">
     <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
-    <a class="top-admin-link" href="../admin-login.html">Admin</a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <a href="best-rated.html" class="top-admin-link">Best Rated</a>
+      <a class="top-admin-link" href="../admin-login.html">Admin</a>
+    </div>
   </div>
   <div class="vhero-content">
     <div class="vhero-eyebrow" style="color:var(--vaccent);">Movies</div>
@@ -23,8 +27,22 @@
 
 <div class="wrap">
   <div class="filter-row" style="padding-top:28px;">
+    <input type="text" id="search-input" class="search-input" placeholder="Search movies by title&hellip;" autocomplete="off">
+  </div>
+
+  <div class="filter-row" style="padding-top:16px;">
     <span class="filter-label">Language</span>
     <div class="chip-row" id="lang-filter"></div>
+  </div>
+
+  <div class="filter-row" style="padding-top:14px;">
+    <span class="filter-label">Industry</span>
+    <div class="chip-row" id="industry-filter"></div>
+  </div>
+
+  <div class="filter-row" style="padding-top:14px;">
+    <span class="filter-label">Sort by</span>
+    <div class="chip-row" id="sort-filter"></div>
   </div>
 
   <div class="section-heading">
@@ -39,17 +57,45 @@
 <script src="../store.js"></script>
 <script>
   let filterLang = 'All';
+  let filterIndustry = 'All';
+  let searchQuery = '';
+  let sortBy = 'newest';
+  const SORT_OPTIONS = [
+    { key: 'newest', label: 'Newest' },
+    { key: 'score', label: 'Highest Rated' },
+  ];
 
   function renderFilters() {
     const langs = ['All', ...getLanguages()];
-    const el = document.getElementById('lang-filter');
-    el.innerHTML = '';
+    const langEl = document.getElementById('lang-filter');
+    langEl.innerHTML = '';
     langs.forEach((lang) => {
       const chip = document.createElement('button');
       chip.className = 'chip' + (lang === filterLang ? ' active' : '');
       chip.textContent = lang;
       chip.onclick = () => { filterLang = lang; render(); };
-      el.appendChild(chip);
+      langEl.appendChild(chip);
+    });
+
+    const industries = ['All', ...Array.from(new Set(getPublishedMovies().map((m) => m.industry))).sort()];
+    const indEl = document.getElementById('industry-filter');
+    indEl.innerHTML = '';
+    industries.forEach((ind) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (ind === filterIndustry ? ' active' : '');
+      chip.textContent = ind;
+      chip.onclick = () => { filterIndustry = ind; render(); };
+      indEl.appendChild(chip);
+    });
+
+    const sortEl = document.getElementById('sort-filter');
+    sortEl.innerHTML = '';
+    SORT_OPTIONS.forEach((opt) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (opt.key === sortBy ? ' active' : '');
+      chip.textContent = opt.label;
+      chip.onclick = () => { sortBy = opt.key; render(); };
+      sortEl.appendChild(chip);
     });
   }
 
@@ -82,8 +128,18 @@
 
   function renderGrid() {
     const grid = document.getElementById('movie-grid');
-    const allMovies = getPublishedMovies().slice().sort((a, b) => parseReleaseDate(b.releaseDate) - parseReleaseDate(a.releaseDate));
-    const list = filterLang === 'All' ? allMovies : allMovies.filter((m) => m.language === filterLang);
+    const allMovies = getPublishedMovies();
+    let list = allMovies;
+    if (filterLang !== 'All') list = list.filter((m) => m.language === filterLang);
+    if (filterIndustry !== 'All') list = list.filter((m) => m.industry === filterIndustry);
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((m) => m.title.toLowerCase().includes(q));
+    }
+    list = list.slice().sort((a, b) => {
+      if (sortBy === 'score') return b.score - a.score;
+      return parseReleaseDate(b.releaseDate) - parseReleaseDate(a.releaseDate);
+    });
     document.getElementById('results-label').textContent = `${list.length} of ${allMovies.length} releases`;
 
     grid.innerHTML = list.map((m) => {
@@ -119,6 +175,11 @@
     renderFilters();
     renderGrid();
   }
+
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderGrid();
+  });
 
   render();
 </script>
