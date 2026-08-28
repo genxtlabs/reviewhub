@@ -36,6 +36,8 @@ EXCLUDE_KEYWORDS = [
 REQUIRE_KEYWORDS = [
     "review", "public talk", "talk", "verdict", "rating", "reaction",
     "genuine", "hit or flop", "hit or miss",
+    # Car-review title patterns that don't necessarily say "review" outright.
+    "first drive", "test drive", "road test", "walkaround", "walk around",
 ]
 
 
@@ -74,10 +76,10 @@ def is_relevant(title, video_title):
     return True
 
 
-def search_candidates(title, region, pool_size, api_key):
+def search_candidates(title, region, pool_size, api_key, query_suffix="movie review"):
     items = []
     page_token = None
-    query = f"{title} movie review"
+    query = f"{title} {query_suffix}"
     while len(items) < pool_size:
         params = {
             "part": "snippet",
@@ -118,11 +120,11 @@ def fetch_channel_stats(channel_ids, api_key):
     return out
 
 
-def find_reviews(title, language="", industry="", release_date="", region="IN", pool_size=40, api_key=None):
+def find_reviews(title, language="", industry="", release_date="", region="IN", pool_size=40, api_key=None, query_suffix="movie review"):
     """Returns the same JSON-shaped dict youtube_reviews.py used to print."""
     api_key = api_key or get_api_key()
 
-    candidates = search_candidates(title, region, pool_size, api_key)
+    candidates = search_candidates(title, region, pool_size, api_key, query_suffix=query_suffix)
     video_ids = [c["id"]["videoId"] for c in candidates if c.get("id", {}).get("videoId")]
     if not video_ids:
         return {
