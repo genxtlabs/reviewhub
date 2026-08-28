@@ -61,6 +61,10 @@
   function externalIcon() {
     return `<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }
+  function youtubeThumb(url) {
+    const m = (url || '').match(/(?:v=|youtu\.be\/)([\w-]{11})/);
+    return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : null;
+  }
 
   function counts(list) {
     const positive = list.filter((x) => x.verdictKey === 'must' || x.verdictKey === 'good').length;
@@ -221,7 +225,7 @@
               <div class="channel-lang">${x.language}</div>
             </div>
           </div>
-          <div class="thumb" style="background:linear-gradient(135deg, ${x.avatarColor}, #1e1912)">
+          <div class="thumb" style="background:${youtubeThumb(x.url) ? `#000 url('${youtubeThumb(x.url)}') center/cover` : `linear-gradient(135deg, ${x.avatarColor}, #1e1912)`}">
             <div class="play"><div class="play-btn">${/youtube\.com|youtu\.be/.test(x.url || '') ? playIcon() : docIcon()}</div></div>
           </div>
           <div class="video-meta-row">
