@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Generate a branded Instagram post image for one or more ReviewHub movies.
+"""Generate a branded Instagram post image for one or more ReviewHub movies or cars.
 
 Usage:
-    python3 scripts/generate_ig_post.py <movie_id> [<movie_id> ...]
-    python3 scripts/generate_ig_post.py --all-missing   # every movie with no existing post
+    python3 scripts/generate_ig_post.py <id> [<id> ...]              # movies (default)
+    python3 scripts/generate_ig_post.py --type car <id> [<id> ...]   # cars
+    python3 scripts/generate_ig_post.py --all-missing [--type car]   # every entry with no post yet
 
 Requires: pip install playwright && playwright install chromium
 Output: social-posts/<id>-<slug>.jpg (1080x1350, Instagram portrait feed format)
@@ -36,14 +37,20 @@ def slugify(title):
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", title.lower())).strip("-")
 
 
-def pick_pull_quote(movie):
-    """Prefer the highest-rated review matching the movie's own dominant verdict;
+MOVIE_VERDICT_LABELS = {"must": "Must Watch", "good": "Good Watch", "onetime": "One-Time Watch",
+                         "wait": "Wait for OTT", "skip": "Skip"}
+CAR_VERDICT_LABELS = {"must": "Must Buy", "good": "Good Buy", "onetime": "Decent Pick",
+                       "wait": "Wait & Watch", "skip": "Skip"}
+
+
+def pick_pull_quote(entry):
+    """Prefer the highest-rated review matching the entry's own dominant verdict;
     fall back to the highest-rated review overall. Extract just the 'Bottom line'
     sentence — those are already written as short, punchy pull-quotes."""
-    videos = [v for v in movie["videos"] if v.get("verdictKey") and v.get("quote")]
+    videos = [v for v in entry["videos"] if v.get("verdictKey") and v.get("quote")]
     if not videos:
         return None
-    same_verdict = [v for v in videos if v["verdictKey"] == movie["verdictKey"]]
+    same_verdict = [v for v in videos if v["verdictKey"] == entry["verdictKey"]]
     pool = same_verdict or videos
     pool.sort(key=lambda v: float(str(v["rating"]).split("/")[0] or 0), reverse=True)
     quote = pool[0]["quote"]
@@ -53,27 +60,33 @@ def pick_pull_quote(movie):
     return text.rstrip(".") + "."
 
 
-def render(page, movie, out_path):
-    style = VERDICT_STYLE[movie["verdictKey"]]
-    quote = pick_pull_quote(movie)
+def render(page, entry, out_path, entry_type="movie"):
+    style = VERDICT_STYLE[entry["verdictKey"]]
+    quote = pick_pull_quote(entry)
     if not quote:
-        print(f"  skipping id {movie['id']} ({movie['title']}): no reviewed videos yet")
+        print(f"  skipping id {entry['id']} ({entry['title']}): no reviewed videos yet")
         return False
+
+    if entry_type == "car":
+        eyebrow = f"{entry['brand']} &middot; {entry['fuelType']} &middot; {entry['priceRange']}"
+        verdict_label = CAR_VERDICT_LABELS[entry["verdictKey"]]
+    else:
+        eyebrow = f"{entry['industry']} &middot; {entry['language']} &middot; Now in Theatres"
+        verdict_label = MOVIE_VERDICT_LABELS[entry["verdictKey"]]
 
     html = TEMPLATE_PATH.read_text(encoding="utf-8")
     replacements = {
-        "POSTER_URL": movie.get("bannerUrl") or movie.get("posterUrl") or "",
-        "EYEBROW_TEXT": f"{movie['industry']} &middot; {movie['language']} &middot; Now in Theatres",
-        "TITLE_TEXT": movie["title"],
-        "SCORE_TEXT": str(movie["score"]),
+        "POSTER_URL": entry.get("bannerUrl") or entry.get("posterUrl") or "",
+        "EYEBROW_TEXT": eyebrow,
+        "TITLE_TEXT": entry["title"],
+        "SCORE_TEXT": str(entry["score"]),
         "VERDICT_COLOR": style["color"],
         "VERDICT_BG": style["bg"],
         "VERDICT_BORDER": style["border"],
         "VERDICT_TEXT_COLOR": style["text"],
-        "VERDICT_LABEL": {"must": "Must Watch", "good": "Good Watch", "onetime": "One-Time Watch",
-                           "wait": "Wait for OTT", "skip": "Skip"}[movie["verdictKey"]],
+        "VERDICT_LABEL": verdict_label,
         "QUOTE_TEXT": quote,
-        "REVIEW_COUNT": str(movie["reviewCount"]),
+        "REVIEW_COUNT": str(entry["reviewCount"]),
     }
     for k, v in replacements.items():
         html = html.replace(k, v)
@@ -90,11 +103,13 @@ def render(page, movie, out_path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("movie_ids", nargs="*", help="Movie ids to render")
-    ap.add_argument("--all-missing", action="store_true", help="Render every movie that has no post yet")
+    ap.add_argument("ids", nargs="*", help="Movie or car ids to render")
+    ap.add_argument("--type", choices=["movie", "car"], default="movie", help="Which vertical (default: movie)")
+    ap.add_argument("--all-missing", action="store_true", help="Render every entry that has no post yet")
     args = ap.parse_args()
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+    js_array_name = "CARS" if args.type == "car" else "MOVIES"
 
     with sync_playwright() as p:
         browser = p.chromium.launch()
@@ -102,24 +117,24 @@ def main():
 
         page.goto("about:blank")
         page.add_script_tag(path=str(ROOT / "data.js"))
-        all_movies = page.evaluate("() => MOVIES")
+        all_entries = page.evaluate(f"() => {js_array_name}")
 
         if args.all_missing:
-            targets = [m["id"] for m in all_movies
-                       if not any(f.name.startswith(f"{m['id']}-") for f in OUTPUT_DIR.glob("*.jpg"))]
+            targets = [e["id"] for e in all_entries
+                       if not any(f.name.startswith(f"{e['id']}-") for f in OUTPUT_DIR.glob("*.jpg"))]
         else:
-            if not args.movie_ids:
-                ap.error("pass movie ids, or --all-missing")
-            targets = args.movie_ids
+            if not args.ids:
+                ap.error("pass ids, or --all-missing")
+            targets = args.ids
 
-        for movie_id in targets:
-            movie = next((m for m in all_movies if str(m["id"]) == str(movie_id)), None)
-            if not movie:
-                print(f"  no movie with id {movie_id}, skipping")
+        for entry_id in targets:
+            entry = next((e for e in all_entries if str(e["id"]) == str(entry_id)), None)
+            if not entry:
+                print(f"  no {args.type} with id {entry_id}, skipping")
                 continue
-            slug = slugify(movie["title"])
-            out_path = OUTPUT_DIR / f"{movie['id']}-{slug}.jpg"
-            render(page, movie, out_path)
+            slug = slugify(entry["title"])
+            out_path = OUTPUT_DIR / f"{entry['id']}-{slug}.jpg"
+            render(page, entry, out_path, entry_type=args.type)
 
         browser.close()
 
