@@ -421,6 +421,34 @@ const MOVIES = [
     ] },
 ];
 
+// Cars vertical. Reuses countVerdicts()/dominantVerdict()/buildSummaryText()
+// from the movies section above unchanged (they only ever touch
+// title/verdictKey/pros/cons/videos, which cars share the same shape for).
+const CAR_VERDICTS = {
+  must:    { label: 'Must Buy',     color: '#2f8f5b' },
+  good:    { label: 'Good Buy',     color: '#6a9e2f' },
+  onetime: { label: 'Decent Pick',  color: '#c98a1c' },
+  wait:    { label: 'Wait & Watch', color: '#3b6ea5' },
+  skip:    { label: 'Skip',         color: '#b3402f' },
+};
+
+// Per-aspect scores are synthesized at the car level from the full body of
+// collected reviews (most reviewers don't hand out a separate numeric score
+// per aspect the way movie reviewers give one overall rating) — set on
+// car.aspectScores, one 1-10 number per key below, omit a key entirely
+// rather than guess if reviews genuinely don't cover it.
+const CAR_ASPECTS = [
+  { key: 'looks', label: 'Looks & Design' },
+  { key: 'performance', label: 'Performance' },
+  { key: 'comfort', label: 'Comfort & Ride' },
+  { key: 'efficiency', label: 'Mileage' }, // label becomes "EV Range" in the UI when fuelType is "Electric"
+  { key: 'features', label: 'Features & Tech' },
+  { key: 'value', label: 'Value for Money' },
+];
+
+const CARS = [
+];
+
 const REVIEW_CHANNELS = [
   { name: 'Kadhal Katta Talks',   color: '#155e63' },
   { name: 'Frame by Frame',       color: '#57534e' },

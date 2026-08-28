@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Car reviews</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="vhero" id="cars-vhero" style="--vaccent:#fb923c; background-image:url('../assets/tile-cars.jpg');">
+  <div class="vhero-nav">
+    <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <a href="best-rated.html" class="top-admin-link">Best Rated</a>
+      <a class="top-admin-link" href="../admin-login.html">Admin</a>
+    </div>
+  </div>
+  <div class="vhero-content">
+    <div class="vhero-eyebrow" style="color:var(--vaccent);">Cars</div>
+    <h1 class="vhero-title">Buy <span class="accent">Smarter.</span></h1>
+    <p class="vhero-sub">Aggregated YouTube reviews, verdicts, and ratings for every new launch.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="filter-row" style="padding-top:28px;">
+    <input type="text" id="search-input" class="search-input" placeholder="Search cars by name&hellip;" autocomplete="off">
+  </div>
+
+  <div class="filter-row" style="padding-top:16px;">
+    <span class="filter-label">Brand</span>
+    <div class="chip-row" id="brand-filter"></div>
+  </div>
+
+  <div class="filter-row" style="padding-top:14px;">
+    <span class="filter-label">Fuel Type</span>
+    <div class="chip-row" id="fuel-filter"></div>
+  </div>
+
+  <div class="filter-row" style="padding-top:14px;">
+    <span class="filter-label">Sort by</span>
+    <div class="chip-row" id="sort-filter"></div>
+  </div>
+
+  <div class="section-heading">
+    <h1>Latest launches</h1>
+    <span class="muted" id="results-label"></span>
+  </div>
+
+  <div class="grid" id="car-grid"></div>
+</div>
+
+<script src="../data.js"></script>
+<script src="../store.js"></script>
+<script>
+  let filterBrand = 'All';
+  let filterFuel = 'All';
+  let searchQuery = '';
+  let sortBy = 'newest';
+  const SORT_OPTIONS = [
+    { key: 'newest', label: 'Newest' },
+    { key: 'score', label: 'Highest Rated' },
+  ];
+
+  const MONTHS = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+  function parseLaunchDate(str) {
+    const [day, mon, year] = (str || '').split(' ');
+    return new Date(Number(year), MONTHS[mon] ?? 0, Number(day));
+  }
+
+  function renderFilters() {
+    const allCars = getPublishedCars();
+
+    const brands = ['All', ...Array.from(new Set(allCars.map((c) => c.brand))).sort()];
+    const brandEl = document.getElementById('brand-filter');
+    brandEl.innerHTML = '';
+    brands.forEach((b) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (b === filterBrand ? ' active' : '');
+      chip.textContent = b;
+      chip.onclick = () => { filterBrand = b; render(); };
+      brandEl.appendChild(chip);
+    });
+
+    const fuels = ['All', ...Array.from(new Set(allCars.map((c) => c.fuelType))).sort()];
+    const fuelEl = document.getElementById('fuel-filter');
+    fuelEl.innerHTML = '';
+    fuels.forEach((f) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (f === filterFuel ? ' active' : '');
+      chip.textContent = f;
+      chip.onclick = () => { filterFuel = f; render(); };
+      fuelEl.appendChild(chip);
+    });
+
+    const sortEl = document.getElementById('sort-filter');
+    sortEl.innerHTML = '';
+    SORT_OPTIONS.forEach((opt) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (opt.key === sortBy ? ' active' : '');
+      chip.textContent = opt.label;
+      chip.onclick = () => { sortBy = opt.key; render(); };
+      sortEl.appendChild(chip);
+    });
+  }
+
+  function posterMarkup(car) {
+    const imgSrc = car.posterImage || car.posterUrl;
+    if (imgSrc) {
+      return `
+        <div class="poster">
+          <img src="${imgSrc}" alt="" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+          <span class="lang-tag">${car.fuelType}</span>
+        </div>`;
+    }
+    return `
+      <div class="poster" style="background:${car.posterGrad}">
+        <svg viewBox="0 0 200 300">
+          <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+          <circle cx="100" cy="130" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle>
+        </svg>
+        <span class="initial">${car.title.charAt(0)}</span>
+        <span class="lang-tag">${car.fuelType}</span>
+      </div>`;
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('car-grid');
+    const allCars = getPublishedCars();
+    let list = allCars;
+    if (filterBrand !== 'All') list = list.filter((c) => c.brand === filterBrand);
+    if (filterFuel !== 'All') list = list.filter((c) => c.fuelType === filterFuel);
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((c) => c.title.toLowerCase().includes(q));
+    }
+    list = list.slice().sort((a, b) => {
+      if (sortBy === 'score') return b.score - a.score;
+      return parseLaunchDate(b.launchDate) - parseLaunchDate(a.launchDate);
+    });
+    document.getElementById('results-label').textContent = `${list.length} of ${allCars.length} cars`;
+
+    grid.innerHTML = list.map((c) => {
+      const v = CAR_VERDICTS[c.verdictKey];
+      return `
+        <div class="card" onclick="location.href='car.html?id=${c.id}'">
+          ${posterMarkup(c)}
+          <div>
+            <div class="card-title">${c.title}</div>
+            <div class="card-meta">${c.brand} &middot; ${c.priceRange}</div>
+            <div class="score-row">
+              <span><span class="score">${c.score}</span><span class="score-suffix">/10</span></span>
+              <span class="muted">${c.reviewCount} reviews</span>
+            </div>
+            <div class="verdict-row">
+              <span class="dot" style="background:${v.color}"></span>
+              <span class="verdict-label">${v.label}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published cars match this filter yet.</div>`;
+  }
+
+  function applyCustomHero() {
+    const custom = getHeroImage('cars');
+    if (custom) {
+      document.getElementById('cars-vhero').style.backgroundImage = `url('${custom}')`;
+    }
+  }
+
+  function render() {
+    applyCustomHero();
+    renderFilters();
+    renderGrid();
+  }
+
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderGrid();
+  });
+
+  render();
+</script>
+</body>
+</html>

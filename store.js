@@ -115,6 +115,96 @@ function nextMovieId() {
   return list.length ? Math.max(...list.map((m) => Number(m.id) || 0)) + 1 : 1;
 }
 
+// --- Cars vertical: same shape and reconciliation logic as movies above,
+// stored under its own key so the two verticals never collide. ---
+const CAR_STORE_KEY = 'reviewhub_cars_v1';
+
+function seedOneCar(c, existing) {
+  const videos = (c.videos || []).map((v, i) => ({
+    id: uid(),
+    url: `https://www.youtube.com/watch?v=seed-${c.id}-${i}`,
+    ...v,
+  }));
+  const counts = countVerdicts(videos);
+  return {
+    ...c,
+    posterImage: (existing && existing.posterImage) || null,
+    status: 'published',
+    summaryText: (existing && existing.summaryText) || c.summaryText || buildSummaryText(c, counts),
+    videos,
+  };
+}
+
+function seedCarStore() {
+  const seeded = CARS.map((c) => seedOneCar(c));
+  localStorage.setItem(CAR_STORE_KEY, JSON.stringify(seeded));
+  return seeded;
+}
+
+function migrateNewSeedCars(existing) {
+  const sourceById = new Map(CARS.map((c) => [String(c.id), c]));
+  const existingIds = new Set(existing.map((c) => String(c.id)));
+
+  let changed = false;
+  const refreshed = existing.map((c) => {
+    const src = sourceById.get(String(c.id));
+    if (src && reviewedVideoCount(src) > reviewedVideoCount(c)) {
+      changed = true;
+      return seedOneCar(src, c);
+    }
+    return c;
+  });
+
+  const missing = CARS.filter((c) => !existingIds.has(String(c.id)));
+  if (missing.length) changed = true;
+
+  if (!changed) return existing;
+  const merged = [...refreshed, ...missing.map((c) => seedOneCar(c))];
+  saveCars(merged);
+  return merged;
+}
+
+function getCars() {
+  const raw = localStorage.getItem(CAR_STORE_KEY);
+  if (!raw) return seedCarStore();
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) throw new Error('bad store');
+    return migrateNewSeedCars(parsed);
+  } catch (e) {
+    return seedCarStore();
+  }
+}
+
+function getPublishedCars() {
+  return getCars().filter((c) => c.status === 'published');
+}
+
+function saveCars(list) {
+  localStorage.setItem(CAR_STORE_KEY, JSON.stringify(list));
+}
+
+function getCar(id) {
+  return getCars().find((c) => String(c.id) === String(id));
+}
+
+function upsertCar(car) {
+  const list = getCars();
+  const idx = list.findIndex((c) => String(c.id) === String(car.id));
+  if (idx >= 0) list[idx] = car; else list.push(car);
+  saveCars(list);
+  return car;
+}
+
+function deleteCarById(id) {
+  saveCars(getCars().filter((c) => String(c.id) !== String(id)));
+}
+
+function nextCarId() {
+  const list = getCars();
+  return list.length ? Math.max(...list.map((c) => Number(c.id) || 0)) + 1 : 1;
+}
+
 function getLanguages() {
   const raw = localStorage.getItem(LANG_KEY);
   if (raw) {

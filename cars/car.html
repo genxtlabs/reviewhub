@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>ReviewHub — Movie detail</title>
+<title>ReviewHub — Car detail</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -15,12 +15,12 @@
     <div class="header-top">
       <div style="display:flex; align-items:baseline; gap:14px;">
         <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
-        <span class="tagline">Movies &middot; Reviews, aggregated.</span>
+        <span class="tagline">Cars &middot; Reviews, aggregated.</span>
       </div>
     </div>
     <a class="back-link" href="index.html">
       <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      All movies
+      All cars
     </a>
     <div class="rule"></div>
   </div>
@@ -32,16 +32,16 @@
 <script src="../store.js"></script>
 <script>
   const params = new URLSearchParams(location.search);
-  const requested = getMovie(params.get('id'));
+  const requested = getCar(params.get('id'));
 
   if (!requested || requested.status !== 'published') {
-    document.getElementById('content').innerHTML = `<div class="empty-state">This movie isn't published yet. <a href="index.html">Back to all movies</a></div>`;
-    throw new Error('movie not published');
+    document.getElementById('content').innerHTML = `<div class="empty-state">This car isn't published yet. <a href="index.html">Back to all cars</a></div>`;
+    throw new Error('car not published');
   }
 
-  const movie = requested;
-  const v = VERDICTS[movie.verdictKey];
-  const videos = (movie.videos || []).filter((x) => x.verdictKey);
+  const car = requested;
+  const v = CAR_VERDICTS[car.verdictKey];
+  const videos = (car.videos || []).filter((x) => x.verdictKey);
 
   const VIDEO_LANGS = ['All', ...Array.from(new Set(videos.map((x) => x.language)))];
   let filterLang = 'All';
@@ -66,20 +66,45 @@
     return { positive, mixed, negative, total: list.length };
   }
 
+  function aspectLabel(key) {
+    const found = CAR_ASPECTS.find((a) => a.key === key);
+    if (!found) return key;
+    if (key === 'efficiency' && car.fuelType === 'Electric') return 'EV Range';
+    return found.label;
+  }
+
+  function renderAspects() {
+    const scores = car.aspectScores || {};
+    const keys = CAR_ASPECTS.map((a) => a.key).filter((k) => scores[k] != null);
+    if (!keys.length) return '';
+    return `
+      <div class="summary-card" style="margin-top:24px;">
+        <span class="filter-label">Rated by Aspect</span>
+        <div class="aspect-grid">
+          ${keys.map((k) => `
+            <div class="aspect-row">
+              <span class="aspect-label">${aspectLabel(k)}</span>
+              <div class="aspect-bar-track"><div class="aspect-bar-fill" style="width:${scores[k] * 10}%;"></div></div>
+              <span class="aspect-score">${scores[k]}/10</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
   function renderStatic() {
     const c = counts(videos);
     const pct = (n) => (c.total ? (n / c.total) * 100 : 0);
 
-    const heroImgSrc = movie.posterImage || movie.posterUrl;
+    const heroImgSrc = car.posterImage || car.posterUrl;
     const heroPoster = heroImgSrc
       ? `<div class="hero-poster"><img src="${heroImgSrc}" alt="" style="width:100%; height:100%; object-fit:cover;"></div>`
-      : `<div class="hero-poster" style="background:${movie.posterGrad}">
+      : `<div class="hero-poster" style="background:${car.posterGrad}">
           <svg viewBox="0 0 200 300">
             <circle cx="100" cy="130" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle>
             <circle cx="100" cy="130" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle>
             <circle cx="100" cy="130" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle>
           </svg>
-          <span class="initial">${movie.title.charAt(0)}</span>
+          <span class="initial">${car.title.charAt(0)}</span>
         </div>`;
 
     const heroBlock = `
@@ -87,14 +112,14 @@
         ${heroPoster}
         <div class="hero-info">
           <div>
-            <div class="eyebrow">${movie.industry} &middot; ${movie.language} &middot; Released ${movie.releaseDate}</div>
-            <h1 class="hero-title">${movie.title}</h1>
-            <p class="hero-synopsis">${movie.synopsis} Aggregated from ${videos.length} reviewer videos${VIDEO_LANGS.length > 2 ? ' across ' + VIDEO_LANGS.slice(1).join(', ') + ' channels' : ''}.</p>
+            <div class="eyebrow">${car.brand} &middot; ${car.fuelType} &middot; Launched ${car.launchDate}</div>
+            <h1 class="hero-title">${car.title}</h1>
+            <p class="hero-synopsis">${car.synopsis} ${car.priceRange ? `Priced at ${car.priceRange}.` : ''} Aggregated from ${videos.length} reviewer videos${VIDEO_LANGS.length > 2 ? ' across ' + VIDEO_LANGS.slice(1).join(', ') + ' channels' : ''}.</p>
           </div>
 
           <div class="score-panel">
             <div>
-              <div><span class="big">${movie.score}</span><span class="score-suffix">/10</span></div>
+              <div><span class="big">${car.score}</span><span class="score-suffix">/10</span></div>
               <div class="label">Aggregate score</div>
             </div>
             <div class="divider"></div>
@@ -116,15 +141,15 @@
         </div>
       </div>`;
 
-    const bannerWrapped = movie.bannerUrl
-      ? `<div class="movie-banner" style="background-image:url('${movie.bannerUrl}')">${heroBlock}</div>`
+    const bannerWrapped = car.bannerUrl
+      ? `<div class="movie-banner" style="background-image:url('${car.bannerUrl}')">${heroBlock}</div>`
       : heroBlock;
 
-    const trailerBlock = movie.trailerId
+    const trailerBlock = car.trailerId
       ? `<div class="summary-card" style="margin-top:24px;">
-          <span class="filter-label">Official Trailer</span>
+          <span class="filter-label">Featured Review</span>
           <div style="aspect-ratio:16/9; border-radius:8px; overflow:hidden; margin-top:12px; background:#000;">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${movie.trailerId}" title="Official Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display:block;"></iframe>
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${car.trailerId}" title="Featured Review" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display:block;"></iframe>
           </div>
         </div>`
       : '';
@@ -132,17 +157,18 @@
     document.getElementById('content').innerHTML = `
       ${bannerWrapped}
       ${trailerBlock}
+      ${renderAspects()}
       <div class="summary-card" style="margin-top:24px;">
         <span class="filter-label">The Verdict</span>
-        <p class="summary-text">${movie.summaryText || buildSummaryText(movie, c)}</p>
+        <p class="summary-text">${car.summaryText || buildSummaryText(car, c)}</p>
         <div class="pc-grid">
           <div class="pc-col">
             <span class="filter-label">Pros</span>
-            ${movie.pros.map((p) => `<div class="pc-item">${checkIcon()}<span>${p}</span></div>`).join('')}
+            ${car.pros.map((p) => `<div class="pc-item">${checkIcon()}<span>${p}</span></div>`).join('')}
           </div>
           <div class="pc-col">
             <span class="filter-label">Cons</span>
-            ${movie.cons.map((c) => `<div class="pc-item">${crossIcon()}<span>${c}</span></div>`).join('')}
+            ${car.cons.map((c) => `<div class="pc-item">${crossIcon()}<span>${c}</span></div>`).join('')}
           </div>
         </div>
       </div>
@@ -180,7 +206,7 @@
     const list = filterLang === 'All' ? videos : videos.filter((x) => x.language === filterLang);
     document.getElementById('results-label').textContent = `${list.length} of ${videos.length} reviews`;
     document.getElementById('video-grid').innerHTML = list.map((x) => {
-      const vv = VERDICTS[x.verdictKey];
+      const vv = CAR_VERDICTS[x.verdictKey];
       const initials = x.channel.split(' ').map((w) => w.charAt(0)).slice(0, 2).join('');
       return `
         <div class="video-card">

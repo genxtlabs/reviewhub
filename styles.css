@@ -451,3 +451,14 @@ a.hub-tile.active:hover { transform: translateY(-4px); box-shadow: 0 20px 44px r
 .vhero-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 38px; color: #fff; margin: 0 0 10px 0; text-shadow: 0 4px 24px rgba(0,0,0,0.65); }
 .vhero-title .accent { color: var(--vaccent, #a78bfa); }
 .vhero-sub { font-size: 14.5px; color: var(--text-secondary); max-width: 480px; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
+
+/* ---- Aspect-score bars (cars, and any future vertical with sub-ratings) ---- */
+.aspect-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 18px; }
+.aspect-row { display: grid; grid-template-columns: 150px 1fr 44px; align-items: center; gap: 14px; }
+.aspect-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
+.aspect-bar-track { height: 8px; border-radius: 100px; background: var(--bg-elevated-2); overflow: hidden; }
+.aspect-bar-fill { height: 100%; background: var(--accent-gradient); border-radius: 100px; }
+.aspect-score { font-size: 13px; font-weight: 700; text-align: right; color: var(--text); }
+
+/* ---- AI-generated content disclaimer ---- */
+.ai-disclaimer { margin-top: 40px; padding: 16px 20px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; line-height: 1.6; color: var(--text-muted); }
