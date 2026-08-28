@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,900&family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; background: #0d0b0a; overflow: hidden; }
+  body { font-family: 'Manrope', sans-serif; position: relative; }
+
+  .bg {
+    position: absolute; inset: 0;
+    background-image: url('POSTER_URL');
+    background-size: cover;
+    background-position: center 20%;
+  }
+  .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(13,11,10,0.15) 0%, rgba(13,11,10,0.55) 45%, rgba(13,11,10,0.97) 78%, #0d0b0a 100%);
+  }
+
+  .brand {
+    position: absolute; top: 56px; left: 56px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand-mark {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, #ff7a45, #ff2d6f);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-mark svg { width: 22px; height: 22px; }
+  .brand-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 30px; color: #fff; }
+
+  .content { position: absolute; left: 56px; right: 56px; bottom: 64px; }
+
+  .eyebrow {
+    font-size: 22px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #ff8f66; margin-bottom: 18px;
+  }
+
+  .title {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 68px; line-height: 1.05;
+    color: #fff; margin-bottom: 28px;
+    text-wrap: balance;
+  }
+
+  .score-row { display: flex; align-items: center; gap: 24px; margin-bottom: 30px; }
+  .score-badge {
+    display: flex; align-items: baseline; gap: 6px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px 26px; border-radius: 16px;
+  }
+  .score-num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 52px;
+    background: linear-gradient(135deg, #ff7a45, #ff2d6f); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .score-suffix { font-size: 24px; color: rgba(255,255,255,0.55); font-weight: 600; }
+
+  .verdict-badge {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 26px; border-radius: 16px;
+    background: VERDICT_BG; border: 1px solid VERDICT_BORDER;
+  }
+  .verdict-dot { width: 14px; height: 14px; border-radius: 50%; background: VERDICT_COLOR; box-shadow: 0 0 14px VERDICT_COLOR; }
+  .verdict-text { font-size: 26px; font-weight: 700; color: VERDICT_TEXT_COLOR; }
+
+  .quote {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 34px;
+    line-height: 1.4; color: rgba(255,255,255,0.92); margin-bottom: 20px;
+    border-left: 4px solid #ff7a45; padding-left: 24px;
+  }
+
+  .meta-row { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+  .meta-text { font-size: 24px; color: rgba(255,255,255,0.55); font-weight: 600; }
+  .cta { font-size: 24px; color: #ff8f66; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="scrim"></div>
+
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 64 64" fill="#0d0b0a"><path d="M32 8 L38 22 L54 24 L42 34 L45 50 L32 42 L19 50 L22 34 L10 24 L26 22 Z"/></svg>
+    </div>
+    <div class="brand-name">ReviewHub</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">EYEBROW_TEXT</div>
+    <div class="title">TITLE_TEXT</div>
+    <div class="score-row">
+      <div class="score-badge"><span class="score-num">SCORE_TEXT</span><span class="score-suffix">/10</span></div>
+      <div class="verdict-badge"><span class="verdict-dot"></span><span class="verdict-text">VERDICT_LABEL</span></div>
+    </div>
+    <div class="quote">&ldquo;QUOTE_TEXT&rdquo;</div>
+    <div class="meta-row">
+      <div class="meta-text">Aggregated from REVIEW_COUNT YouTube reviews</div>
+      <div class="cta">Full breakdown &rarr; link in bio</div>
+    </div>
+  </div>
+</body>
+</html>
