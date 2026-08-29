@@ -484,7 +484,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=i2PHSx5tG-8", channel: "DDS", avatarColor: "#92400e", language: "Hindi", verdictKey: 'good', rating: "7/10", quote: "A rear-wheel-drive-focused test praising the flatter ride and better body control versus the AWD version, plus a genuinely useful turn-by-turn HUD, while flagging noticeable road and wind noise and the now-familiar EV-typical spongy brake pedal response. Bottom line: A likeable product that again comes back to the same pricing concern other reviewers raise.", viewCount: 319440, subscriberCount: 1820000, matchedBy: ["curated"] },
     ] },
   { id: 2, title: "Skoda Slavia Facelift", brand: "Skoda", fuelType: "Petrol", priceRange: "₹11L - ₹22.5L", launchDate: "18 Aug 2026", score: 6.9, reviewCount: 8, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#57534e,#292524)",
-    posterUrl: "", bannerUrl: "", trailerId: null, brochureUrl: "",
+    posterUrl: "/assets/cars/skoda-slavia-facelift.jpg", bannerUrl: "/assets/cars/skoda-slavia-facelift.jpg", trailerId: null, brochureUrl: "/assets/cars/skoda-slavia-facelift-brochure.pdf",
     synopsis: "A mid-life update to Skoda's entry-level sedan, bringing an Octavia-inspired front end, a new 8-speed automatic for the 1.0-litre engine, a digital instrument cluster, and rear seat massagers, while keeping the same 1.0L and 1.5L TSI petrol engines as before.",
     aspectScores: { looks: 7.5, performance: 7, comfort: 8, efficiency: 7, features: 7.5, value: 7 },
     pros: [
