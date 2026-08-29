@@ -56,6 +56,16 @@ def pick_pull_quote(entry):
     quote = pool[0]["quote"]
     m = re.search(r"Bottom line:\s*(.+)$", quote)
     text = m.group(1).strip() if m else quote
+    # If the text opens with a quote mark, it's a partial inline quotation
+    # (e.g. "'X' from a reviewer who..."), not the whole sentence quoted -
+    # strip that specific opening mark and its matching close, not just the
+    # string's outer edges, so no quote mark is left stranded mid-sentence
+    # once the template wraps the whole thing in its own curly quotes.
+    if text[:1] in "'\"‘’“”":
+        close_char = {"'": "'", '"': '"', '‘': '’', '“': '”'}.get(text[0], text[0])
+        close_idx = text.find(close_char, 1)
+        if close_idx != -1:
+            text = text[1:close_idx] + text[close_idx + 1:]
     text = text[:1].upper() + text[1:]
     return text.rstrip(".") + "."
 
