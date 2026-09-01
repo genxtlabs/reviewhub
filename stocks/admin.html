@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub Stocks — Admin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .digest-review-card { padding: 20px 22px; margin-bottom: 16px; }
+  .digest-review-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .digest-review-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; color: var(--text); margin: 0 0 8px; }
+  .digest-review-context { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .digest-review-points { margin: 0 0 12px; padding-left: 18px; }
+  .digest-review-points li { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 4px; }
+  .digest-review-takeaway { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 14px; }
+  .digest-review-card details { margin-bottom: 10px; }
+  .digest-review-card summary { cursor: pointer; font-size: 12.5px; color: var(--text-muted); }
+  .digest-review-card .textarea { margin-top: 8px; min-height: 160px; font-family: ui-monospace, monospace; font-size: 12px; }
+  .digest-review-card pre { white-space: pre-wrap; font-size: 11.5px; background: var(--bg-elevated-2); padding: 12px; border-radius: 6px; margin-top: 8px; color: var(--text-muted); max-height: 240px; overflow-y: auto; }
+  .add-stock-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  .add-stock-row .input { flex: 1; }
+</style>
+</head>
+<body>
+
+<div class="admin-shell">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="wordmark">ReviewHub</span>
+      <span class="admin-badge">Stocks Admin</span>
+    </div>
+    <div class="admin-header-right">
+      <button id="pause-toggle" class="btn btn-secondary btn-sm"></button>
+      <button id="logout" class="btn btn-secondary btn-sm">Log out</button>
+    </div>
+  </div>
+
+  <div id="pause-banner" class="login-error" style="margin-bottom:20px;" hidden>Pipeline is paused — no new digests will be generated until resumed.</div>
+
+  <div class="filter-row" style="padding-bottom:20px;">
+    <div class="chip-row">
+      <button class="chip active" data-tab="review">Review queue</button>
+      <button class="chip" data-tab="stocks">Stocks</button>
+      <button class="chip" data-tab="logs">Logs</button>
+    </div>
+  </div>
+
+  <div id="tab-review"></div>
+  <div id="tab-stocks" hidden></div>
+  <div id="tab-logs" hidden></div>
+</div>
+
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Stock analysis, tracked daily</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .stock-card { display: flex; flex-direction: column; gap: 10px; }
+  .ticker-badge { display: inline-flex; align-items: center; width: fit-content; font-family: 'Fraunces', serif; font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em; color: #b6f0c9; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3); padding: 3px 10px; border-radius: 100px; }
+  .price-line { display: flex; align-items: baseline; gap: 10px; margin-top: 2px; }
+  .price-value { font-family: 'Fraunces', serif; font-weight: 700; font-size: 24px; color: var(--text); }
+  .price-change { font-size: 13px; font-weight: 700; }
+  .price-change.up { color: var(--verdict-must); }
+  .price-change.down { color: var(--verdict-skip); }
+  .stock-takeaway { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="vhero" id="stocks-vhero" style="--vaccent:#4ade80; background-image:url('../assets/tile-stocks.jpg');">
+  <div class="vhero-nav">
+    <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <a href="admin-login.html" class="top-admin-link">Admin</a>
+    </div>
+  </div>
+  <div class="vhero-content">
+    <div class="vhero-eyebrow" style="color:var(--vaccent);">Stocks</div>
+    <h1 class="vhero-title">Invest <span class="accent">Smarter.</span></h1>
+    <p class="vhero-sub">Data-grounded reads on tracked NSE stocks, updated daily. Informational only — not investment advice.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="filter-row" style="padding-top:28px;">
+    <input type="text" id="search-input" class="search-input" placeholder="Search by name or ticker&hellip;" autocomplete="off">
+  </div>
+
+  <div class="filter-row" style="padding-top:16px;">
+    <span class="filter-label">Sector</span>
+    <div class="chip-row" id="sector-filter"></div>
+  </div>
+
+  <div class="filter-row" style="padding-top:14px;">
+    <span class="filter-label">Sort by</span>
+    <div class="chip-row" id="sort-filter"></div>
+  </div>
+
+  <div class="section-heading">
+    <h1>Today&rsquo;s board</h1>
+    <span class="muted" id="results-label"></span>
+  </div>
+
+  <div class="grid" id="stock-grid"><div class="empty-state" style="grid-column:1 / -1;">Loading&hellip;</div></div>
+</div>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  let allStocks = [];
+  let filterSector = 'All';
+  let searchQuery = '';
+  let sortBy = 'newest';
+  const SORT_OPTIONS = [
+    { key: 'newest', label: 'Newest' },
+    { key: 'movers', label: 'Top Movers' },
+  ];
+
+  function renderFilters() {
+    const sectors = ['All', ...Array.from(new Set(allStocks.map((s) => s.sector).filter(Boolean))).sort()];
+    const secEl = document.getElementById('sector-filter');
+    secEl.innerHTML = '';
+    sectors.forEach((sec) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (sec === filterSector ? ' active' : '');
+      chip.textContent = sec;
+      chip.onclick = () => { filterSector = sec; renderGrid(); };
+      secEl.appendChild(chip);
+    });
+
+    const sortEl = document.getElementById('sort-filter');
+    sortEl.innerHTML = '';
+    SORT_OPTIONS.forEach((opt) => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (opt.key === sortBy ? ' active' : '');
+      chip.textContent = opt.label;
+      chip.onclick = () => { sortBy = opt.key; renderGrid(); };
+      sortEl.appendChild(chip);
+    });
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('stock-grid');
+    let list = allStocks;
+    if (filterSector !== 'All') list = list.filter((s) => s.sector === filterSector);
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((s) => s.name.toLowerCase().includes(q) || s.ticker.toLowerCase().includes(q));
+    }
+    list = list.slice().sort((a, b) => {
+      const changeA = fmtChange(a.price_snapshot?.price, a.price_snapshot?.previousClose);
+      const changeB = fmtChange(b.price_snapshot?.price, b.price_snapshot?.previousClose);
+      if (sortBy === 'movers') return Math.abs(changeB?.pct || 0) - Math.abs(changeA?.pct || 0);
+      return new Date(b.published_at) - new Date(a.published_at);
+    });
+    document.getElementById('results-label').textContent = `${list.length} of ${allStocks.length} tracked`;
+
+    grid.innerHTML = list.map((s) => {
+      const price = s.price_snapshot || {};
+      const change = fmtChange(price.price, price.previousClose);
+      const takeaway = s.summary_json?.takeaway || '';
+      return `
+        <div class="card stock-card" onclick="location.href='stock.html?ticker=${encodeURIComponent(s.ticker)}'">
+          <span class="ticker-badge">${s.ticker.replace('.NS', '')}</span>
+          <div>
+            <div class="card-title">${s.name}</div>
+            <div class="card-meta">${s.sector || '—'}</div>
+          </div>
+          <div class="price-line">
+            <span class="price-value">${fmtINR(price.price)}</span>
+            ${change ? `<span class="price-change ${change.isUp ? 'up' : 'down'}">${change.isUp ? '+' : ''}${change.pct.toFixed(2)}%</span>` : ''}
+          </div>
+          ${takeaway ? `<div class="stock-takeaway">${takeaway}</div>` : ''}
+        </div>`;
+    }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published analysis matches this filter yet.</div>`;
+  }
+
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderGrid();
+  });
+
+  async function init() {
+    try {
+      allStocks = await stocksApiGet('/api/stocks');
+      renderFilters();
+      renderGrid();
+    } catch (err) {
+      document.getElementById('stock-grid').innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">Couldn't load the board right now. Try refreshing.</div>`;
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

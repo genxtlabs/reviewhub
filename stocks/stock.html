@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Stock detail</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .price-ticker { position: relative; width: 240px; flex-shrink: 0; aspect-ratio: 2/3; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-elevated); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 20px; }
+  .price-ticker .tbadge { font-family: 'Fraunces', serif; font-weight: 600; font-size: 13px; color: #b6f0c9; background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3); padding: 3px 10px; border-radius: 100px; margin-bottom: 8px; }
+  .price-ticker .tprice { font-family: 'Fraunces', serif; font-weight: 700; font-size: 34px; color: var(--text); line-height: 1.1; }
+  .price-ticker .tchange { font-size: 14px; font-weight: 700; }
+  .price-ticker .tchange.up { color: var(--verdict-must); }
+  .price-ticker .tchange.down { color: var(--verdict-skip); }
+  .price-ticker .tasof { font-size: 11px; color: var(--text-muted); margin-top: 10px; }
+  .digest-card { margin-top: 22px; padding: 22px 26px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; }
+  .digest-date { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; }
+  .digest-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; margin: 6px 0 10px; color: var(--text); }
+  .digest-context { font-size: 13.5px; color: var(--text-secondary); margin-bottom: 14px; }
+  .digest-points { display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; }
+  .digest-points li { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; color: var(--text-secondary); }
+  .digest-points li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-solid); margin-top: 7px; flex-shrink: 0; }
+  .digest-takeaway { font-size: 14px; font-weight: 600; color: var(--text); padding-top: 12px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; Reviews, aggregated.</span>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  async function loadStock() {
+    const contentEl = document.getElementById('content');
+    const ticker = new URLSearchParams(location.search).get('ticker');
+    if (!ticker) {
+      contentEl.innerHTML = `<div class="empty-state">No stock specified. <a href="index.html">Back to all stocks</a></div>`;
+      return;
+    }
+
+    let stock, digests;
+    try {
+      ({ stock, digests } = await stocksApiGet(`/api/stocks/${encodeURIComponent(ticker)}`));
+    } catch (err) {
+      contentEl.innerHTML = `<div class="empty-state">Couldn't load this stock right now. <a href="index.html">Back to all stocks</a></div>`;
+      return;
+    }
+
+    document.title = `${stock.name} — ReviewHub`;
+    const latest = digests[0];
+    const price = latest?.price_snapshot || {};
+    const change = fmtChange(price.price, price.previousClose);
+
+    const heroBlock = `
+      <div class="hero">
+        <div class="price-ticker">
+          <span class="tbadge">${stock.ticker.replace('.NS', '')}</span>
+          <div class="tprice">${fmtINR(price.price)}</div>
+          ${change ? `<span class="tchange ${change.isUp ? 'up' : 'down'}">${change.isUp ? '+' : ''}${change.pct.toFixed(2)}%</span>` : ''}
+          ${latest ? `<div class="tasof">as of ${fmtDate(latest.published_at)}</div>` : ''}
+        </div>
+        <div class="hero-info">
+          <div>
+            <div class="eyebrow">${stock.exchange} &middot; ${stock.sector || 'Uncategorized'}</div>
+            <h1 class="hero-title">${stock.name}</h1>
+            <p class="hero-synopsis">Data-grounded analysis aggregated from public market data and news, reviewed by an admin before publishing. Informational only — not a recommendation to buy or sell.</p>
+          </div>
+        </div>
+      </div>`;
+
+    const digestsHtml = digests.length
+      ? digests.map((d) => {
+          const s = d.summary_json || {};
+          return `
+            <div class="digest-card">
+              <div class="digest-date">${fmtDate(d.published_at)}</div>
+              <div class="digest-title">${s.title || ''}</div>
+              ${s.priceContext ? `<div class="digest-context">${s.priceContext}</div>` : ''}
+              <ul class="digest-points">${(s.keyPoints || []).map((p) => `<li>${p}</li>`).join('')}</ul>
+              ${s.takeaway ? `<div class="digest-takeaway">${s.takeaway}</div>` : ''}
+            </div>`;
+        }).join('')
+      : `<div class="empty-state">No published analysis for this stock yet.</div>`;
+
+    contentEl.innerHTML = `
+      ${heroBlock}
+      <div class="section-heading">
+        <h1>Published analysis</h1>
+        <span class="muted">${digests.length} digest${digests.length === 1 ? '' : 's'}</span>
+      </div>
+      ${digestsHtml}
+      <div class="ai-disclaimer">
+        StockPulse is an independent, informational project. Nothing on this page is investment advice, a recommendation, or a solicitation to buy or sell any security. Figures are sourced from public market data and news at the time of publishing and may be out of date. Always do your own research or consult a registered investment adviser before making financial decisions.
+      </div>
+    `;
+  }
+
+  loadStock();
+</script>
+</body>
+</html>
