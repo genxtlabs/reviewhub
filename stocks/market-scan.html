@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Market scan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .scan-table-wrap { overflow-x: auto; margin-top: 20px; }
+  .scan-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  .scan-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; padding: 12px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .scan-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: middle; color: var(--text-secondary); white-space: nowrap; }
+  .scan-table tr:last-child td { border-bottom: none; }
+  .scan-name { font-weight: 600; color: var(--text); }
+  .scan-ticker { font-size: 11px; color: var(--text-muted); }
+  .pct.up { color: var(--verdict-must); font-weight: 700; }
+  .pct.down { color: var(--verdict-skip); font-weight: 700; }
+  .scan-note { margin-top: 28px; padding: 18px 22px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; }
+  .scan-note h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; margin: 0 0 6px; color: var(--text); }
+  .scan-note p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+  .scan-note + .scan-note { margin-top: 14px; }
+  .snapshot-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); background: var(--bg-elevated); border: 1px solid var(--border); padding: 4px 12px; border-radius: 100px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; Market scan.</span>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div style="padding-top:32px;">
+    <span class="snapshot-tag">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Snapshot &middot; 02 Sep 2026, 06:52 UTC (12:22 PM IST)
+    </span>
+    <h1 class="serif" style="font-size:32px; font-weight:600; margin:10px 0 8px; color:var(--text);">NSE stocks under &#8377;100</h1>
+    <p class="hero-synopsis" style="margin:0 0 4px; max-width:700px;">A point-in-time data pull, not a live-updating board. Live prices sourced from public market data at the timestamp above. Purely informational &mdash; nothing here is a recommendation to buy, sell, or hold any security.</p>
+  </div>
+
+  <div class="scan-table-wrap">
+    <table class="scan-table">
+      <thead>
+        <tr><th>Stock</th><th>Price (&#8377;)</th><th>1-Day</th><th>1-Month</th><th>52-Week Range</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="scan-name">Vodafone Idea</div><div class="scan-ticker">IDEA.NS</div></td>
+          <td>14.46</td>
+          <td><span class="pct up">+11.15%</span></td>
+          <td><span class="pct up">+12.44%</span></td>
+          <td>6.46 &ndash; 15.37</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">Bank of Maharashtra</div><div class="scan-ticker">MAHABANK.NS</div></td>
+          <td>82.44</td>
+          <td><span class="pct up">+3.92%</span></td>
+          <td><span class="pct up">+3.61%</span></td>
+          <td>51.84 &ndash; 94.50</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">IDFC First Bank</div><div class="scan-ticker">IDFCFIRSTB.NS</div></td>
+          <td>85.14</td>
+          <td><span class="pct up">+0.54%</span></td>
+          <td><span class="pct down">-1.00%</span></td>
+          <td>58.08 &ndash; 88.76</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">NHPC</div><div class="scan-ticker">NHPC.NS</div></td>
+          <td>76.18</td>
+          <td><span class="pct down">-3.24%</span></td>
+          <td><span class="pct down">-3.87%</span></td>
+          <td>71.62 &ndash; 89.22</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">South Indian Bank</div><div class="scan-ticker">SOUTHBANK.NS</div></td>
+          <td>45.58</td>
+          <td><span class="pct down">-2.40%</span></td>
+          <td><span class="pct down">-3.17%</span></td>
+          <td>28.11 &ndash; 49.90</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">Central Bank of India</div><div class="scan-ticker">CENTRALBK.NS</div></td>
+          <td>30.26</td>
+          <td><span class="pct down">-2.29%</span></td>
+          <td><span class="pct down">-3.81%</span></td>
+          <td>29.32 &ndash; 40.92</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">Trident</div><div class="scan-ticker">TRIDENT.NS</div></td>
+          <td>24.00</td>
+          <td><span class="pct down">-2.87%</span></td>
+          <td><span class="pct down">-3.77%</span></td>
+          <td>21.98 &ndash; 30.94</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">Yes Bank</div><div class="scan-ticker">YESBANK.NS</div></td>
+          <td>21.99</td>
+          <td><span class="pct down">-3.43%</span></td>
+          <td><span class="pct down">-4.39%</span></td>
+          <td>17.20 &ndash; 25.78</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">Suzlon Energy</div><div class="scan-ticker">SUZLON.NS</div></td>
+          <td>45.72</td>
+          <td><span class="pct down">-4.77%</span></td>
+          <td><span class="pct down">-4.95%</span></td>
+          <td>38.19 &ndash; 61.50</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">UCO Bank</div><div class="scan-ticker">UCOBANK.NS</div></td>
+          <td>24.52</td>
+          <td><span class="pct down">-6.30%</span></td>
+          <td><span class="pct down">-6.80%</span></td>
+          <td>22.22 &ndash; 34.20</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">IRFC</div><div class="scan-ticker">IRFC.NS</div></td>
+          <td>82.25</td>
+          <td><span class="pct down">-7.74%</span></td>
+          <td><span class="pct down">-8.86%</span></td>
+          <td>81.30 &ndash; 137.17 <span style="color:var(--text-muted);">(near 52w low)</span></td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">NBCC India</div><div class="scan-ticker">NBCC.NS</div></td>
+          <td>84.51</td>
+          <td><span class="pct down">-10.85%</span></td>
+          <td><span class="pct down">-11.51%</span></td>
+          <td>77.18 &ndash; 125.85</td>
+        </tr>
+        <tr>
+          <td><div class="scan-name">GMR Airports</div><div class="scan-ticker">GMRAIRPORT.NS</div></td>
+          <td>93.64</td>
+          <td><span class="pct down">-11.04%</span></td>
+          <td><span class="pct down">-11.28%</span></td>
+          <td>84.11 &ndash; 115.64</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-heading" style="padding-top:36px; padding-bottom:8px;">
+    <h2>Context on the notable movers</h2>
+  </div>
+
+  <div class="scan-note">
+    <h3>Vodafone Idea &mdash; today's biggest gainer</h3>
+    <p>Coincides with a just-announced Shah Rukh Khan brand ambassador deal and full rebrand, reported today by Economic Times, Moneycontrol, and Business Standard.</p>
+  </div>
+  <div class="scan-note">
+    <h3>NBCC India &mdash; down sharply despite a fresh partnership</h3>
+    <p>A new MoU with NHPC for pan-India infrastructure execution was announced August 29, but the stock's decline doesn't obviously line up with that specific news.</p>
+  </div>
+  <div class="scan-note">
+    <h3>GMR Airports &mdash; down double digits after a record traffic quarter</h3>
+    <p>The company reported record Q1 FY27 passenger traffic of 30.22 million, yet the stock fell over 11%. The drop doesn't line up with the headline numbers on its own &mdash; worth checking for a broader sector or company-specific factor not showing up in a quick news scan.</p>
+  </div>
+  <div class="scan-note">
+    <h3>IRFC &mdash; trading near its 52-week low</h3>
+    <p>No major news found either way at the time of this snapshot.</p>
+  </div>
+
+  <div class="ai-disclaimer">
+    This page is a one-time, point-in-time data snapshot generated from public market data and news at the timestamp shown above. It is not investment advice, a recommendation, or a solicitation to buy, sell, or hold any security, and prices will have moved since this was published. Always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+</body>
+</html>

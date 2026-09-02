@@ -32,16 +32,21 @@ function fmtDate(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
+function fmtDateOnly(dateStr) {
+  if (!dateStr) return '';
+  return new Date(`${dateStr}T00:00:00Z`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
 
 // --- Tabs ---
 document.querySelectorAll('.chip[data-tab]').forEach((tab) => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.chip[data-tab]').forEach((t) => t.classList.remove('active'));
     tab.classList.add('active');
-    ['review', 'stocks', 'logs'].forEach((name) => {
+    ['review', 'stocks', 'journal', 'logs'].forEach((name) => {
       document.getElementById(`tab-${name}`).hidden = name !== tab.dataset.tab;
     });
     if (tab.dataset.tab === 'stocks') loadStocks();
+    if (tab.dataset.tab === 'journal') loadJournal();
     if (tab.dataset.tab === 'logs') loadLogs();
   });
 });
@@ -167,6 +172,108 @@ async function loadStocks() {
       }
       btn.textContent = 'Run now';
       btn.disabled = false;
+    });
+  });
+}
+
+// --- Trade journal ---
+// Every entry here is a trade the admin has ALREADY executed themselves, through
+// their own broker, before logging it. Nothing here decides or places a trade.
+async function loadJournal() {
+  const el = document.getElementById('tab-journal');
+  el.innerHTML = `
+    <div class="login-error" style="background:var(--pill-neutral-bg); color:var(--text-secondary); margin-bottom:20px;">
+      This journal only records trades you've already made yourself. It never generates a trade or a signal.
+    </div>
+    <form id="add-trade-form" class="add-trade-form">
+      <input type="text" id="t-ticker" class="input" placeholder="Ticker (e.g. RELIANCE.NS)" required>
+      <input type="text" id="t-name" class="input" placeholder="Company name" required>
+      <input type="number" id="t-quantity" class="input" placeholder="Quantity" step="any" required>
+      <input type="number" id="t-price" class="input" placeholder="Entry price (₹)" step="any" required>
+      <input type="date" id="t-date" class="input" required>
+      <button type="submit" class="btn btn-primary">Log trade</button>
+      <textarea id="t-notes" class="textarea full" placeholder="Why you made this trade (optional, shown publicly)" rows="2"></textarea>
+    </form>
+    <div class="card-box">
+      <table class="admin-table">
+        <thead><tr><th>Ticker</th><th>Entry</th><th>Status</th><th>P&amp;L</th><th>Actions</th></tr></thead>
+        <tbody id="trades-body"><tr><td colspan="5">Loading&hellip;</td></tr></tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('add-trade-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await adminFetch('/api/admin/trades', {
+      method: 'POST',
+      body: JSON.stringify({
+        ticker: document.getElementById('t-ticker').value,
+        name: document.getElementById('t-name').value,
+        quantity: document.getElementById('t-quantity').value,
+        entry_price: document.getElementById('t-price').value,
+        entry_date: document.getElementById('t-date').value,
+        entry_notes: document.getElementById('t-notes').value,
+      }),
+    });
+    loadJournal();
+  });
+
+  const trades = await adminFetch('/api/admin/trades');
+  document.getElementById('trades-body').innerHTML = trades.map((t) => {
+    const isClosed = t.status === 'closed';
+    const pnlPct = isClosed
+      ? ((t.exit_price - t.entry_price) / t.entry_price) * 100
+      : null;
+    return `
+      <tr data-id="${t.id}">
+        <td>${t.ticker}<div style="font-size:11px; color:var(--text-muted);">${t.name}</div></td>
+        <td>${fmtINR(t.entry_price)} &times; ${t.quantity}<div style="font-size:11px; color:var(--text-muted);">${fmtDateOnly(t.entry_date)}</div></td>
+        <td><span class="status-pill ${isClosed ? 'status-published' : 'status-draft'}">${isClosed ? 'Closed' : 'Open'}</span></td>
+        <td>${pnlPct != null ? `<span class="pnl ${pnlPct >= 0 ? 'up' : 'down'}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%</span>` : '—'}</td>
+        <td class="row-actions">
+          ${isClosed ? '' : '<button class="btn btn-secondary btn-sm" data-action="close">Close position</button>'}
+          <button class="btn btn-danger btn-sm" data-action="delete">Delete</button>
+        </td>
+      </tr>
+      <tr class="close-trade-tr" data-close-for="${t.id}">
+        <td colspan="5" style="padding:0;">
+          <div class="close-trade-grid" style="border-top:1px solid var(--border);">
+            <input type="number" class="input close-exit-price" placeholder="Exit price (₹)" step="any">
+            <input type="date" class="input close-exit-date">
+            <input type="text" class="input close-exit-notes" placeholder="Why you exited (optional)">
+            <button class="btn btn-primary btn-sm" data-action="confirm-close">Confirm</button>
+          </div>
+        </td>
+      </tr>`;
+  }).join('') || `<tr><td colspan="5">No trades logged yet.</td></tr>`;
+
+  document.querySelectorAll('[data-action="close"]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.closest('tr').dataset.id;
+      document.querySelector(`[data-close-for="${id}"]`).classList.add('open');
+    });
+  });
+
+  document.querySelectorAll('[data-action="confirm-close"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const wrap = btn.closest('tr');
+      const id = wrap.dataset.closeFor;
+      const exit_price = wrap.querySelector('.close-exit-price').value;
+      const exit_date = wrap.querySelector('.close-exit-date').value;
+      const exit_notes = wrap.querySelector('.close-exit-notes').value;
+      if (!exit_price || !exit_date) { alert('Exit price and date are required.'); return; }
+      await adminFetch(`/api/admin/trades/${id}/close`, {
+        method: 'PATCH',
+        body: JSON.stringify({ exit_price, exit_date, exit_notes }),
+      });
+      loadJournal();
+    });
+  });
+
+  document.querySelectorAll('[data-action="delete"]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Delete this trade entry permanently?')) return;
+      await adminFetch(`/api/admin/trades/${btn.closest('tr').dataset.id}`, { method: 'DELETE' });
+      loadJournal();
     });
   });
 }

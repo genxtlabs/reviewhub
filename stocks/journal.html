@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Trade journal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .trade-entry { padding: 20px 24px; margin-bottom: 16px; }
+  .trade-entry-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .trade-ticker { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; color: var(--text); }
+  .trade-name { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .trade-pnl { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; }
+  .trade-pnl.up { color: var(--verdict-must); }
+  .trade-pnl.down { color: var(--verdict-skip); }
+  .trade-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .trade-meta-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+  .trade-meta-value { font-size: 13.5px; color: var(--text-secondary); }
+  .trade-notes { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; margin-top: 14px; font-style: italic; }
+  .trade-notes-label { font-style: normal; font-weight: 600; color: var(--text); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; Trade journal.</span>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div class="section-heading" style="padding-top:32px;">
+    <h1>Trade journal</h1>
+    <span class="muted" id="results-label"></span>
+  </div>
+  <p class="hero-synopsis" style="margin:-8px 0 8px;">A personal, after-the-fact record of trades already placed through my own broker — logged here once they're done, not before. Nothing on this page is a recommendation, a signal, or advice to buy, sell, or hold any security.</p>
+
+  <div id="journal-list"><div class="empty-state">Loading&hellip;</div></div>
+
+  <div class="ai-disclaimer">
+    This journal reflects trades I have personally already executed. It is published for transparency only, is not investment advice, and past performance is not indicative of future results. Do not treat anything here as a recommendation — always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  async function loadJournal() {
+    const el = document.getElementById('journal-list');
+    try {
+      const trades = await stocksApiGet('/api/trades');
+      document.getElementById('results-label').textContent = `${trades.length} logged trade${trades.length === 1 ? '' : 's'}`;
+
+      if (!trades.length) {
+        el.innerHTML = `<div class="empty-state">No trades logged yet.</div>`;
+        return;
+      }
+
+      el.innerHTML = trades.map((t) => {
+        const isClosed = t.status === 'closed';
+        const refPrice = isClosed ? t.exit_price : t.current_price;
+        const pnlPct = refPrice != null ? ((refPrice - t.entry_price) / t.entry_price) * 100 : null;
+        const pnlLabel = isClosed ? 'Realized P&L' : 'Unrealized P&L';
+
+        return `
+          <div class="card-box trade-entry">
+            <div class="trade-entry-top">
+              <div>
+                <div class="trade-ticker">${t.ticker.replace('.NS', '')}</div>
+                <div class="trade-name">${t.name}</div>
+              </div>
+              <div style="text-align:right;">
+                ${pnlPct != null ? `<div class="trade-pnl ${pnlPct >= 0 ? 'up' : 'down'}">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%</div>` : ''}
+                <span class="status-pill ${isClosed ? 'status-published' : 'status-draft'}">${isClosed ? 'Closed' : 'Open'}</span>
+              </div>
+            </div>
+            <div class="trade-meta-grid">
+              <div>
+                <div class="trade-meta-label">Entry</div>
+                <div class="trade-meta-value">${fmtINR(t.entry_price)} &times; ${t.quantity} on ${fmtDate(t.entry_date)}</div>
+              </div>
+              <div>
+                <div class="trade-meta-label">${isClosed ? 'Exit' : pnlLabel}</div>
+                <div class="trade-meta-value">${isClosed ? `${fmtINR(t.exit_price)} on ${fmtDate(t.exit_date)}` : (t.current_price != null ? `Currently ${fmtINR(t.current_price)}` : 'Live price unavailable')}</div>
+              </div>
+            </div>
+            ${t.entry_notes ? `<div class="trade-notes"><div class="trade-notes-label">Why I entered</div>${t.entry_notes}</div>` : ''}
+            ${t.exit_notes ? `<div class="trade-notes"><div class="trade-notes-label">Why I exited</div>${t.exit_notes}</div>` : ''}
+          </div>`;
+      }).join('');
+    } catch (err) {
+      el.innerHTML = `<div class="empty-state">Couldn't load the journal right now. Try refreshing.</div>`;
+    }
+  }
+
+  loadJournal();
+</script>
+</body>
+</html>

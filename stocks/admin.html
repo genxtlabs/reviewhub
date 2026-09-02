@@ -21,6 +21,13 @@
   .digest-review-card pre { white-space: pre-wrap; font-size: 11.5px; background: var(--bg-elevated-2); padding: 12px; border-radius: 6px; margin-top: 8px; color: var(--text-muted); max-height: 240px; overflow-y: auto; }
   .add-stock-row { display: flex; gap: 10px; margin-bottom: 20px; }
   .add-stock-row .input { flex: 1; }
+  .add-trade-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .add-trade-form .full { grid-column: 1 / -1; }
+  .pnl.up { color: var(--verdict-must); font-weight: 700; }
+  .pnl.down { color: var(--verdict-skip); font-weight: 700; }
+  tr.close-trade-tr { display: none; }
+  tr.close-trade-tr.open { display: table-row; }
+  .close-trade-grid { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; padding: 10px 14px; background: var(--bg-elevated-2); }
 </style>
 </head>
 <body>
@@ -43,12 +50,14 @@
     <div class="chip-row">
       <button class="chip active" data-tab="review">Review queue</button>
       <button class="chip" data-tab="stocks">Stocks</button>
+      <button class="chip" data-tab="journal">Trade Journal</button>
       <button class="chip" data-tab="logs">Logs</button>
     </div>
   </div>
 
   <div id="tab-review"></div>
   <div id="tab-stocks" hidden></div>
+  <div id="tab-journal" hidden></div>
   <div id="tab-logs" hidden></div>
 </div>
 
