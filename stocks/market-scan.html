@@ -28,6 +28,10 @@
   .criteria-list li { font-size: 13px; color: var(--text-secondary); }
   .criteria-list code { font-family: ui-monospace, monospace; font-size: 12px; background: var(--bg-elevated); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--text); }
   .criteria-source { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+  .sortable-th { cursor: pointer; user-select: none; }
+  .sortable-th:hover { color: var(--text-secondary); }
+  .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.5; font-size: 10px; }
+  .sortable-th.active .sort-icon { opacity: 1; color: var(--accent-solid); }
 </style>
 </head>
 <body>
@@ -71,37 +75,11 @@
   </div>
 
   <div class="scan-table-wrap">
-    <table class="scan-table">
+    <table class="scan-table" id="scan-table">
       <thead>
-        <tr><th>#</th><th>Company</th><th>CMP (&#8377;)</th><th>P/E</th><th>Market Cap (&#8377;Cr)</th><th>ROCE %</th><th>ROIC %</th><th>Div Yield %</th></tr>
+        <tr id="scan-thead-row"></tr>
       </thead>
-      <tbody>
-        <tr><td class="scan-rank">1</td><td class="scan-name">IDBI Bank</td><td>91.56</td><td>10.54</td><td>98,449</td><td>5.92</td><td>5.92</td><td>2.25</td></tr>
-        <tr><td class="scan-rank">2</td><td class="scan-name">NMDC</td><td>84.51</td><td>10.01</td><td>74,300</td><td>27.58</td><td>32.40</td><td>2.91</td></tr>
-        <tr><td class="scan-rank">3</td><td class="scan-name">Yes Bank</td><td>21.95</td><td>18.28</td><td>68,897</td><td>5.98</td><td>5.98</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">4</td><td class="scan-name">Bank of Maharashtra</td><td>82.85</td><td>8.51</td><td>63,725</td><td>6.03</td><td>6.03</td><td>2.58</td></tr>
-        <tr><td class="scan-rank">5</td><td class="scan-name">Suzlon Energy</td><td>45.60</td><td>19.81</td><td>62,177</td><td>34.15</td><td>37.99</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">6</td><td class="scan-name">Indian Overseas Bank</td><td>32.13</td><td>10.75</td><td>61,871</td><td>6.07</td><td>6.07</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">7</td><td class="scan-name">UCO Bank</td><td>24.48</td><td>10.99</td><td>30,697</td><td>5.55</td><td>5.55</td><td>1.82</td></tr>
-        <tr><td class="scan-rank">8</td><td class="scan-name">Central Bank of India</td><td>30.24</td><td>5.97</td><td>27,371</td><td>5.64</td><td>5.64</td><td>3.99</td></tr>
-        <tr><td class="scan-rank">9</td><td class="scan-name">Sagility India</td><td>46.41</td><td>21.11</td><td>21,726</td><td>13.41</td><td>10.20</td><td>0.32</td></tr>
-        <tr><td class="scan-rank">10</td><td class="scan-name">Punjab &amp; Sind Bank</td><td>22.48</td><td>11.52</td><td>15,951</td><td>5.95</td><td>5.95</td><td>1.74</td></tr>
-        <tr><td class="scan-rank">11</td><td class="scan-name">Ujjivan Small Finance Bank</td><td>62.85</td><td>13.56</td><td>12,247</td><td>7.73</td><td>7.73</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">12</td><td class="scan-name">South Indian Bank</td><td>45.54</td><td>7.93</td><td>11,928</td><td>6.42</td><td>6.42</td><td>0.99</td></tr>
-        <tr><td class="scan-rank">13</td><td class="scan-name">SBFC Finance</td><td>98.86</td><td>22.83</td><td>10,956</td><td>11.82</td><td>11.82</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">14</td><td class="scan-name">Equitas Small Finance Bank</td><td>73.40</td><td>16.43</td><td>8,396</td><td>6.43</td><td>6.43</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">15</td><td class="scan-name">Paisalo Digital</td><td>66.35</td><td>23.95</td><td>6,035</td><td>12.38</td><td>12.38</td><td>0.15</td></tr>
-        <tr><td class="scan-rank">16</td><td class="scan-name">AvenuesAI</td><td>15.45</td><td>18.13</td><td>5,390</td><td>7.71</td><td>6.48</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">17</td><td class="scan-name">Websol Energy System</td><td>73.89</td><td>10.19</td><td>3,208</td><td>63.18</td><td>41.97</td><td>0.36</td></tr>
-        <tr><td class="scan-rank">18</td><td class="scan-name">Grauer &amp; Weil</td><td>70.39</td><td>19.91</td><td>3,192</td><td>20.59</td><td>26.70</td><td>0.73</td></tr>
-        <tr><td class="scan-rank">19</td><td class="scan-name">Patel Engineering</td><td>27.32</td><td>6.90</td><td>2,711</td><td>13.28</td><td>22.95</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">20</td><td class="scan-name">Confidence Petroleum</td><td>81.45</td><td>20.11</td><td>2,706</td><td>9.23</td><td>8.68</td><td>0.12</td></tr>
-        <tr><td class="scan-rank">21</td><td class="scan-name">Gateway Distriparks</td><td>52.92</td><td>10.77</td><td>2,644</td><td>10.83</td><td>11.74</td><td>3.74</td></tr>
-        <tr><td class="scan-rank">22</td><td class="scan-name">Insolation Energy</td><td>89.40</td><td>10.09</td><td>1,971</td><td>22.20</td><td>18.69</td><td>0.11</td></tr>
-        <tr><td class="scan-rank">23</td><td class="scan-name">Syncom Formulations</td><td>20.75</td><td>22.95</td><td>1,951</td><td>26.84</td><td>18.84</td><td>0.49</td></tr>
-        <tr><td class="scan-rank">24</td><td class="scan-name">Ardee Industries</td><td>56.45</td><td>20.71</td><td>1,779</td><td>49.08</td><td>67.02</td><td>0.00</td></tr>
-        <tr><td class="scan-rank">25</td><td class="scan-name">GRM Overseas</td><td>84.84</td><td>22.98</td><td>1,758</td><td>13.99</td><td>15.71</td><td>0.00</td></tr>
-      </tbody>
+      <tbody id="scan-tbody"></tbody>
     </table>
   </div>
 
@@ -128,5 +106,99 @@
   </div>
 </div>
 
+<script>
+  // name is text (sorts alphabetically); every other field is numeric.
+  const SCAN_ROWS = [
+    { name: "IDBI Bank", cmp: 91.56, pe: 10.54, mcap: 98449, roce: 5.92, roic: 5.92, div: 2.25 },
+    { name: "NMDC", cmp: 84.51, pe: 10.01, mcap: 74300, roce: 27.58, roic: 32.40, div: 2.91 },
+    { name: "Yes Bank", cmp: 21.95, pe: 18.28, mcap: 68897, roce: 5.98, roic: 5.98, div: 0.00 },
+    { name: "Bank of Maharashtra", cmp: 82.85, pe: 8.51, mcap: 63725, roce: 6.03, roic: 6.03, div: 2.58 },
+    { name: "Suzlon Energy", cmp: 45.60, pe: 19.81, mcap: 62177, roce: 34.15, roic: 37.99, div: 0.00 },
+    { name: "Indian Overseas Bank", cmp: 32.13, pe: 10.75, mcap: 61871, roce: 6.07, roic: 6.07, div: 0.00 },
+    { name: "UCO Bank", cmp: 24.48, pe: 10.99, mcap: 30697, roce: 5.55, roic: 5.55, div: 1.82 },
+    { name: "Central Bank of India", cmp: 30.24, pe: 5.97, mcap: 27371, roce: 5.64, roic: 5.64, div: 3.99 },
+    { name: "Sagility India", cmp: 46.41, pe: 21.11, mcap: 21726, roce: 13.41, roic: 10.20, div: 0.32 },
+    { name: "Punjab & Sind Bank", cmp: 22.48, pe: 11.52, mcap: 15951, roce: 5.95, roic: 5.95, div: 1.74 },
+    { name: "Ujjivan Small Finance Bank", cmp: 62.85, pe: 13.56, mcap: 12247, roce: 7.73, roic: 7.73, div: 0.00 },
+    { name: "South Indian Bank", cmp: 45.54, pe: 7.93, mcap: 11928, roce: 6.42, roic: 6.42, div: 0.99 },
+    { name: "SBFC Finance", cmp: 98.86, pe: 22.83, mcap: 10956, roce: 11.82, roic: 11.82, div: 0.00 },
+    { name: "Equitas Small Finance Bank", cmp: 73.40, pe: 16.43, mcap: 8396, roce: 6.43, roic: 6.43, div: 0.00 },
+    { name: "Paisalo Digital", cmp: 66.35, pe: 23.95, mcap: 6035, roce: 12.38, roic: 12.38, div: 0.15 },
+    { name: "AvenuesAI", cmp: 15.45, pe: 18.13, mcap: 5390, roce: 7.71, roic: 6.48, div: 0.00 },
+    { name: "Websol Energy System", cmp: 73.89, pe: 10.19, mcap: 3208, roce: 63.18, roic: 41.97, div: 0.36 },
+    { name: "Grauer & Weil", cmp: 70.39, pe: 19.91, mcap: 3192, roce: 20.59, roic: 26.70, div: 0.73 },
+    { name: "Patel Engineering", cmp: 27.32, pe: 6.90, mcap: 2711, roce: 13.28, roic: 22.95, div: 0.00 },
+    { name: "Confidence Petroleum", cmp: 81.45, pe: 20.11, mcap: 2706, roce: 9.23, roic: 8.68, div: 0.12 },
+    { name: "Gateway Distriparks", cmp: 52.92, pe: 10.77, mcap: 2644, roce: 10.83, roic: 11.74, div: 3.74 },
+    { name: "Insolation Energy", cmp: 89.40, pe: 10.09, mcap: 1971, roce: 22.20, roic: 18.69, div: 0.11 },
+    { name: "Syncom Formulations", cmp: 20.75, pe: 22.95, mcap: 1951, roce: 26.84, roic: 18.84, div: 0.49 },
+    { name: "Ardee Industries", cmp: 56.45, pe: 20.71, mcap: 1779, roce: 49.08, roic: 67.02, div: 0.00 },
+    { name: "GRM Overseas", cmp: 84.84, pe: 22.98, mcap: 1758, roce: 13.99, roic: 15.71, div: 0.00 },
+  ];
+
+  const COLUMNS = [
+    { key: "mcaprank", label: "#", sortable: false },
+    { key: "name", label: "Company", sortable: true, type: "text" },
+    { key: "cmp", label: "CMP (₹)", sortable: true, type: "num" },
+    { key: "pe", label: "P/E", sortable: true, type: "num" },
+    { key: "mcap", label: "Market Cap (₹Cr)", sortable: true, type: "num" },
+    { key: "roce", label: "ROCE %", sortable: true, type: "num" },
+    { key: "roic", label: "ROIC %", sortable: true, type: "num" },
+    { key: "div", label: "Div Yield %", sortable: true, type: "num" },
+  ];
+
+  // Original market-cap rank is fixed to each stock regardless of current sort,
+  // so switching sort columns never relabels "who was #1 by market cap."
+  SCAN_ROWS.forEach((row, i) => { row.mcaprank = i + 1; });
+
+  let sortKey = "mcap";
+  let sortDir = "desc";
+
+  function renderHead() {
+    const tr = document.getElementById("scan-thead-row");
+    tr.innerHTML = COLUMNS.map((col) => {
+      if (!col.sortable) return `<th>${col.label}</th>`;
+      const isActive = col.key === sortKey;
+      const arrow = isActive ? (sortDir === "asc" ? "▲" : "▼") : "⇅";
+      return `<th class="sortable-th${isActive ? " active" : ""}" data-key="${col.key}" data-type="${col.type}">${col.label}<span class="sort-icon">${arrow}</span></th>`;
+    }).join("");
+
+    tr.querySelectorAll(".sortable-th").forEach((th) => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.key;
+        if (sortKey === key) {
+          sortDir = sortDir === "asc" ? "desc" : "asc";
+        } else {
+          sortKey = key;
+          sortDir = th.dataset.type === "text" ? "asc" : "desc";
+        }
+        renderHead();
+        renderBody();
+      });
+    });
+  }
+
+  function renderBody() {
+    const rows = SCAN_ROWS.slice().sort((a, b) => {
+      const av = a[sortKey], bv = b[sortKey];
+      const cmp = typeof av === "string" ? av.localeCompare(bv) : av - bv;
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+    document.getElementById("scan-tbody").innerHTML = rows.map((r) => `
+      <tr>
+        <td class="scan-rank">${r.mcaprank}</td>
+        <td class="scan-name">${r.name}</td>
+        <td>${r.cmp.toFixed(2)}</td>
+        <td>${r.pe.toFixed(2)}</td>
+        <td>${r.mcap.toLocaleString('en-IN')}</td>
+        <td>${r.roce.toFixed(2)}</td>
+        <td>${r.roic.toFixed(2)}</td>
+        <td>${r.div.toFixed(2)}</td>
+      </tr>`).join("");
+  }
+
+  renderHead();
+  renderBody();
+</script>
 </body>
 </html>
