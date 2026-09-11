@@ -14,6 +14,7 @@ Requires YOUTUBE_API_KEY in the environment (see ../.env).
 
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -64,10 +65,19 @@ def api_get(path, params, api_key):
         raise ApiError(f"YouTube API error ({e.code}) on {path}: {body}")
 
 
+def _normalize(s):
+    # Strip punctuation from both sides of a title comparison so movies with
+    # apostrophes ("I'm Game") or spaced hyphens ("Epic - First Semester")
+    # still match real video titles that render those characters differently
+    # (curly quotes, HTML entities, or the punctuation itself).
+    stripped = "".join(ch for ch in s.lower() if ch.isalnum() or ch.isspace())
+    return re.sub(r"\s+", " ", stripped).strip()
+
+
 def is_relevant(title, video_title):
-    norm_title = "".join(ch for ch in title.lower() if ch.isalnum() or ch.isspace()).strip()
+    norm_title = _normalize(title)
     norm_video = video_title.lower()
-    if norm_title and norm_title not in norm_video:
+    if norm_title and norm_title not in _normalize(video_title):
         return False
     if any(kw in norm_video for kw in EXCLUDE_KEYWORDS):
         return False
