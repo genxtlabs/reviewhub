@@ -52,14 +52,36 @@
     <div class="chip-row" id="sort-filter"></div>
   </div>
 
-  <a href="compare-budget-evs.html" class="card-box" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:22px 26px; margin:24px 0 6px; text-decoration:none; flex-wrap:wrap;">
-    <div>
-      <div style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fb923c; margin-bottom:6px;">Head-to-head</div>
-      <div style="font-family:'Fraunces',serif; font-weight:600; font-size:19px; color:var(--text); margin-bottom:4px;">Budget electric SUV comparison</div>
-      <div style="font-size:13.5px; color:var(--text-secondary);">Punch.ev vs Syros EV vs XUV 3XO EV vs Nexon EV vs Windsor EV — specs, scores and who wins on what.</div>
+  <a href="compare-budget-evs.html" class="ev-promo">
+    <div class="ev-promo-stack" aria-hidden="true">
+      <img src="../assets/cars/tata-punch-ev.jpg" alt="">
+      <img src="../assets/cars/kia-syros-ev.jpg" alt="">
+      <img src="../assets/cars/mahindra-xuv-3xo-ev.jpg" alt="">
+      <img src="../assets/cars/tata-nexon-ev.jpg" alt="">
+      <img src="../assets/cars/mg-windsor-ev.jpg" alt="">
     </div>
-    <span style="font-size:13.5px; font-weight:700; color:var(--accent-solid); white-space:nowrap;">Compare now &rarr;</span>
+    <div class="ev-promo-body">
+      <div class="ev-promo-eyebrow">Head-to-head &middot; 5 cars, 48 reviews</div>
+      <div class="ev-promo-title">Budget electric SUV showdown</div>
+      <div class="ev-promo-sub">Punch.ev &middot; Syros EV &middot; XUV 3XO EV &middot; Nexon EV &middot; Windsor EV — specs, scores and who wins on what.</div>
+    </div>
+    <span class="btn btn-primary ev-promo-cta">Compare all 5 &rarr;</span>
   </a>
+
+  <style>
+    .ev-promo { position:relative; display:flex; align-items:center; gap:22px; padding:22px 28px; margin:24px 0 6px; text-decoration:none; border-radius:14px; border:1px solid var(--border); overflow:hidden; background:rgba(255,255,255,.035); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); transition:border-color .2s ease, transform .2s ease; flex-wrap:wrap; }
+    .ev-promo::before { content:""; position:absolute; inset:0; background:radial-gradient(120% 160% at 0% 0%, rgba(255,122,69,.16), transparent 55%), radial-gradient(120% 160% at 100% 100%, rgba(255,45,111,.14), transparent 55%); pointer-events:none; }
+    .ev-promo:hover { border-color:rgba(255,122,69,.4); transform:translateY(-2px); }
+    .ev-promo-stack { position:relative; z-index:1; display:flex; flex-shrink:0; }
+    .ev-promo-stack img { width:52px; height:52px; border-radius:50%; object-fit:cover; background:#fff; border:2px solid var(--bg-elevated); box-shadow:0 2px 8px rgba(0,0,0,.35); margin-left:-16px; }
+    .ev-promo-stack img:first-child { margin-left:0; }
+    .ev-promo-body { position:relative; z-index:1; flex:1; min-width:220px; }
+    .ev-promo-eyebrow { font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fb923c; margin-bottom:6px; }
+    .ev-promo-title { font-family:'Fraunces',serif; font-weight:600; font-size:20px; color:var(--text); margin-bottom:5px; }
+    .ev-promo-sub { font-size:13.5px; color:var(--text-secondary); line-height:1.5; }
+    .ev-promo-cta { position:relative; z-index:1; white-space:nowrap; flex-shrink:0; }
+    @media (max-width:640px) { .ev-promo { padding:20px; } .ev-promo-stack img { width:40px; height:40px; } }
+  </style>
 
   <div class="section-heading">
     <h1>Latest launches</h1>

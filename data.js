@@ -849,7 +849,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=3rno3eQ8e3Q", channel: "Shrish Kaushik", avatarColor: "#1e3a5f", language: "Hindi", verdictKey: 'good', rating: "7/10", quote: "A Delta-variant-focused walkaround with a full on-road price and EMI breakdown, noting this mid-spec trim skips automatic climate control and a reverse camera but still delivers on the essentials. Bottom line: 'You don't have to compromise on anything' at this variant's price point, a few top-trim exclusives aside.", viewCount: 12791, subscriberCount: 24500, matchedBy: ["views"] },
     ] },
   { id: 8, title: "Tata Punch.ev", brand: "Tata", fuelType: "Electric", priceRange: "₹9.69L - ₹12.59L", launchDate: "20 Feb 2026", score: 7.7, reviewCount: 9, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#0f766e,#042f2e)",
-    posterUrl: "/assets/cars/tata-punch-ev.jpg", bannerUrl: "/assets/cars/tata-punch-ev.jpg", trailerId: null, brochureUrl: null,
+    posterUrl: "/assets/cars/tata-punch-ev.jpg", bannerUrl: "/assets/cars/tata-punch-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/tata-punch-ev-brochure.pdf",
     synopsis: "A comprehensive facelift to Tata's compact electric SUV, switching to bigger 30kWh/40kWh prismatic-cell battery packs (up from 25kWh/35kWh), a more efficient 6-in-1 powertrain unit, faster 65kW DC charging, and a significant price cut, while carrying over the Punch's tall-boy stance and segment-leading ride quality.",
     aspectScores: { looks: 7, performance: 8, comfort: 7, efficiency: 8.5, features: 8, value: 8.5 },
     pros: [
@@ -877,7 +877,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=7_voDiy9wOY", channel: "Sai Tech Guru", avatarColor: "#155e63", language: "English", verdictKey: 'good', rating: "7.5/10", quote: "A 5,000km ownership review covering real energy-consumption figures across highway, ghat and full-load driving, DC/AC charging costs, and a first-service billing complaint (charged for a supposedly free AC cleaning), while praising overall reliability and running costs of roughly ₹7,000 versus an estimated ₹38,000 in equivalent fuel costs. Bottom line: Strong on running costs and reliability, with a few service-centre rough edges.", viewCount: 22102, subscriberCount: 184000, matchedBy: ["views", "subscribers"] },
     ] },
   { id: 9, title: "Kia Syros EV", brand: "Kia", fuelType: "Electric", priceRange: "₹13.50L - ₹20.00L", launchDate: "22 Jul 2026", score: 7.7, reviewCount: 12, verdictKey: 'must', posterGrad: "linear-gradient(135deg,#166534,#052e16)",
-    posterUrl: "/assets/cars/kia-syros-ev.jpg", bannerUrl: "/assets/cars/kia-syros-ev.jpg", trailerId: null, brochureUrl: null,
+    posterUrl: "/assets/cars/kia-syros-ev.jpg", bannerUrl: "/assets/cars/kia-syros-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/kia-syros-ev-brochure.pdf",
     synopsis: "A sub-4-metre electric SUV on Kia's K1 platform, offered with a 42kWh (443km ARAI) and a 51.4kWh extended-range (526km ARAI) battery pack shared with the Carens Clavis EV and Creta Electric, pitched squarely at the Tata Nexon EV and Mahindra XUV 3XO EV.",
     aspectScores: { looks: 6, performance: 8, comfort: 8.5, efficiency: 7, features: 8, value: 7 },
     pros: [
@@ -908,7 +908,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=-yl1Gc9utgY", channel: "CarDekho", avatarColor: "#6b7280", language: "Hindi", verdictKey: 'must', rating: "8/10", quote: "A drive review calling this the best small EV in its class thanks to an unmatched feature list, a real-world range of roughly 450km-plus on the bigger battery, and improved ride and handling versus the ICE car from the battery's low centre of gravity, while flagging reduced front under-thigh support for taller drivers and a surprising miss of blind-spot mirror warning despite the ADAS suite. Bottom line: 'Don't make the mistake of ignoring the Syros EV' - recommended without hesitation as a small EV.", viewCount: 13236, subscriberCount: 1360000, matchedBy: ["subscribers"] },
     ] },
   { id: 10, title: "Mahindra XUV 3XO EV", brand: "Mahindra", fuelType: "Electric", priceRange: "₹13.89L - ₹15.46L", launchDate: "06 Jan 2026", score: 7.4, reviewCount: 8, verdictKey: 'good', posterGrad: "linear-gradient(135deg,#9a3412,#2a0e04)",
-    posterUrl: "/assets/cars/mahindra-xuv-3xo-ev.jpg", bannerUrl: "/assets/cars/mahindra-xuv-3xo-ev.jpg", trailerId: null, brochureUrl: null,
+    posterUrl: "/assets/cars/mahindra-xuv-3xo-ev.jpg", bannerUrl: "/assets/cars/mahindra-xuv-3xo-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/mahindra-xuv-3xo-ev-brochure.pdf",
     synopsis: "Mahindra's electric version of its sub-4m XUV 3XO SUV carries over the discontinued XUV400 EV's 39.4kWh battery and 147.5bhp/310Nm front-mounted motor, with an ARAI-claimed range up to 351km (real-world closer to 285km per Mahindra's own figures), styled with copper accents to set it apart from the petrol/diesel car and positioned as a direct rival to the Tata Nexon EV.",
     aspectScores: { looks: 7, performance: 7, comfort: 7, efficiency: 6.5, features: 8, value: 8 },
     pros: [
@@ -937,7 +937,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=DaIgOlANY_w", channel: "Harsh Antil ", avatarColor: "#7c3aed", language: "Hindi", verdictKey: '', rating: '', quote: '', viewCount: 2834, subscriberCount: 1680, matchedBy: ["views"] },
     ] },
   { id: 11, title: "Tata Nexon EV", brand: "Tata", fuelType: "Electric", priceRange: "₹12.49L - ₹17.69L", launchDate: "16 Sep 2023", score: 7.3, reviewCount: 10, verdictKey: 'good', posterGrad: "linear-gradient(135deg,#1e3a5f,#0a1929)",
-    posterUrl: "/assets/cars/tata-nexon-ev.jpg", bannerUrl: "/assets/cars/tata-nexon-ev.jpg", trailerId: null, brochureUrl: null,
+    posterUrl: "/assets/cars/tata-nexon-ev.jpg", bannerUrl: "/assets/cars/tata-nexon-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/tata-nexon-ev-brochure.pdf",
     synopsis: "Tata's established compact electric SUV and India's best-selling EV, now in its facelifted form with a lighter, more efficient Gen-2 motor, a bigger 45kWh Long Range battery option (ARAI-claimed ~489km / 142bhp), a 12.3-inch touchscreen, and segment tech like Arcade.EV in-car entertainment and vehicle-to-load charging.",
     aspectScores: { looks: 8, performance: 7.5, comfort: 7, efficiency: 6, features: 8.5, value: 7.5 },
     pros: [
@@ -967,7 +967,7 @@ const CARS = [
       { url: "https://www.youtube.com/watch?v=lmq9YQWwnio", channel: "MotorCraze", avatarColor: "#0f766e", language: "Hindi", verdictKey: 'good', rating: "7.5/10", quote: "A 2-month, 6,000km long-term Hindi review reporting real savings of ₹30,000-35,000 versus an equivalent diesel Sonnet, home-charging costs under ₹1/km on solar, a genuine 300-310km mixed-driving range (up to 350km in Eco), and praise for the suspension, silent city driving, and a confidence-inspiring high seating position. Bottom line: 'Nexon EV is the best option in the budget of 15-18 lakhs.'", viewCount: 18189, subscriberCount: 366000, matchedBy: ["subscribers"] },
     ] },
   { id: 12, title: "MG Windsor EV", brand: "MG", fuelType: "Electric", priceRange: "₹14.70L - ₹18.99L", launchDate: "06 May 2025", score: 7.2, reviewCount: 9, verdictKey: 'good', posterGrad: "linear-gradient(135deg,#b3402f,#3a150c)",
-    posterUrl: "/assets/cars/mg-windsor-ev.jpg", bannerUrl: "/assets/cars/mg-windsor-ev.jpg", trailerId: null, brochureUrl: null,
+    posterUrl: "/assets/cars/mg-windsor-ev.jpg", bannerUrl: "/assets/cars/mg-windsor-ev.jpg", trailerId: null, brochureUrl: "/assets/cars/mg-windsor-ev-brochure.pdf",
     synopsis: "India's best-selling EV, built on a dedicated skateboard platform that trades a hatchback footprint for MPV-like interior space, a 134bhp/200Nm motor, and a novel Battery-as-a-Service ownership option; a May 2025 update added a bigger 52.9kWh 'Pro' battery (449km claimed range) alongside the standard 38.2kWh pack's ~331km claim.",
     aspectScores: { looks: 7, performance: 6.5, comfort: 7.5, efficiency: 6, features: 8.5, value: 8.5 },
     pros: [
