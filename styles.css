@@ -265,6 +265,12 @@ a:hover { color: var(--accent-solid-hover); }
 .hero-poster .initial { position: absolute; left: 14px; bottom: 6px; font-family: 'Fraunces', serif; font-size: 84px; color: rgba(255,255,255,0.9); line-height: 1; }
 
 .hero-info { display: flex; flex-direction: column; gap: 16px; flex-grow: 1; padding-top: 4px; }
+
+@media (max-width: 640px) {
+  .hero { flex-direction: column; gap: 20px; }
+  .hero-poster { width: 160px; }
+  .movie-banner { padding: 0 20px; }
+}
 .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; }
 .hero-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 36px; margin: 0; line-height: 1.1; color: var(--text); }
 .hero-synopsis { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); margin: 6px 0 0 0; max-width: 620px; }
@@ -281,6 +287,7 @@ a:hover { color: var(--accent-solid-hover); }
 .summary-card { margin-top: 36px; padding: 26px 30px; background: rgba(255,255,255,0.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 10px; }
 .summary-text { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin: 10px 0 20px 0; max-width: 800px; }
 .pc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+@media (max-width: 640px) { .pc-grid { grid-template-columns: 1fr; gap: 20px; } }
 .pc-col { display: flex; flex-direction: column; gap: 8px; }
 .pc-item { display: flex; gap: 7px; align-items: flex-start; font-size: 13.5px; color: var(--text-secondary); }
 .pc-item svg { margin-top: 3px; flex-shrink: 0; }
