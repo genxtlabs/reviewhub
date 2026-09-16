@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Budget Electric SUV Comparison</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .cmp-hero { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; padding: 26px 40px 48px; }
+  .cmp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+  .cmp-nav-links { display: flex; align-items: center; gap: 26px; font-size: 13.5px; font-weight: 600; }
+  .cmp-nav-links a { color: var(--text-secondary); }
+  .cmp-nav-links a:hover { color: var(--text); }
+  .cmp-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fb923c; margin-bottom: 14px; }
+  .cmp-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 42px; line-height: 1.1; margin: 0 0 16px; max-width: 780px; }
+  .cmp-sub { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); max-width: 680px; }
+  .cmp-meta-row { display: flex; gap: 22px; margin-top: 20px; flex-wrap: wrap; }
+  .cmp-meta-pill { font-size: 12px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; }
+
+  .cmp-section { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; padding: 8px 40px 56px; }
+  .cmp-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 24px; margin: 0 0 22px; }
+
+  /* car cards row */
+  .cmp-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .cmp-card { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color .2s ease, transform .2s ease; cursor: pointer; display: flex; flex-direction: column; }
+  .cmp-card:hover { border-color: rgba(255,122,69,.4); transform: translateY(-3px); }
+  .cmp-card .cimg { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: #fff; }
+  .cmp-card .cbody { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .cmp-card .cname { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; line-height: 1.25; }
+  .cmp-card .cscore-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .cmp-card .cscore { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; }
+  .cmp-card .cverdict { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+  .cmp-card .cdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .cmp-card .cprice { font-size: 12px; color: var(--text-muted); }
+
+  /* spec table */
+  .spec-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; }
+  table.spec-table { width: 100%; border-collapse: collapse; min-width: 780px; background: rgba(255,255,255,.02); }
+  .spec-table th, .spec-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13.5px; white-space: nowrap; }
+  .spec-table th { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-weight: 700; background: rgba(255,255,255,.02); }
+  .spec-table th:first-child, .spec-table td:first-child { position: sticky; left: 0; background: var(--bg-elevated); font-weight: 700; color: var(--text); white-space: normal; min-width: 140px; }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.best { color: #4ade80; font-weight: 700; }
+
+  /* verdict callouts */
+  .callout-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .callout { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .callout .clabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fb923c; margin-bottom: 8px; }
+  .callout .cwinner { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+  .callout p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+  /* per-car breakdown */
+  .breakdown-list { display: flex; flex-direction: column; gap: 16px; }
+  .breakdown-row { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; display: grid; grid-template-columns: 200px 1fr; gap: 26px; align-items: start; }
+  .breakdown-row .bimg { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; background: #fff; }
+  .breakdown-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+  .breakdown-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; }
+  .breakdown-score { display: flex; align-items: center; gap: 10px; }
+  .breakdown-score .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 22px; }
+  .breakdown-verdict { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--text-secondary); }
+  .breakdown-summary { font-size: 13.5px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 12px; }
+  .breakdown-link { font-size: 13px; font-weight: 700; color: var(--accent-solid); }
+  @media (max-width: 700px) { .breakdown-row { grid-template-columns: 1fr; } }
+
+  @media (max-width: 1100px) { .cmp-cards { grid-template-columns: repeat(3, 1fr); } .callout-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .cmp-cards { grid-template-columns: repeat(2, 1fr); } .cmp-title { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<main>
+  <div class="cmp-hero">
+    <div class="cmp-nav">
+      <span class="wordmark"><a href="../index.html" style="color:inherit;">ReviewHub</a></span>
+      <div class="cmp-nav-links">
+        <a href="index.html">All cars</a>
+        <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="cmp-eyebrow">Cars &middot; Comparison</div>
+    <h1 class="cmp-title">Budget electric SUV comparison: Punch.ev vs Syros EV vs XUV 3XO EV vs Nexon EV vs Windsor EV</h1>
+    <p class="cmp-sub" id="cmp-sub-text">Five of India's most cross-shopped electric SUVs, all under &#8377;19 lakh, compared on real specs and real reviewer verdicts &mdash; not just spec sheets.</p>
+    <div class="cmp-meta-row" id="cmp-meta-row"></div>
+  </div>
+
+  <div class="cmp-section">
+    <h2>At a glance</h2>
+    <div class="cmp-cards" id="cmp-cards"></div>
+  </div>
+
+  <div class="cmp-section">
+    <h2>Spec comparison</h2>
+    <div class="spec-table-wrap">
+      <table class="spec-table" id="spec-table"></table>
+    </div>
+  </div>
+
+  <div class="cmp-section">
+    <h2>Who wins on what</h2>
+    <div class="callout-grid" id="callout-grid"></div>
+  </div>
+
+  <div class="cmp-section">
+    <h2>Full breakdown</h2>
+    <div class="breakdown-list" id="breakdown-list"></div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div>
+        <span class="wordmark">ReviewHub</span>
+        <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="../movies/index.html">Movies</a></li>
+          <li><a href="index.html">Cars</a></li>
+          <li><a href="../stocks/index.html">Stocks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ReviewHub</h4>
+        <ul>
+          <li><a href="best-rated.html">Best rated cars</a></li>
+          <li><a href="../movies/best-rated.html">Best rated movies</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>A note on our content</h4>
+        <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available YouTube review videos, for informational purposes only. No copyright infringement is intended &mdash; all video content, thumbnails, and imagery belong to their original creators and rights holders.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script src="../data.js"></script>
+<script src="../store.js"></script>
+<script>
+  // The five cars in this comparison, by id (see data.js CARS array).
+  const COMPARE_IDS = [8, 9, 10, 11, 12];
+
+  function verdictColor(key) { return CAR_VERDICTS[key].color; }
+  function verdictLabel(key) { return CAR_VERDICTS[key].label; }
+
+  function posterMarkup(car, cls) {
+    const src = car.posterImage || car.posterUrl;
+    if (src) return `<img class="${cls}" src="${src}" alt="">`;
+    return `<div class="${cls}" style="background:${car.posterGrad}; display:flex; align-items:center; justify-content:center;"><span style="font-family:'Fraunces',serif; font-size:32px; color:rgba(255,255,255,.9);">${car.title.charAt(0)}</span></div>`;
+  }
+
+  function render() {
+    const all = getPublishedCars();
+    const cars = COMPARE_IDS.map(id => all.find(c => String(c.id) === String(id))).filter(Boolean);
+
+    if (cars.length < COMPARE_IDS.length) {
+      document.getElementById('cmp-cards').innerHTML = `<div class="empty-state" style="grid-column:1/-1;">This comparison is being put together &mdash; check back shortly.</div>`;
+      return;
+    }
+
+    document.getElementById('cmp-meta-row').innerHTML = `
+      <span class="cmp-meta-pill">${cars.length} cars compared</span>
+      <span class="cmp-meta-pill">${cars.reduce((s,c)=>s+c.reviewCount,0)} reviews aggregated</span>
+    `;
+
+    // at-a-glance cards
+    document.getElementById('cmp-cards').innerHTML = cars.map(c => `
+      <div class="cmp-card" onclick="location.href='car.html?id=${c.id}'">
+        ${posterMarkup(c, 'cimg')}
+        <div class="cbody">
+          <div class="cname">${c.title}</div>
+          <div class="cprice">${c.priceRange}</div>
+          <div class="cscore-row">
+            <span class="cscore">${c.score}<span style="font-size:11px;color:var(--text-muted);font-family:'Manrope',sans-serif;">/10</span></span>
+            <span class="cverdict"><span class="cdot" style="background:${verdictColor(c.verdictKey)};"></span>${verdictLabel(c.verdictKey)}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // spec table
+    const rows = [
+      { label: 'Price range', get: c => c.priceRange },
+      { label: 'ReviewHub score', get: c => `${c.score}/10` },
+      { label: 'Verdict', get: c => verdictLabel(c.verdictKey) },
+      { label: 'Reviews aggregated', get: c => c.reviewCount },
+      { label: 'Looks & Design', get: c => c.aspectScores?.looks ?? '—' },
+      { label: 'Performance', get: c => c.aspectScores?.performance ?? '—' },
+      { label: 'Comfort & Ride', get: c => c.aspectScores?.comfort ?? '—' },
+      { label: 'EV Range', get: c => c.aspectScores?.efficiency ?? '—' },
+      { label: 'Features & Tech', get: c => c.aspectScores?.features ?? '—' },
+      { label: 'Value for Money', get: c => c.aspectScores?.value ?? '—' },
+    ];
+    let tableHTML = '<thead><tr><th>Car</th>' + cars.map(c => `<th>${c.title}</th>`).join('') + '</tr></thead><tbody>';
+    rows.forEach(row => {
+      tableHTML += `<tr><td>${row.label}</td>${cars.map(c => `<td>${row.get(c)}</td>`).join('')}</tr>`;
+    });
+    tableHTML += '</tbody>';
+    document.getElementById('spec-table').innerHTML = tableHTML;
+
+    // "who wins on what" callouts, computed from real aspectScores/score
+    function topCar(aspectKey) {
+      return cars.slice().sort((a,b) => (b.aspectScores?.[aspectKey] ?? 0) - (a.aspectScores?.[aspectKey] ?? 0))[0];
+    }
+    const bestValue = topCar('value');
+    const bestRange = topCar('efficiency');
+    const bestFeatures = topCar('features');
+    const bestOverall = cars.slice().sort((a,b) => b.score - a.score)[0];
+    const callouts = [
+      { label: 'Best value', winner: bestValue, note: `Scores highest on value for money in this group (${bestValue.aspectScores.value}/10).` },
+      { label: 'Best range', winner: bestRange, note: `Rated highest for real-world EV range among these five (${bestRange.aspectScores.efficiency}/10).` },
+      { label: 'Most feature-rich', winner: bestFeatures, note: `Leads on features & tech in this comparison (${bestFeatures.aspectScores.features}/10).` },
+      { label: 'Highest overall score', winner: bestOverall, note: `The top-rated car in this group overall, at ${bestOverall.score}/10.` },
+    ];
+    document.getElementById('callout-grid').innerHTML = callouts.map(c => `
+      <div class="callout">
+        <div class="clabel">${c.label}</div>
+        <div class="cwinner">${c.winner.title}</div>
+        <p>${c.note}</p>
+      </div>
+    `).join('');
+
+    // full breakdown
+    document.getElementById('breakdown-list').innerHTML = cars.map(c => `
+      <div class="breakdown-row">
+        ${posterMarkup(c, 'bimg')}
+        <div>
+          <div class="breakdown-name-row">
+            <span class="breakdown-name">${c.title}</span>
+            <div class="breakdown-score">
+              <span class="num">${c.score}<span style="font-size:12px;color:var(--text-muted);font-family:'Manrope',sans-serif;">/10</span></span>
+              <span class="breakdown-verdict"><span class="cdot" style="width:7px;height:7px;border-radius:50%;background:${verdictColor(c.verdictKey)};display:inline-block;"></span>${verdictLabel(c.verdictKey)}</span>
+            </div>
+          </div>
+          <p class="breakdown-summary">${c.synopsis}</p>
+          <a class="breakdown-link" href="car.html?id=${c.id}">Read the full aggregated review &rarr;</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  render();
+</script>
+</body>
+</html>
