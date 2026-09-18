@@ -1,26 +1,31 @@
-// Daily market brief entries — one per trading day, newest first (unshift new entries at the top).
+// Market brief entries — newest first (unshift new entries at the top).
+// Can be a single trading day OR a "last week" recap (as below) — whatever cadence is in use,
+// each entry keeps this shape so the page renders it the same way either way.
 // SCHEMA (kept intentionally simple/static so this never depends on the StockPulse backend being live):
-//   date: "DD Mon YYYY"
+//   date: "DD Mon YYYY" or a range like "15-18 Sep 2026" for a weekly recap
 //   wittyLine: one line, no stock-specific calls
-//   verdict: a read on the OVERALL MARKET MOOD for the day only — never a buy/sell/hold call on any
+//   verdict: a read on the OVERALL MARKET MOOD only — never a buy/sell/hold call on any
 //            individual stock. Informational tone only (e.g. "cautiously positive", "choppy, event-heavy").
-//   assumptions: bullet list of the macro/flow inputs the verdict rests on (index futures, FII/DII flow,
+//   assumptions: bullet list of the macro/flow inputs the verdict rests on (index levels, FII/DII flow,
 //                global cues, rate/oil context) — again, no stock-specific recommendations.
-//   news: bullet list of real, verifiable macro/economy/policy headlines for the day.
+//   news: bullet list of real, verifiable macro/economy/policy headlines for the period.
 //   stockUpdates: array of { ticker, name, update } — factual corporate announcements/news only
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
-    date: "18 Sep 2026",
-    wittyLine: "The economy's having a good month. UPI just decided it deserves a cut too.",
-    verdict: "Cautiously constructive heading into the session. A five-month-low trade deficit, cooling unemployment, and a record August for passenger vehicles are genuine tailwinds — but mixed overnight Asian cues and largely inactive FII flows point to consolidation rather than a strong directional move today.",
+    date: "15-18 Sep 2026",
+    wittyLine: "Sensex just logged its longest losing streak since 2020. Nifty, standing right next to it, quietly had its best run in a month.",
+    verdict: "A genuinely mixed week. The Sensex extended its losing streak to a sixth straight week — its longest since 2020 — dragged down by IT-sector weakness and uncertainty from a public governance dispute at Tata Sons. The Nifty, in contrast, bucked the trend with three straight days of gains on banking and insurance strength. FII selling pressure eased by Friday and DIIs stayed net buyers through the week, which helped cushion the broader market even as headline sentiment stayed cautious.",
     assumptions: [
-      "GIFT Nifty trading marginally lower pre-open, pointing to a flat-to-slightly-negative start",
-      "FIIs largely inactive/balanced over recent sessions — no strong directional flow either way",
-      "Asian markets mixed-to-lower overnight (Nikkei, Hang Seng, Taiwan Weighted all down)",
-      "Falling oil prices continue to ease pressure on the RBI's rate-hike calculus"
+      "Markets were closed Monday 14 Sep for Ganesh Chaturthi — only 4 trading sessions this week",
+      "Sensex closed the week at 74,294.96, down ~0.65% week-on-week — a sixth consecutive weekly decline",
+      "Nifty closed Friday at 23,346.40, its third straight daily gain, helped by HDFC Life and SBI Life",
+      "FIIs were net sellers mid-week (₹2,978 crore on 15 Sep) but turned modest net buyers by Friday (₹599.5 crore on 18 Sep); DIIs were net buyers on both days",
+      "Brent crude stayed elevated (~$103-107/barrel) through the week on West Asia tensions, a continuing overhang on sentiment"
     ],
     news: [
+      "A public governance dispute erupted at Tata Sons: the board voted on 17 September to reappoint N. Chandrasekaran as Executive Chairman for a further 5 years, reversing his own August decision not to seek reappointment. Tata Trusts, which holds a 66% stake, is disputing the legal validity of that board resolution. The uncertainty weighed on Tata Group-linked stocks through the week.",
+      "NSE's own ₹22,569 crore public listing drew heavy investor demand this week — a rare mega-IPO that some market commentary linked to tighter secondary-market liquidity.",
       "India's unemployment rate fell to a 6-month low of 5.00% in August, compared to 5.10% in July.",
       "The government introduced a Merchant Discount Rate (MDR) of 0.4% on person-to-merchant UPI transactions above ₹2,000, effective 15 October — capped at ₹300 for transactions above ₹75,000. Person-to-person UPI transactions remain free.",
       "India's trade deficit narrowed to a 5-month low of $26.86 billion in August, from $31.98 billion in July, as export growth (up 26% YoY) outpaced import growth.",
