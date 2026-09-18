@@ -43,7 +43,9 @@
 </div>
 
 <div class="wrap">
-  <div class="filter-row" style="padding-top:28px;">
+  <a href="daily-brief.html" id="brief-teaser" class="card-box" style="display:none; padding:24px 28px; margin:28px 0 6px; text-decoration:none;"></a>
+
+  <div class="filter-row" style="padding-top:16px;">
     <input type="text" id="search-input" class="search-input" placeholder="Search by name or ticker&hellip;" autocomplete="off">
   </div>
 
@@ -65,6 +67,26 @@
   <div class="grid" id="stock-grid"><div class="empty-state" style="grid-column:1 / -1;">Loading&hellip;</div></div>
 </div>
 
+<script src="briefs-data.js"></script>
+<script>
+  (function renderBriefTeaser() {
+    const el = document.getElementById('brief-teaser');
+    if (!el || typeof DAILY_BRIEFS === 'undefined' || !DAILY_BRIEFS.length) return;
+    const b = DAILY_BRIEFS[0];
+    el.style.display = 'flex';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'space-between';
+    el.style.gap = '20px';
+    el.style.flexWrap = 'wrap';
+    el.innerHTML = `
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#4ade80; margin-bottom:6px;">Daily brief &middot; ${b.date}</div>
+        <div style="font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:17px; color:var(--text); margin-bottom:6px;">&ldquo;${b.wittyLine}&rdquo;</div>
+        <div style="font-size:13px; color:var(--text-secondary); max-width:640px;">${b.verdict}</div>
+      </div>
+      <span style="font-size:13px; font-weight:700; color:#4ade80; white-space:nowrap;">Read full brief &amp; archive &rarr;</span>`;
+  })();
+</script>
 <script src="config.js"></script>
 <script src="js/api.js"></script>
 <script>

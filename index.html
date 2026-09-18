@@ -109,7 +109,7 @@
   .tcard .vlabel { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
   @media (max-width: 980px) { .bento { grid-template-columns: repeat(2,1fr); } .bento .tcard.feature { grid-column: span 2; grid-row: span 1; } }
 
-  .stocks-panel { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; }
+  .stocks-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
   .stocks-card { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 26px; transition: border-color .2s ease, transform .2s ease; }
   .stocks-card:hover { border-color: rgba(74,222,128,.35); transform: translateY(-3px); }
   .stocks-card h3 { font-family: 'Fraunces', serif; font-size: 19px; margin: 0 0 8px; font-weight: 600; }
@@ -179,6 +179,11 @@
     <div class="vpanel" id="t-cars"><div class="bento" id="grid-cars"></div></div>
     <div class="vpanel" id="t-stocks">
       <div class="stocks-panel">
+        <div class="stocks-card">
+          <h3>Daily market brief</h3>
+          <p>Posted every trading morning before the market opens &mdash; overall market mood, real verified news, and factual company updates. Archived permanently, day by day.</p>
+          <a class="go" href="stocks/daily-brief.html">Read today's brief &rarr;</a>
+        </div>
         <div class="stocks-card">
           <h3>Stocks under &#8377;100</h3>
           <p>A live, sortable screen built on 7 disclosed criteria (ROCE, ROIC, ROE, sales growth, P/E and more) &mdash; pulled straight from Screener.in, not a hand-picked list.</p>
