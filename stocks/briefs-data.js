@@ -13,6 +13,26 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "21 Sep 2026",
+    wittyLine: "The market cheered cheaper oil today. HDFC Bank, meanwhile, finally cheered up about who's taking the corner office.",
+    verdict: "A genuinely upbeat start to the week. Cooling crude oil and renewed foreign fund buying lifted both benchmarks through the morning, continuing the tentative stabilization seen at the end of last week. NSE's own IPO closing with healthy demand across categories adds to the positive tone, though elevated August inflation and the still-unresolved Tata Sons governance dispute remain real overhangs.",
+    assumptions: [
+      "Sensex up ~0.85% and Nifty up ~0.36% in early-to-midday trade, helped by Brent crude falling 2.25% to around $101.5/barrel",
+      "FIIs turned net buyers on 18 Sep (+₹599.5 crore) after a prolonged selling stretch; DIIs remained net buyers as well (+₹1,019.7 crore)",
+      "NSE's ₹22,562 crore IPO closed today at 1.46x overall subscription (non-institutional investors led at 2.31x); grey market premium of ~₹48 implies a modest ~2.7% potential listing gain over the ₹1,785 upper price band, with listing expected 24 September",
+      "August retail inflation rose to 4.82% - the highest since December 2024 - driven by elevated food/beverage and transport costs"
+    ],
+    news: [
+      "The RBI rejected Tata Sons' long-pending request to avoid classification as an 'upper-layer NBFC' - a status that would otherwise require it to list - adding a fresh regulatory dimension to the governance dispute already unfolding at the group.",
+      "India's retail inflation rose to 4.82% in August, the highest since December 2024, up from 4.45% in July, driven by elevated food, beverage and transport costs linked to the ongoing Middle East conflict's impact on global oil prices.",
+      "NSE's ₹22,562 crore initial public offering closed today with 1.46x overall subscription across categories, with listing expected on 24 September."
+    ],
+    stockUpdates: [
+      { ticker: "HDFCBANK", name: "HDFC Bank", update: "The board sent two shortlisted candidate names to the RBI for the MD & CEO role, following Sashidhar Jagdishan's decision not to seek a further term (he retires in October). The bank hasn't disclosed the names publicly, though several other bank and NBFC chief executives have been reported as contenders. The board separately appointed a new executive director." },
+      { ticker: "MANIKAPLA", name: "Manika Plastech", update: "Shares listed flat at ₹43 on both BSE and NSE, matching the IPO issue price, despite the ₹125.50 crore issue being subscribed 28.14 times ahead of listing." }
+    ]
+  },
+  {
     date: "15-18 Sep 2026",
     wittyLine: "Sensex just logged its longest losing streak since 2020. Nifty, standing right next to it, quietly had its best run in a month.",
     verdict: "A genuinely mixed week. The Sensex extended its losing streak to a sixth straight week — its longest since 2020 — dragged down by IT-sector weakness and uncertainty from a public governance dispute at Tata Sons. The Nifty, in contrast, bucked the trend with three straight days of gains on banking and insurance strength. FII selling pressure eased by Friday and DIIs stayed net buyers through the week, which helped cushion the broader market even as headline sentiment stayed cautious.",
