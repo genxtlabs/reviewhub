@@ -13,6 +13,24 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "22 Sep 2026",
+    wittyLine: "Oil's down for the fourth day running. NSE's own listing premium is falling almost as fast.",
+    verdict: "A quietly positive, if fragile, session. Falling crude oil (a fourth straight day of declines) and softer US bond yields lifted both benchmarks in early trade, with real estate leading gainers and IT lagging. The bigger undertone though: NSE's own IPO premium has cooled sharply ahead of Thursday's listing, and September's foreign outflows have now crossed ₹23,000 crore despite last week's brief buying spurt - a reminder that this recovery is tentative, not a clean trend reversal.",
+    assumptions: [
+      "Sensex up ~0.08% to around 74,915 and Nifty up ~0.15% to around 23,450 in early trade; Nifty Realty led gainers (+1%+) while Nifty IT was the biggest laggard (down over 1%)",
+      "Brent crude fell for a fourth straight session, continuing to ease the oil-driven inflation and rate concerns flagged through last week",
+      "NSE's IPO grey market premium has fallen sharply through September - from around ₹285 on 4 Sep to roughly ₹43-48 now - implying a far smaller listing pop than initially expected ahead of Thursday's (24 Sep) debut; share allotment was finalized today",
+      "September's cumulative FII outflow has crossed ₹23,000 crore (through 19 Sep) - a reminder that the single-day net buying seen on 18 Sep hasn't reversed the broader monthly trend"
+    ],
+    news: [
+      "Tata Trusts formally restated, in writing, that N. Chandrasekaran's 17 September reappointment as Tata Sons Executive Chairman is 'void' and has 'no legal effect.' Their argument rests on the company's Articles of Association requiring majority support from Trusts-nominated directors specifically - at the 17 Sep meeting, Tata Trusts chairman Noel Tata voted against the reappointment while the other Trusts nominee, Venu Srinivasan, voted in favour, which Tata Trusts says means that threshold wasn't met.",
+      "NSE's share allotment was finalized today ahead of Thursday's (24 Sep) stock market debut. The issue's grey market premium has cooled sharply through September - from around ₹285 on 4 Sep to roughly ₹43-48 now - implying a far more modest listing gain than initially expected.",
+      "September's cumulative FII outflow from Indian equities has crossed ₹23,000 crore (through 19 Sep), as elevated crude prices, high US bond yields, and geopolitical risk continue to weigh on foreign flows.",
+      "India's broader IPO pipeline remains busy, with roughly 20 companies collectively looking to raise over ₹4,152 crore this week alone."
+    ],
+    stockUpdates: []
+  },
+  {
     date: "21 Sep 2026",
     wittyLine: "The market cheered cheaper oil today. HDFC Bank, meanwhile, finally cheered up about who's taking the corner office.",
     verdict: "A genuinely upbeat start to the week. Cooling crude oil and renewed foreign fund buying lifted both benchmarks through the morning, continuing the tentative stabilization seen at the end of last week. NSE's own IPO closing with healthy demand across categories adds to the positive tone, though elevated August inflation and the still-unresolved Tata Sons governance dispute remain real overhangs.",

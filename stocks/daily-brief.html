@@ -93,6 +93,7 @@
           <ul class="brief-list">${b.news.map((n) => `<li>${n}</li>`).join('')}</ul>
         </div>
 
+        ${b.stockUpdates && b.stockUpdates.length ? `
         <div class="brief-section">
           <div class="brief-label">Stock updates</div>
           <div>${b.stockUpdates.map((s) => `
@@ -103,7 +104,7 @@
               </div>
               <div class="stock-update-text">${s.update}</div>
             </div>`).join('')}</div>
-        </div>
+        </div>` : ''}
       </div>`).join('');
   }
 
