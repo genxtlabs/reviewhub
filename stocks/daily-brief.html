@@ -22,6 +22,12 @@
   .stock-update-ticker { font-family: 'Fraunces', serif; font-weight: 700; font-size: 13.5px; color: var(--text); flex-shrink: 0; width: 110px; }
   .stock-update-name { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
   .stock-update-text { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }
+  .watch-note { font-size: 12px; color: var(--text-muted); margin: -4px 0 12px; font-style: italic; }
+  .watch-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .watch-row:last-child { border-bottom: none; }
+  .watch-ticker { font-family: 'Fraunces', serif; font-weight: 700; font-size: 13.5px; color: var(--text); flex-shrink: 0; width: 110px; }
+  .watch-name { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+  .watch-reason { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }
 </style>
 </head>
 <body>
@@ -92,6 +98,20 @@
           <div class="brief-label">News</div>
           <ul class="brief-list">${b.news.map((n) => `<li>${n}</li>`).join('')}</ul>
         </div>
+
+        ${b.stocksToWatch && b.stocksToWatch.length ? `
+        <div class="brief-section">
+          <div class="brief-label">Stocks to watch</div>
+          <div class="watch-note">Real names with news or events today &mdash; not a buy, sell, or hold signal.</div>
+          <div>${b.stocksToWatch.map((s) => `
+            <div class="watch-row">
+              <div>
+                <div class="watch-ticker">${s.ticker}</div>
+                <div class="watch-name">${s.name}</div>
+              </div>
+              <div class="watch-reason">${s.reason}</div>
+            </div>`).join('')}</div>
+        </div>` : ''}
 
         ${b.stockUpdates && b.stockUpdates.length ? `
         <div class="brief-section">

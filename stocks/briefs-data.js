@@ -9,6 +9,11 @@
 //   assumptions: bullet list of the macro/flow inputs the verdict rests on (index levels, FII/DII flow,
 //                global cues, rate/oil context) — again, no stock-specific recommendations.
 //   news: bullet list of real, verifiable macro/economy/policy headlines for the period.
+//   stocksToWatch: array of { ticker, name, reason } — real names with a genuine reason to pay
+//                  attention today (upcoming listing, pending regulatory decision, ongoing dispute,
+//                  results due, etc). Purely factual/forward-looking — NEVER a buy/sell/hold call,
+//                  a rating, or a price target. This is "here's why this name might move today,"
+//                  not "here's what to do about it."
 //   stockUpdates: array of { ticker, name, update } — factual corporate announcements/news only
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
@@ -27,6 +32,11 @@ const DAILY_BRIEFS = [
       "NSE's share allotment was finalized today ahead of Thursday's (24 Sep) stock market debut. The issue's grey market premium has cooled sharply through September - from around ₹285 on 4 Sep to roughly ₹43-48 now - implying a far more modest listing gain than initially expected.",
       "September's cumulative FII outflow from Indian equities has crossed ₹23,000 crore (through 19 Sep), as elevated crude prices, high US bond yields, and geopolitical risk continue to weigh on foreign flows.",
       "India's broader IPO pipeline remains busy, with roughly 20 companies collectively looking to raise over ₹4,152 crore this week alone."
+    ],
+    stocksToWatch: [
+      { ticker: "NSE", name: "National Stock Exchange", reason: "Share allotment finalized today; debuts on the exchanges this Thursday, 24 September, one of the most closely watched listings of the year." },
+      { ticker: "TATA GROUP", name: "TCS, Tata Motors, Tata Chemicals, Titan, Tata Steel & others", reason: "The unresolved board-vs-Tata Trusts dispute over Chandrasekaran's chairmanship continues to create uncertainty around Tata Group holding-company stocks - not a single ticker, but worth watching across the group." },
+      { ticker: "HDFCBANK", name: "HDFC Bank", reason: "RBI approval is still pending on the two shortlisted MD & CEO candidates the board sent in yesterday - an announcement either way could move the stock." }
     ],
     stockUpdates: []
   },
