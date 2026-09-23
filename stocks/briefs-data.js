@@ -18,6 +18,28 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "23 Sep 2026",
+    wittyLine: "Metals and cooling oil did the heavy lifting for the market today. The Tata Sons saga did some lifting of its own — straight into a TVS warehouse.",
+    verdict: "A constructive session on the surface: both benchmarks advanced through the afternoon on metal-stock strength and easing crude, and fresh upgrades to India's growth outlook added a genuinely positive undertone. But it's not an all-clear - IT stocks lagged, and the Tata Sons governance dispute just gained a new, more personal dimension that keeps that overhang firmly in place.",
+    assumptions: [
+      "Sensex up ~0.51% to around 74,907 and Nifty up ~0.52% to around 23,450 in early-afternoon trade, led by metal shares and a further pullback in crude oil prices",
+      "Man Industries surged 15% to a fresh high of ₹974.40, one of today's most notable single-stock moves; Nifty IT lagged the broader advance, with Persistent Systems, LTIMindtree and Coforge among the index's top losers",
+      "ADB raised its FY27 India GDP growth forecast to 7% (from 6.6%) and Fitch raised its own FY27 forecast to 6.9%, both citing stronger-than-expected Q1 FY27 growth",
+      "NSE's IPO closed today with strong institutional-led demand, taking overall subscription to roughly 5.7-6x; its grey market premium has cooled further to around ₹43, implying a listing price near ₹1,828 against the ₹1,785 upper band ahead of tomorrow's (24 Sep) debut"
+    ],
+    news: [
+      "ADB raised India's FY27 GDP growth forecast to 7% (from 6.6% previously); Fitch separately raised its own FY27 forecast to 6.9% - both citing stronger-than-expected Q1 FY27 growth momentum.",
+      "NSE's ₹22,562 crore IPO closed today with strong institutional-led demand, taking overall subscription to roughly 5.7-6x ahead of tomorrow's stock market debut.",
+      "A new twist emerged in the Tata Sons governance dispute: reports say N. Chandrasekaran's family members are directors of a company that leased farmland from TVS Motor for a warehouse project, shortly after TVS Motor chairman-emeritus Venu Srinivasan cast one of the votes backing Chandrasekaran's reappointment on 17 September. Tata Trusts said Srinivasan had not disclosed the connection to its trustees, adding a fresh conflict-of-interest question to the existing dispute over whether that reappointment vote was even valid."
+    ],
+    stocksToWatch: [
+      { ticker: "NSE", name: "National Stock Exchange", reason: "Closed its IPO today at roughly 5.7-6x overall subscription, institutional-led; debuts on the exchanges tomorrow, 24 September." },
+      { ticker: "TATA GROUP", name: "TCS, Tata Motors, Tata Chemicals, Titan, Tata Steel & others", reason: "The board-vs-Tata Trusts dispute over Chandrasekaran's reappointment just gained a fresh conflict-of-interest angle - worth watching across the group, not a single ticker." },
+      { ticker: "TVSMOTOR", name: "TVS Motor Company", reason: "Newly drawn into the Tata Sons story after reports that it leased farmland to a company where Chandrasekaran family members are directors - a name that wasn't part of this saga until today." }
+    ],
+    stockUpdates: []
+  },
+  {
     date: "22 Sep 2026",
     wittyLine: "Oil's down for the fourth day running. NSE's own listing premium is falling almost as fast.",
     verdict: "A quietly positive, if fragile, session. Falling crude oil (a fourth straight day of declines) and softer US bond yields lifted both benchmarks in early trade, with real estate leading gainers and IT lagging. The bigger undertone though: NSE's own IPO premium has cooled sharply ahead of Thursday's listing, and September's foreign outflows have now crossed ₹23,000 crore despite last week's brief buying spurt - a reminder that this recovery is tentative, not a clean trend reversal.",
