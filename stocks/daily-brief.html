@@ -5,29 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>ReviewHub — Daily market brief</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../styles.css">
 <style>
-  .brief-entry { padding: 26px 28px; margin-bottom: 20px; }
-  .brief-date { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 10px; }
-  .brief-witty { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 19px; color: var(--text); line-height: 1.4; margin-bottom: 18px; }
-  .brief-section { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
-  .brief-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
-  .brief-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #4ade80; margin-bottom: 8px; }
-  .brief-verdict-text { font-size: 14.5px; line-height: 1.65; color: var(--text-secondary); }
-  .brief-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
-  .brief-list li { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); }
-  .stock-update-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
-  .stock-update-row:last-child { border-bottom: none; }
-  .stock-update-ticker { font-family: 'Fraunces', serif; font-weight: 700; font-size: 13.5px; color: var(--text); flex-shrink: 0; width: 110px; }
-  .stock-update-name { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
-  .stock-update-text { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }
-  .watch-note { font-size: 12px; color: var(--text-muted); margin: -4px 0 12px; font-style: italic; }
-  .watch-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
-  .watch-row:last-child { border-bottom: none; }
-  .watch-ticker { font-family: 'Fraunces', serif; font-weight: 700; font-size: 13.5px; color: var(--text); flex-shrink: 0; width: 110px; }
-  .watch-name { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
-  .watch-reason { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }
+  .td-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
+  .td-card { background: rgba(255,255,255,.04); border: 1px solid #232a33; border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color .15s ease; }
+  .td-card:hover, .td-card.active { border-color: #22d3ee; }
+  .td-card-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(34,211,238,.06); border-bottom: 1px solid #232a33; }
+  .td-date { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #22d3ee; font-weight: 600; }
+  .td-mood-badge { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: .05em; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; }
+  .td-card-body { padding: 16px 14px; }
+  .td-witty { font-size: 13.5px; line-height: 1.55; color: #e7edf2; margin-bottom: 16px; min-height: 62px; }
+  .td-tape { display: flex; gap: 8px; overflow-x: auto; border-top: 1px dashed #232a33; padding-top: 10px; }
+  .td-tape-item { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; color: #e7edf2; white-space: nowrap; padding: 3px 8px; background: rgba(255,255,255,.04); border-radius: 4px; }
+  .td-detail { margin: 0 0 20px; background: rgba(255,255,255,.04); border: 1px solid #232a33; border-radius: 8px; padding: 26px; }
+  .td-detail h4 { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: #22d3ee; margin: 20px 0 10px; }
+  .td-detail h4:first-child { margin-top: 0; }
+  .td-detail p, .td-detail li { font-size: 13.5px; line-height: 1.65; color: #8b98a5; }
+  .td-detail ul { margin: 0; padding-left: 18px; }
+  .td-note { font-size: 11.5px; color: #8b98a5; font-style: italic; margin: -2px 0 10px; }
+  .td-watch-row, .td-update-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #232a33; }
+  .td-watch-row:last-child, .td-update-row:last-child { border-bottom: none; }
+  .td-row-ticker { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 12.5px; color: #e7edf2; flex-shrink: 0; width: 130px; }
+  .td-row-name { font-size: 10px; color: #8b98a5; margin-top: 2px; }
+  .td-row-text { font-size: 13.5px; line-height: 1.55; color: #8b98a5; }
+  .td-close-btn { float: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8b98a5; background: none; border: 1px solid #232a33; border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+  @media (max-width: 900px) {
+    .td-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -61,74 +66,90 @@
   </div>
   <p class="hero-synopsis" style="margin:-8px 0 8px;">Posted every trading morning, before market open. A read on the day's overall mood plus real, verified news — never a buy, sell, or hold call on any individual stock.</p>
 
-  <div id="brief-list"></div>
+  <div class="td-grid" id="brief-grid"></div>
+  <div id="brief-detail"></div>
 
   <div class="ai-disclaimer">
     This brief is generated from publicly available news and data for informational purposes only. The "verdict" reflects overall market mood/sentiment, never a recommendation on any individual security. Nothing here is investment advice — always do your own research or consult a registered investment adviser before making financial decisions.
   </div>
 </div>
 
-<script src="briefs-data.js"></script>
 <script>
+  const MOOD_COLOR = { positive: '#34d399', upbeat: '#a3e635', mixed: '#fbbf24', negative: '#f87171' };
+  let openBriefIndex = null;
+
+  function tapeTickers(b) {
+    const seen = new Set();
+    const out = [];
+    (b.stocksToWatch || []).forEach((s) => { if (!seen.has(s.ticker)) { seen.add(s.ticker); out.push(s.ticker); } });
+    (b.stockUpdates || []).forEach((s) => { if (!seen.has(s.ticker)) { seen.add(s.ticker); out.push(s.ticker); } });
+    return out;
+  }
+
+  function detailHTML(b) {
+    return `
+      <h4>Verdict &middot; Market mood</h4><p>${b.verdict}</p>
+      <h4>Assumptions</h4><ul>${b.assumptions.map((a) => `<li>${a}</li>`).join('')}</ul>
+      <h4>News</h4><ul>${b.news.map((n) => `<li>${n}</li>`).join('')}</ul>
+      ${b.stocksToWatch && b.stocksToWatch.length ? `
+      <h4>Stocks to watch</h4>
+      <div class="td-note">Real names with news or events today &mdash; not a buy, sell, or hold signal.</div>
+      ${b.stocksToWatch.map((s) => `
+        <div class="td-watch-row">
+          <div><div class="td-row-ticker">${s.ticker}</div><div class="td-row-name">${s.name}</div></div>
+          <div class="td-row-text">${s.reason}</div>
+        </div>`).join('')}` : ''}
+      ${b.stockUpdates && b.stockUpdates.length ? `
+      <h4>Stock updates</h4>
+      ${b.stockUpdates.map((s) => `
+        <div class="td-update-row">
+          <div><div class="td-row-ticker">${s.ticker}</div><div class="td-row-name">${s.name}</div></div>
+          <div class="td-row-text">${s.update}</div>
+        </div>`).join('')}` : ''}
+    `;
+  }
+
+  function toggleBrief(i) {
+    const detailEl = document.getElementById('brief-detail');
+    document.querySelectorAll('.td-card').forEach((c) => c.classList.remove('active'));
+    if (openBriefIndex === i) { detailEl.innerHTML = ''; openBriefIndex = null; return; }
+    openBriefIndex = i;
+    const card = document.getElementById(`td-card-${i}`);
+    if (card) card.classList.add('active');
+    const b = DAILY_BRIEFS[i];
+    detailEl.innerHTML = `<div class="td-detail"><button class="td-close-btn" onclick="event.stopPropagation(); toggleBrief(${i})">Close &times;</button><div style="clear:both;"></div>${detailHTML(b)}</div>`;
+  }
+
   function renderBriefs() {
-    const el = document.getElementById('brief-list');
+    const grid = document.getElementById('brief-grid');
     document.getElementById('results-label').textContent = `${DAILY_BRIEFS.length} brief${DAILY_BRIEFS.length === 1 ? '' : 's'}`;
 
     if (!DAILY_BRIEFS.length) {
-      el.innerHTML = `<div class="empty-state">No briefs posted yet.</div>`;
+      grid.innerHTML = `<div class="empty-state">No briefs posted yet.</div>`;
       return;
     }
 
-    el.innerHTML = DAILY_BRIEFS.map((b) => `
-      <div class="card-box brief-entry">
-        <div class="brief-date">${b.date}</div>
-        <div class="brief-witty">&ldquo;${b.wittyLine}&rdquo;</div>
-
-        <div class="brief-section">
-          <div class="brief-label">Verdict &middot; Market mood</div>
-          <div class="brief-verdict-text">${b.verdict}</div>
+    grid.innerHTML = DAILY_BRIEFS.map((b, i) => `
+      <div class="td-card" id="td-card-${i}" onclick="toggleBrief(${i})">
+        <div class="td-card-head">
+          <span class="td-date">${b.date}</span>
+          <span class="td-mood-badge" style="background:${(MOOD_COLOR[b.mood] || '#8b98a5')}22; color:${MOOD_COLOR[b.mood] || '#8b98a5'}">${b.moodLabel || ''}</span>
         </div>
-
-        <div class="brief-section">
-          <div class="brief-label">Assumptions</div>
-          <ul class="brief-list">${b.assumptions.map((a) => `<li>${a}</li>`).join('')}</ul>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;${b.wittyLine}&rdquo;</div>
+          <div class="td-tape">${tapeTickers(b).map((t) => `<span class="td-tape-item">${t}</span>`).join('') || '<span class="td-tape-item" style="opacity:.5;">No named tickers today</span>'}</div>
         </div>
-
-        <div class="brief-section">
-          <div class="brief-label">News</div>
-          <ul class="brief-list">${b.news.map((n) => `<li>${n}</li>`).join('')}</ul>
-        </div>
-
-        ${b.stocksToWatch && b.stocksToWatch.length ? `
-        <div class="brief-section">
-          <div class="brief-label">Stocks to watch</div>
-          <div class="watch-note">Real names with news or events today &mdash; not a buy, sell, or hold signal.</div>
-          <div>${b.stocksToWatch.map((s) => `
-            <div class="watch-row">
-              <div>
-                <div class="watch-ticker">${s.ticker}</div>
-                <div class="watch-name">${s.name}</div>
-              </div>
-              <div class="watch-reason">${s.reason}</div>
-            </div>`).join('')}</div>
-        </div>` : ''}
-
-        ${b.stockUpdates && b.stockUpdates.length ? `
-        <div class="brief-section">
-          <div class="brief-label">Stock updates</div>
-          <div>${b.stockUpdates.map((s) => `
-            <div class="stock-update-row">
-              <div>
-                <div class="stock-update-ticker">${s.ticker}</div>
-                <div class="stock-update-name">${s.name}</div>
-              </div>
-              <div class="stock-update-text">${s.update}</div>
-            </div>`).join('')}</div>
-        </div>` : ''}
       </div>`).join('');
+
+    toggleBrief(0);
   }
 
-  renderBriefs();
+  (function loadBriefsData() {
+    const s = document.createElement('script');
+    s.src = 'briefs-data.js?v=' + Date.now();
+    s.onload = renderBriefs;
+    document.head.appendChild(s);
+  })();
 </script>
 <footer class="site-footer">
   <div class="footer-top">

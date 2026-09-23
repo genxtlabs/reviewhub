@@ -3,6 +3,8 @@
 // each entry keeps this shape so the page renders it the same way either way.
 // SCHEMA (kept intentionally simple/static so this never depends on the StockPulse backend being live):
 //   date: "DD Mon YYYY" or a range like "15-18 Sep 2026" for a weekly recap
+//   mood: one of "positive" | "upbeat" | "mixed" | "negative" — drives the card's mood-badge color
+//   moodLabel: short display text for the badge (e.g. "Positive", "Upbeat", "Mixed", "Cautious")
 //   wittyLine: one line, no stock-specific calls
 //   verdict: a read on the OVERALL MARKET MOOD only — never a buy/sell/hold call on any
 //            individual stock. Informational tone only (e.g. "cautiously positive", "choppy, event-heavy").
@@ -19,6 +21,8 @@
 const DAILY_BRIEFS = [
   {
     date: "23 Sep 2026",
+    mood: "positive",
+    moodLabel: "Positive",
     wittyLine: "Metals and cooling oil did the heavy lifting for the market today. The Tata Sons saga did some lifting of its own — straight into a TVS warehouse.",
     verdict: "A constructive session on the surface: both benchmarks advanced through the afternoon on metal-stock strength and easing crude, and fresh upgrades to India's growth outlook added a genuinely positive undertone. But it's not an all-clear - IT stocks lagged, and the Tata Sons governance dispute just gained a new, more personal dimension that keeps that overhang firmly in place.",
     assumptions: [
@@ -41,6 +45,8 @@ const DAILY_BRIEFS = [
   },
   {
     date: "22 Sep 2026",
+    mood: "positive",
+    moodLabel: "Positive",
     wittyLine: "Oil's down for the fourth day running. NSE's own listing premium is falling almost as fast.",
     verdict: "A quietly positive, if fragile, session. Falling crude oil (a fourth straight day of declines) and softer US bond yields lifted both benchmarks in early trade, with real estate leading gainers and IT lagging. The bigger undertone though: NSE's own IPO premium has cooled sharply ahead of Thursday's listing, and September's foreign outflows have now crossed ₹23,000 crore despite last week's brief buying spurt - a reminder that this recovery is tentative, not a clean trend reversal.",
     assumptions: [
@@ -64,6 +70,8 @@ const DAILY_BRIEFS = [
   },
   {
     date: "21 Sep 2026",
+    mood: "upbeat",
+    moodLabel: "Upbeat",
     wittyLine: "The market cheered cheaper oil today. HDFC Bank, meanwhile, finally cheered up about who's taking the corner office.",
     verdict: "A genuinely upbeat start to the week. Cooling crude oil and renewed foreign fund buying lifted both benchmarks through the morning, continuing the tentative stabilization seen at the end of last week. NSE's own IPO closing with healthy demand across categories adds to the positive tone, though elevated August inflation and the still-unresolved Tata Sons governance dispute remain real overhangs.",
     assumptions: [
@@ -84,6 +92,8 @@ const DAILY_BRIEFS = [
   },
   {
     date: "15-18 Sep 2026",
+    mood: "mixed",
+    moodLabel: "Mixed",
     wittyLine: "Sensex just logged its longest losing streak since 2020. Nifty, standing right next to it, quietly had its best run in a month.",
     verdict: "A genuinely mixed week. The Sensex extended its losing streak to a sixth straight week — its longest since 2020 — dragged down by IT-sector weakness and uncertainty from a public governance dispute at Tata Sons. The Nifty, in contrast, bucked the trend with three straight days of gains on banking and insurance strength. FII selling pressure eased by Friday and DIIs stayed net buyers through the week, which helped cushion the broader market even as headline sentiment stayed cautious.",
     assumptions: [
