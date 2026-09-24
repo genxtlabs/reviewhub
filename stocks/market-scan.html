@@ -5,25 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>ReviewHub — Market scan</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
 <style>
+  :root {
+    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
+    --border: #e2e0da; --border-hover: #c9c6bd;
+    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
+    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
+    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
+    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
+    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+  }
+  .ambient, .grain { display: none; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
   .scan-table-wrap { overflow-x: auto; margin-top: 20px; }
   .scan-table { width: 100%; border-collapse: collapse; min-width: 760px; }
   .scan-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; padding: 12px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
   .scan-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: middle; color: var(--text-secondary); white-space: nowrap; }
   .scan-table tr:last-child td { border-bottom: none; }
   .scan-name { font-weight: 600; color: var(--text); }
-  .scan-rank { font-family: 'Fraunces', serif; font-weight: 700; color: var(--text-muted); font-size: 13px; }
+  .scan-rank { font-family: 'Times New Roman', Times, serif; font-weight: 700; color: var(--text-muted); font-size: 13px; }
   .pct.up { color: var(--verdict-must); font-weight: 700; }
   .pct.down { color: var(--verdict-skip); font-weight: 700; }
   .scan-note { margin-top: 28px; padding: 18px 22px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; }
-  .scan-note h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; margin: 0 0 6px; color: var(--text); }
+  .scan-note h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15px; margin: 0 0 6px; color: var(--text); }
   .scan-note p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
   .scan-note + .scan-note { margin-top: 14px; }
   .snapshot-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); background: var(--bg-elevated); border: 1px solid var(--border); padding: 4px 12px; border-radius: 100px; margin-bottom: 4px; }
   .criteria-box { margin-top: 18px; padding: 18px 22px; background: var(--bg-elevated-2); border: 1px solid var(--border); border-radius: 10px; }
-  .criteria-box h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; margin: 0 0 10px; color: var(--text); }
+  .criteria-box h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 14px; margin: 0 0 10px; color: var(--text); }
   .criteria-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
   .criteria-list li { font-size: 13px; color: var(--text-secondary); }
   .criteria-list code { font-family: ui-monospace, monospace; font-size: 12px; background: var(--bg-elevated); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--text); }

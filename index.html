@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>ReviewHub — Explore. Compare. Decide better.</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="styles.css">
 <style>
   /* Page-specific layout for the new homepage. Shared tokens (colors, glass
@@ -24,7 +23,7 @@
   .home-hero-body { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; padding: 56px 40px 40px; }
   .home-hero-content { max-width: 560px; }
   .home-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
-  .home-headline { font-family: 'Fraunces', serif; font-weight: 600; font-size: 50px; line-height: 1.08; margin: 0 0 16px; text-wrap: balance; }
+  .home-headline { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 50px; line-height: 1.08; margin: 0 0 16px; text-wrap: balance; }
   .home-headline .grad { background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .home-sub { font-size: 16px; line-height: 1.6; color: var(--text-secondary); max-width: 480px; margin: 0 0 30px; }
 
@@ -52,9 +51,9 @@
   .stack-card { position: absolute; width: 200px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px -15px rgba(0,0,0,.6); transition: transform .35s cubic-bezier(.2,.8,.2,1); cursor: pointer; }
   .stack-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
   .stack-card .scbody { padding: 11px 13px 13px; }
-  .stack-card .sctitle { font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stack-card .sctitle { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 14px; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stack-card .scfoot { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--text-secondary); }
-  .stack-card .scscore { font-family: 'Fraunces', serif; font-weight: 700; font-size: 15px; color: var(--text); }
+  .stack-card .scscore { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 15px; color: var(--text); }
   .stack-card .scdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 4px; }
   .stack-s1 { top: 10px; left: 40px; transform: rotate(-9deg); z-index: 1; }
   .stack-s2 { top: 30px; left: 170px; transform: rotate(4deg); z-index: 3; }
@@ -78,7 +77,7 @@
   .home-section-shell { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; }
   .home-section { padding: 56px 40px; }
   .home-section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; gap: 20px; flex-wrap: wrap; }
-  .home-section-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 28px; margin: 0; }
+  .home-section-head h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 28px; margin: 0; }
   .home-section-head .see-all { font-size: 13px; font-weight: 700; color: var(--accent-solid); white-space: nowrap; }
   .home-section-head .see-all:hover { color: var(--accent-solid-hover); }
   .home-divider { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 15%, var(--border) 85%, transparent); }
@@ -95,15 +94,15 @@
   .tcard .poster { position: relative; width: 100%; aspect-ratio: 2/3; background-size: cover; background-position: center; display: flex; align-items: flex-end; }
   .tcard .poster::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.75) 100%); }
   .tcard.feature .poster { aspect-ratio: auto; height: 100%; }
-  .tcard .rank { position: absolute; top: 10px; left: 10px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; background: rgba(13,11,10,.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 700; font-size: 13px; border: 1px solid rgba(255,255,255,.1); }
-  .tcard .initial { position: relative; z-index: 1; font-family: 'Fraunces', serif; font-size: 44px; color: rgba(255,255,255,.85); line-height: 1; padding: 0 0 8px 14px; }
+  .tcard .rank { position: absolute; top: 10px; left: 10px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; background: rgba(13,11,10,.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 13px; border: 1px solid rgba(255,255,255,.1); }
+  .tcard .initial { position: relative; z-index: 1; font-family: 'Times New Roman', Times, serif; font-size: 44px; color: rgba(255,255,255,.85); line-height: 1; padding: 0 0 8px 14px; }
   .tcard.feature .initial { font-size: 72px; }
   .tcard .body { padding: 14px 16px 16px; }
-  .tcard .title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; line-height: 1.3; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tcard .title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15px; line-height: 1.3; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .tcard.feature .title { font-size: 22px; }
   .tcard .meta { font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px; }
   .tcard .foot { display: flex; align-items: center; justify-content: space-between; }
-  .tcard .score { font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; }
+  .tcard .score { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 16px; }
   .tcard.feature .score { font-size: 24px; }
   .tcard .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 6px currentColor; }
   .tcard .vlabel { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
@@ -112,7 +111,7 @@
   .stocks-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
   .stocks-card { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 26px; transition: border-color .2s ease, transform .2s ease; }
   .stocks-card:hover { border-color: rgba(74,222,128,.35); transform: translateY(-3px); }
-  .stocks-card h3 { font-family: 'Fraunces', serif; font-size: 19px; margin: 0 0 8px; font-weight: 600; }
+  .stocks-card h3 { font-family: 'Times New Roman', Times, serif; font-size: 19px; margin: 0 0 8px; font-weight: 600; }
   .stocks-card p { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 16px; }
   .stocks-card .go { font-size: 13px; font-weight: 700; color: #4ade80; }
   .stocks-note { grid-column: 1/-1; font-size: 12px; color: var(--text-faint); border-top: 1px solid var(--border); padding-top: 14px; margin-top: 2px; line-height: 1.6; }
@@ -340,7 +339,7 @@
         <div class="title" title="${item.title}">${item.title}</div>
         <div class="meta">${metaLine}</div>
         <div class="foot">
-          <span class="score">${item.score}<span style="font-size:11px;color:var(--text-muted);font-family:'Manrope',sans-serif;"> /10</span></span>
+          <span class="score">${item.score}<span style="font-size:11px;color:var(--text-muted);font-family:'Times New Roman',Times,serif;"> /10</span></span>
           <span class="vlabel"><span class="dot" style="background:${v.color};color:${v.color};"></span>${v.label}</span>
         </div>
       </div>
@@ -353,7 +352,7 @@
     return `<div class="leaderboard-row" onclick="location.href='${href}'">
       <div class="leaderboard-rank">${rank}</div>
       <div class="lb-poster" style="width:44px;height:66px;flex-shrink:0;border-radius:6px;${posterStyle(item)};background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;">
-        ${(item.posterImage || item.posterUrl) ? '' : `<span style="font-family:'Fraunces',serif;font-size:20px;color:rgba(255,255,255,.9);">${item.title.charAt(0)}</span>`}
+        ${(item.posterImage || item.posterUrl) ? '' : `<span style="font-family:'Times New Roman',Times,serif;font-size:20px;color:rgba(255,255,255,.9);">${item.title.charAt(0)}</span>`}
       </div>
       <div class="leaderboard-info"><div class="card-title">${item.title}</div><div class="card-meta">${metaLine}</div></div>
       <div class="leaderboard-score"><span class="score">${item.score}</span><span class="score-suffix">/10</span></div>
@@ -391,7 +390,7 @@
       const v = verdictFor(m, false);
       const posterHTML = (m.posterImage || m.posterUrl)
         ? `<img src="${m.posterImage || m.posterUrl}" alt="">`
-        : `<div style="width:100%;aspect-ratio:2/3;${posterStyle(m)};display:flex;align-items:flex-end;padding:10px;"><span style="font-family:'Fraunces',serif;font-size:36px;color:rgba(255,255,255,.85);">${m.title.charAt(0)}</span></div>`;
+        : `<div style="width:100%;aspect-ratio:2/3;${posterStyle(m)};display:flex;align-items:flex-end;padding:10px;"><span style="font-family:'Times New Roman',Times,serif;font-size:36px;color:rgba(255,255,255,.85);">${m.title.charAt(0)}</span></div>`;
       return `<div class="stack-card ${stackClasses[i] || 'stack-s1'}" onclick="location.href='movies/movie.html?id=${m.id}'">
         ${posterHTML}
         <div class="scbody"><div class="sctitle">${m.title}</div><div class="scfoot"><span class="scscore">${m.score}</span><span><span class="scdot" style="background:${v.color};"></span>${v.label}</span></div></div>

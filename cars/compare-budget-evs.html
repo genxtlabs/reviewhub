@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>ReviewHub — Budget Electric SUV Comparison</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
 <style>
   .cmp-hero { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; padding: 26px 40px 48px; }
@@ -14,13 +13,13 @@
   .cmp-nav-links a { color: var(--text-secondary); }
   .cmp-nav-links a:hover { color: var(--text); }
   .cmp-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fb923c; margin-bottom: 14px; }
-  .cmp-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 42px; line-height: 1.1; margin: 0 0 16px; max-width: 780px; }
+  .cmp-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 42px; line-height: 1.1; margin: 0 0 16px; max-width: 780px; }
   .cmp-sub { font-size: 15.5px; line-height: 1.6; color: var(--text-secondary); max-width: 680px; }
   .cmp-meta-row { display: flex; gap: 22px; margin-top: 20px; flex-wrap: wrap; }
   .cmp-meta-pill { font-size: 12px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; }
 
   .cmp-section { position: relative; z-index: 2; max-width: 1360px; margin: 0 auto; padding: 8px 40px 56px; }
-  .cmp-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 24px; margin: 0 0 22px; }
+  .cmp-section h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 24px; margin: 0 0 22px; }
 
   /* car cards row */
   .cmp-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
@@ -28,9 +27,9 @@
   .cmp-card:hover { border-color: rgba(255,122,69,.4); transform: translateY(-3px); }
   .cmp-card .cimg { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: #fff; }
   .cmp-card .cbody { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .cmp-card .cname { font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; line-height: 1.25; }
+  .cmp-card .cname { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15px; line-height: 1.25; }
   .cmp-card .cscore-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
-  .cmp-card .cscore { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; }
+  .cmp-card .cscore { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 20px; }
   .cmp-card .cverdict { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--text-secondary); }
   .cmp-card .cdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
   .cmp-card .cprice { font-size: 12px; color: var(--text-muted); }
@@ -48,7 +47,7 @@
   .callout-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .callout { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
   .callout .clabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #fb923c; margin-bottom: 8px; }
-  .callout .cwinner { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+  .callout .cwinner { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 17px; margin-bottom: 6px; }
   .callout p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
 
   /* per-car breakdown */
@@ -56,9 +55,9 @@
   .breakdown-row { background: rgba(255,255,255,.035); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; display: grid; grid-template-columns: 200px 1fr; gap: 26px; align-items: start; }
   .breakdown-row .bimg { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; background: #fff; }
   .breakdown-name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
-  .breakdown-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; }
+  .breakdown-name { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 20px; }
   .breakdown-score { display: flex; align-items: center; gap: 10px; }
-  .breakdown-score .num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 22px; }
+  .breakdown-score .num { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 22px; }
   .breakdown-verdict { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--text-secondary); }
   .breakdown-summary { font-size: 13.5px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 12px; }
   .breakdown-link { font-size: 13px; font-weight: 700; color: var(--accent-solid); }
@@ -158,7 +157,7 @@
   function posterMarkup(car, cls) {
     const src = car.posterImage || car.posterUrl;
     if (src) return `<img class="${cls}" src="${src}" alt="">`;
-    return `<div class="${cls}" style="background:${car.posterGrad}; display:flex; align-items:center; justify-content:center;"><span style="font-family:'Fraunces',serif; font-size:32px; color:rgba(255,255,255,.9);">${car.title.charAt(0)}</span></div>`;
+    return `<div class="${cls}" style="background:${car.posterGrad}; display:flex; align-items:center; justify-content:center;"><span style="font-family:'Times New Roman',Times,serif; font-size:32px; color:rgba(255,255,255,.9);">${car.title.charAt(0)}</span></div>`;
   }
 
   function render() {
@@ -183,7 +182,7 @@
           <div class="cname">${c.title}</div>
           <div class="cprice">${c.priceRange}</div>
           <div class="cscore-row">
-            <span class="cscore">${c.score}<span style="font-size:11px;color:var(--text-muted);font-family:'Manrope',sans-serif;">/10</span></span>
+            <span class="cscore">${c.score}<span style="font-size:11px;color:var(--text-muted);font-family:'Times New Roman',Times,serif;">/10</span></span>
             <span class="cverdict"><span class="cdot" style="background:${verdictColor(c.verdictKey)};"></span>${verdictLabel(c.verdictKey)}</span>
           </div>
         </div>
@@ -240,7 +239,7 @@
           <div class="breakdown-name-row">
             <span class="breakdown-name">${c.title}</span>
             <div class="breakdown-score">
-              <span class="num">${c.score}<span style="font-size:12px;color:var(--text-muted);font-family:'Manrope',sans-serif;">/10</span></span>
+              <span class="num">${c.score}<span style="font-size:12px;color:var(--text-muted);font-family:'Times New Roman',Times,serif;">/10</span></span>
               <span class="breakdown-verdict"><span class="cdot" style="width:7px;height:7px;border-radius:50%;background:${verdictColor(c.verdictKey)};display:inline-block;"></span>${verdictLabel(c.verdictKey)}</span>
             </div>
           </div>

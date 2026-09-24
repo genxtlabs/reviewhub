@@ -5,31 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>ReviewHub — Daily market brief</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="../styles.css">
 <style>
+  :root {
+    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
+    --border: #e2e0da; --border-hover: #c9c6bd;
+    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
+    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
+    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
+    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
+    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+  }
+  .ambient, .grain { display: none; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
   .td-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
-  .td-card { background: rgba(255,255,255,.04); border: 1px solid #232a33; border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color .15s ease; }
-  .td-card:hover, .td-card.active { border-color: #22d3ee; }
-  .td-card-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(34,211,238,.06); border-bottom: 1px solid #232a33; }
-  .td-date { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #22d3ee; font-weight: 600; }
-  .td-mood-badge { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: .05em; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; }
+  .td-card { background: #ffffff; border: 1px solid #e2e0da; border-radius: 8px; overflow: hidden; cursor: pointer; transition: border-color .15s ease; }
+  .td-card:hover, .td-card.active { border-color: #be185d; }
+  .td-card-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: #f7f7f5; border-bottom: 1px solid #e2e0da; }
+  .td-date { font-family: 'Times New Roman', Times, serif; font-size: 11px; color: #be185d; font-weight: 600; }
+  .td-mood-badge { font-family: 'Times New Roman', Times, serif; font-size: 9.5px; font-weight: 700; letter-spacing: .05em; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; }
   .td-card-body { padding: 16px 14px; }
-  .td-witty { font-size: 13.5px; line-height: 1.55; color: #e7edf2; margin-bottom: 16px; min-height: 62px; }
-  .td-tape { display: flex; gap: 8px; overflow-x: auto; border-top: 1px dashed #232a33; padding-top: 10px; }
-  .td-tape-item { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; color: #e7edf2; white-space: nowrap; padding: 3px 8px; background: rgba(255,255,255,.04); border-radius: 4px; }
-  .td-detail { margin: 0 0 20px; background: rgba(255,255,255,.04); border: 1px solid #232a33; border-radius: 8px; padding: 26px; }
-  .td-detail h4 { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: #22d3ee; margin: 20px 0 10px; }
+  .td-witty { font-size: 13.5px; line-height: 1.55; color: #1a1a1a; margin-bottom: 16px; min-height: 62px; }
+  .td-tape { display: flex; gap: 8px; overflow-x: auto; border-top: 1px dashed #e2e0da; padding-top: 10px; }
+  .td-tape-item { font-family: 'Times New Roman', Times, serif; font-size: 10.5px; font-weight: 700; color: #2a2a26; white-space: nowrap; padding: 3px 8px; background: #f0f0ed; border-radius: 4px; }
+  .td-detail { margin: 0 0 20px; background: #fbfbf9; border: 1px solid #e2e0da; border-radius: 8px; padding: 26px; }
+  .td-detail h4 { font-family: 'Times New Roman', Times, serif; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: #be185d; margin: 20px 0 10px; }
   .td-detail h4:first-child { margin-top: 0; }
-  .td-detail p, .td-detail li { font-size: 13.5px; line-height: 1.65; color: #8b98a5; }
+  .td-detail p, .td-detail li { font-size: 13.5px; line-height: 1.65; color: #5c5a54; }
   .td-detail ul { margin: 0; padding-left: 18px; }
-  .td-note { font-size: 11.5px; color: #8b98a5; font-style: italic; margin: -2px 0 10px; }
-  .td-watch-row, .td-update-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #232a33; }
+  .td-note { font-size: 11.5px; color: #726f68; font-style: italic; margin: -2px 0 10px; }
+  .td-watch-row, .td-update-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #e2e0da; }
   .td-watch-row:last-child, .td-update-row:last-child { border-bottom: none; }
-  .td-row-ticker { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 12.5px; color: #e7edf2; flex-shrink: 0; width: 130px; }
-  .td-row-name { font-size: 10px; color: #8b98a5; margin-top: 2px; }
-  .td-row-text { font-size: 13.5px; line-height: 1.55; color: #8b98a5; }
-  .td-close-btn { float: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8b98a5; background: none; border: 1px solid #232a33; border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+  .td-row-ticker { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 12.5px; color: #1a1a1a; flex-shrink: 0; width: 130px; }
+  .td-row-name { font-size: 10px; color: #726f68; margin-top: 2px; }
+  .td-row-text { font-size: 13.5px; line-height: 1.55; color: #5c5a54; }
+  .td-close-btn { float: right; font-family: 'Times New Roman', Times, serif; font-size: 11px; color: #726f68; background: none; border: 1px solid #e2e0da; border-radius: 4px; padding: 6px 12px; cursor: pointer; }
   @media (max-width: 900px) {
     .td-grid { grid-template-columns: 1fr; }
   }
@@ -75,7 +86,7 @@
 </div>
 
 <script>
-  const MOOD_COLOR = { positive: '#34d399', upbeat: '#a3e635', mixed: '#fbbf24', negative: '#f87171' };
+  const MOOD_COLOR = { positive: '#15803d', upbeat: '#4d7c0f', mixed: '#b45309', negative: '#b91c1c' };
   let openBriefIndex = null;
 
   function tapeTickers(b) {
@@ -133,7 +144,7 @@
       <div class="td-card" id="td-card-${i}" onclick="toggleBrief(${i})">
         <div class="td-card-head">
           <span class="td-date">${b.date}</span>
-          <span class="td-mood-badge" style="background:${(MOOD_COLOR[b.mood] || '#8b98a5')}22; color:${MOOD_COLOR[b.mood] || '#8b98a5'}">${b.moodLabel || ''}</span>
+          <span class="td-mood-badge" style="background:${(MOOD_COLOR[b.mood] || '#726f68')}22; color:${MOOD_COLOR[b.mood] || '#726f68'}">${b.moodLabel || ''}</span>
         </div>
         <div class="td-card-body">
           <div class="td-witty">&ldquo;${b.wittyLine}&rdquo;</div>
