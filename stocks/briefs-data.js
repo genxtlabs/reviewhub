@@ -20,6 +20,30 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "24 Sep 2026",
+    mood: "negative",
+    moodLabel: "Negative",
+    wittyLine: "Everyone else's portfolio had a rough day. NSE, trading in public for the very first time, somehow didn't.",
+    verdict: "A sharply negative, broad-based sell-off - the worst single session for both benchmarks in roughly ten weeks. A global bond-market rout, triggered by hot US inflation data and rising Middle East-driven oil prices, pushed traders to price in far higher odds of a further US rate hike, and that risk-off mood hit Indian equities hard across the board. The one bright spot: NSE's own market debut went smoothly, listing at a premium and extending gains through the day even as the broader mood soured. The unresolved Tata Sons governance dispute remains a live overhang, with an AGM now reportedly expected within a month.",
+    assumptions: [
+      "Sensex closed at 73,580.54, down 1,247.71 points (-1.67%); Nifty closed at 23,063.10, down 383.70 points (-1.64%) - the steepest single-day decline for both benchmarks in roughly ten weeks",
+      "Global bond markets sold off sharply, with US 30-year Treasury yields hitting their highest level since 2004, after hot US inflation data pushed the market-implied odds of a further Fed rate hike in October up to 71%, from just 11% a month ago",
+      "Brent crude extended its climb to around $103-105/barrel on Middle East tensions tied to the Strait of Hormuz, reversing the cooling trend seen through most of this week",
+      "NSE made its stock market debut today, listing at a modest 0.84% premium (₹1,800 vs the ₹1,785 issue price) before rallying as much as 3.83% intraday to a high of ₹1,869"
+    ],
+    news: [
+      "Global bond markets sold off sharply, sending US 30-year Treasury yields to their highest level since 2004, as hot US inflation data pushed the market-implied odds of a further Federal Reserve rate hike in October up to 71%, from just 11% a month ago.",
+      "Brent crude extended its recent climb to around $103-105/barrel, driven by Middle East tensions linked to the Strait of Hormuz - a reversal of the cooling trend seen through most of this week.",
+      "Tata Sons is reportedly planning to hold its AGM within the next month, as the unresolved boardroom dispute between the board and Tata Trusts over N. Chandrasekaran's reappointment continues."
+    ],
+    stocksToWatch: [
+      { ticker: "TATA GROUP", name: "TCS, Tata Motors, Tata Chemicals, Titan, Tata Steel & others", reason: "Tata Sons is reportedly planning to hold its AGM within the next month, which could force a resolution to the unresolved board-vs-Tata Trusts dispute over Chandrasekaran's reappointment." }
+    ],
+    stockUpdates: [
+      { ticker: "NSE", name: "National Stock Exchange", update: "Made its stock market debut today after one of India's biggest-ever IPOs (₹22,562 crore). Shares listed at a modest 0.84% premium over the ₹1,785 issue price, touched an intraday high of ₹1,869 (+3.83% from listing), and settled around +3.13% for the day. Market cap stood at ₹4,59,137 crore after listing." }
+    ]
+  },
+  {
     date: "23 Sep 2026",
     mood: "positive",
     moodLabel: "Positive",
