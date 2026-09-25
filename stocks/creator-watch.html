@@ -30,6 +30,24 @@
   .cw-title a:hover { color: var(--accent-solid); }
   .cw-summary { font-size: 13.5px; line-height: 1.65; color: var(--text-secondary); }
   .cw-watch-link { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--accent-solid); text-decoration: none; }
+  .cw-topics { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+  .cw-topic { font-size: 10.5px; font-weight: 600; color: var(--text-muted); background: #f0f0ed; border: 1px solid var(--border); padding: 2px 9px; border-radius: 100px; }
+  .cw-verify { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.55; color: #92620c; background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.25); border-radius: 6px; padding: 8px 12px; margin-top: 10px; }
+  .cw-verify b { flex-shrink: 0; white-space: nowrap; }
+  .cw-directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0 32px; }
+  .cw-dir-card { display: flex; gap: 12px; align-items: flex-start; padding: 16px; }
+  .cw-dir-name { font-weight: 700; font-size: 13px; color: var(--text); text-decoration: none; }
+  .cw-dir-name:hover { color: var(--accent-solid); }
+  .cw-dir-focus { font-size: 12px; line-height: 1.5; color: var(--text-muted); margin-top: 4px; }
+  .cw-compare { margin: 28px 0; padding: 20px 24px; }
+  .cw-compare h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 16px; margin: 0 0 4px; color: var(--text); }
+  .cw-compare-sub { font-size: 11px; color: var(--text-muted); margin-bottom: 14px; }
+  .cw-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .cw-compare-grid { grid-template-columns: 1fr; } }
+  .cw-compare-take { padding: 12px 14px; background: #f7f7f5; border: 1px solid var(--border); border-radius: 8px; }
+  .cw-compare-take b { display: block; font-size: 12.5px; color: var(--text); margin-bottom: 5px; }
+  .cw-compare-take span { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); }
+  .cw-compare-note { font-size: 12px; line-height: 1.55; color: var(--text-muted); font-style: italic; margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -63,15 +81,55 @@
   </div>
   <p class="hero-synopsis" style="margin:-8px 0 8px;">What reputable Indian finance YouTubers are actually saying, this week — summarized and attributed, never scored. If a creator states a personal opinion or stock call, it's reported as theirs, not ours.</p>
 
+  <div id="cw-directory" class="cw-directory"></div>
+  <div id="cw-compare"></div>
+
+  <div class="section-heading" style="padding-top:8px; padding-bottom:8px;">
+    <h2>Latest videos</h2>
+  </div>
   <div id="cw-list"></div>
 
   <div class="ai-disclaimer">
-    These are real creators' own stated opinions and analysis, summarized here for informational awareness only. ReviewHub does not verify, endorse, fact-check the creators' claims, or take a position on any opinion, stock, or call mentioned. Unlike our Movies and Cars pages, nothing here is aggregated into a ReviewHub score or verdict — this is attribution, not advice. Always do your own research or consult a registered investment adviser before making financial decisions.
+    These are real creators' own stated opinions and analysis, summarized here for informational awareness only. ReviewHub does not verify, endorse, fact-check the creators' claims, or take a position on any opinion, stock, or call mentioned. Unlike our Movies and Cars pages, nothing here is aggregated into a ReviewHub score or verdict — this is attribution, not advice. We link to and summarize each creator's publicly available video in our own words; we do not reproduce their video or transcript content, and listing a channel here is not an endorsement of it. Always do your own research or consult a registered investment adviser before making financial decisions.
   </div>
 </div>
 
 <script src="creator-watch-data.js"></script>
 <script>
+  function fmtViews(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+    return String(n);
+  }
+
+  function renderDirectory() {
+    const el = document.getElementById('cw-directory');
+    el.innerHTML = CREATORS.map((c) => {
+      const initial = c.channel.trim().charAt(0).toUpperCase();
+      return `
+      <div class="card-box cw-dir-card">
+        <div class="cw-avatar" style="background:${c.avatarColor}; width:38px; height:38px; font-size:14px;">${initial}</div>
+        <div>
+          <a class="cw-dir-name" href="${c.channelUrl}" target="_blank" rel="noopener">${c.channel}</a>
+          <div class="cw-dir-focus">${c.focus}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderComparisons() {
+    const el = document.getElementById('cw-compare');
+    if (typeof CREATOR_COMPARISONS === 'undefined' || !CREATOR_COMPARISONS.length) { el.innerHTML = ''; return; }
+    el.innerHTML = CREATOR_COMPARISONS.map((c) => `
+      <div class="card-box cw-compare">
+        <h3>${c.title}</h3>
+        <div class="cw-compare-sub">Where tracked creators' views overlap &mdash; presented side by side, neither ranked nor endorsed.</div>
+        <div class="cw-compare-grid">${c.takes.map((t) => `
+          <div class="cw-compare-take"><b>${t.channel}</b><span>${t.position}</span></div>`).join('')}</div>
+        <div class="cw-compare-note">${c.note}</div>
+      </div>`).join('');
+  }
+
   function renderCreatorWatch() {
     const el = document.getElementById('cw-list');
     document.getElementById('results-label').textContent = `${CREATOR_WATCH.length} video${CREATOR_WATCH.length === 1 ? '' : 's'}`;
@@ -79,12 +137,6 @@
     if (!CREATOR_WATCH.length) {
       el.innerHTML = `<div class="empty-state">Nothing tracked yet.</div>`;
       return;
-    }
-
-    function fmtViews(n) {
-      if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-      if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
-      return String(n);
     }
 
     el.innerHTML = CREATOR_WATCH.map((v) => {
@@ -98,13 +150,17 @@
             <span class="cw-meta">${v.publishedDate} &middot; ${fmtViews(v.viewCount)} views &middot; ${fmtViews(v.subscriberCount)} subs</span>
           </div>
           <div class="cw-title"><a href="${v.url}" target="_blank" rel="noopener">${v.videoTitle}</a></div>
+          ${v.topics && v.topics.length ? `<div class="cw-topics">${v.topics.map((t) => `<span class="cw-topic">${t}</span>`).join('')}</div>` : ''}
           <div class="cw-summary">${v.summary}</div>
+          ${v.verify ? `<div class="cw-verify"><b>Worth verifying:</b><span>${v.verify}</span></div>` : ''}
           <a class="cw-watch-link" href="${v.url}" target="_blank" rel="noopener">Watch the full video &rarr;</a>
         </div>
       </div>`;
     }).join('');
   }
 
+  renderDirectory();
+  renderComparisons();
   renderCreatorWatch();
 </script>
 <footer class="site-footer">
