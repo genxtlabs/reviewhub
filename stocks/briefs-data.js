@@ -5,11 +5,20 @@
 //   date: "DD Mon YYYY" or a range like "15-18 Sep 2026" for a weekly recap
 //   mood: one of "positive" | "upbeat" | "mixed" | "negative" — drives the card's mood-badge color
 //   moodLabel: short display text for the badge (e.g. "Positive", "Upbeat", "Mixed", "Cautious")
+//   dataStatus: honest label for how current the index figures below are — e.g. "Intraday — early
+//               trade (~11:00 AM IST)", "End-of-day close", "Week-end close (Friday)". Never claim
+//               a live/real-time feed this site doesn't have.
+//   indices: array of { name, value?, changePct } for the session's headline index levels (Market
+//            Overview). `value` is optional — omit it rather than back-computing/guessing a level
+//            that was never actually verified; changePct alone is still honest and useful.
 //   wittyLine: one line, no stock-specific calls
 //   verdict: a read on the OVERALL MARKET MOOD only — never a buy/sell/hold call on any
 //            individual stock. Informational tone only (e.g. "cautiously positive", "choppy, event-heavy").
 //   assumptions: bullet list of the macro/flow inputs the verdict rests on (index levels, FII/DII flow,
-//                global cues, rate/oil context) — again, no stock-specific recommendations.
+//                global cues, rate/oil context) — again, no stock-specific recommendations. Displayed
+//                on the page as "Key Drivers."
+//   watchNext: one short, forward-looking sentence — the macro-level "what to monitor next," distinct
+//              from any single stock (stocksToWatch below is the per-stock version of this).
 //   news: bullet list of real, verifiable macro/economy/policy headlines for the period.
 //   stocksToWatch: array of { ticker, name, reason } — real names with a genuine reason to pay
 //                  attention today (upcoming listing, pending regulatory decision, ongoing dispute,
@@ -23,6 +32,12 @@ const DAILY_BRIEFS = [
     date: "25 Sep 2026",
     mood: "mixed",
     moodLabel: "Mixed",
+    dataStatus: "Intraday — early trade (~11:00 AM IST)",
+    indices: [
+      { name: "SENSEX", value: "73,526", changePct: -0.07 },
+      { name: "NIFTY 50", value: "23,035", changePct: -0.12 }
+    ],
+    watchNext: "Whether today's stabilization holds, further US-Iran truce developments and their effect on oil, and the next move in the Tata Sons legal dispute.",
     wittyLine: "The market took a breather today after yesterday's tumble. Tata Sons, meanwhile, took out the lawyers.",
     verdict: "A quiet, range-bound session after yesterday's steep sell-off - markets are essentially pausing to catch their breath. Cooling crude oil, on growing hopes of a US-Iran truce, is helping ease yesterday's inflation scare, but Nifty IT remains a specific drag, extending a rough 2026 for the sector. The bigger story today is off the exchange: Tata Sons has formally defended Chandrasekaran's reappointment with three legal opinions, pushing the unresolved Tata Trusts dispute closer to an open legal battle.",
     assumptions: [
@@ -47,6 +62,12 @@ const DAILY_BRIEFS = [
     date: "24 Sep 2026",
     mood: "negative",
     moodLabel: "Negative",
+    dataStatus: "End-of-day close",
+    indices: [
+      { name: "SENSEX", value: "73,580.54", changePct: -1.67 },
+      { name: "NIFTY 50", value: "23,063.10", changePct: -1.64 }
+    ],
+    watchNext: "Whether today's global bond and oil shock proves a one-day move or the start of a longer risk-off stretch, and how NSE trades in its first full week.",
     wittyLine: "Everyone else's portfolio had a rough day. NSE, trading in public for the very first time, somehow didn't.",
     verdict: "A sharply negative, broad-based sell-off - the worst single session for both benchmarks in roughly ten weeks. A global bond-market rout, triggered by hot US inflation data and rising Middle East-driven oil prices, pushed traders to price in far higher odds of a further US rate hike, and that risk-off mood hit Indian equities hard across the board. The one bright spot: NSE's own market debut went smoothly, listing at a premium and extending gains through the day even as the broader mood soured. The unresolved Tata Sons governance dispute remains a live overhang, with an AGM now reportedly expected within a month.",
     assumptions: [
@@ -71,6 +92,12 @@ const DAILY_BRIEFS = [
     date: "23 Sep 2026",
     mood: "positive",
     moodLabel: "Positive",
+    dataStatus: "Intraday — early-afternoon trade (~1:00 PM IST)",
+    indices: [
+      { name: "SENSEX", value: "74,907", changePct: 0.51 },
+      { name: "NIFTY 50", value: "23,450", changePct: 0.52 }
+    ],
+    watchNext: "Tomorrow's (24 Sep) NSE listing, and whether the Tata Sons dispute escalates further after today's TVS Motor revelations.",
     wittyLine: "Metals and cooling oil did the heavy lifting for the market today. The Tata Sons saga did some lifting of its own — straight into a TVS warehouse.",
     verdict: "A constructive session on the surface: both benchmarks advanced through the afternoon on metal-stock strength and easing crude, and fresh upgrades to India's growth outlook added a genuinely positive undertone. But it's not an all-clear - IT stocks lagged, and the Tata Sons governance dispute just gained a new, more personal dimension that keeps that overhang firmly in place.",
     assumptions: [
@@ -95,6 +122,12 @@ const DAILY_BRIEFS = [
     date: "22 Sep 2026",
     mood: "positive",
     moodLabel: "Positive",
+    dataStatus: "Intraday — early trade",
+    indices: [
+      { name: "SENSEX", value: "74,915", changePct: 0.08 },
+      { name: "NIFTY 50", value: "23,450", changePct: 0.15 }
+    ],
+    watchNext: "Thursday's (24 Sep) NSE listing, and whether September's cumulative FII outflow trend turns around before month-end.",
     wittyLine: "Oil's down for the fourth day running. NSE's own listing premium is falling almost as fast.",
     verdict: "A quietly positive, if fragile, session. Falling crude oil (a fourth straight day of declines) and softer US bond yields lifted both benchmarks in early trade, with real estate leading gainers and IT lagging. The bigger undertone though: NSE's own IPO premium has cooled sharply ahead of Thursday's listing, and September's foreign outflows have now crossed ₹23,000 crore despite last week's brief buying spurt - a reminder that this recovery is tentative, not a clean trend reversal.",
     assumptions: [
@@ -120,6 +153,12 @@ const DAILY_BRIEFS = [
     date: "21 Sep 2026",
     mood: "upbeat",
     moodLabel: "Upbeat",
+    dataStatus: "Intraday — early-to-midday trade",
+    indices: [
+      { name: "SENSEX", changePct: 0.85 },
+      { name: "NIFTY 50", changePct: 0.36 }
+    ],
+    watchNext: "NSE's listing timeline following today's IPO close, and any RBI response on the HDFC Bank CEO shortlist.",
     wittyLine: "The market cheered cheaper oil today. HDFC Bank, meanwhile, finally cheered up about who's taking the corner office.",
     verdict: "A genuinely upbeat start to the week. Cooling crude oil and renewed foreign fund buying lifted both benchmarks through the morning, continuing the tentative stabilization seen at the end of last week. NSE's own IPO closing with healthy demand across categories adds to the positive tone, though elevated August inflation and the still-unresolved Tata Sons governance dispute remain real overhangs.",
     assumptions: [
@@ -142,6 +181,12 @@ const DAILY_BRIEFS = [
     date: "15-18 Sep 2026",
     mood: "mixed",
     moodLabel: "Mixed",
+    dataStatus: "Week-end close (Friday)",
+    indices: [
+      { name: "SENSEX", value: "74,294.96", changePct: -0.65 },
+      { name: "NIFTY 50", value: "23,346.40" }
+    ],
+    watchNext: "Whether the Tata Sons dispute resolves or escalates, and whether Nifty can extend its bank-led bounce into the following week.",
     wittyLine: "Sensex just logged its longest losing streak since 2020. Nifty, standing right next to it, quietly had its best run in a month.",
     verdict: "A genuinely mixed week. The Sensex extended its losing streak to a sixth straight week — its longest since 2020 — dragged down by IT-sector weakness and uncertainty from a public governance dispute at Tata Sons. The Nifty, in contrast, bucked the trend with three straight days of gains on banking and insurance strength. FII selling pressure eased by Friday and DIIs stayed net buyers through the week, which helped cushion the broader market even as headline sentiment stayed cautious.",
     assumptions: [

@@ -41,6 +41,21 @@
   .td-row-name { font-size: 10px; color: #726f68; margin-top: 2px; }
   .td-row-text { font-size: 13.5px; line-height: 1.55; color: #5c5a54; }
   .td-close-btn { float: right; font-family: 'Times New Roman', Times, serif; font-size: 11px; color: #726f68; background: none; border: 1px solid #e2e0da; border-radius: 4px; padding: 6px 12px; cursor: pointer; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; border: 1px solid #e2e0da; color: #726f68; }
+  .session-badge .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .session-badge.open { color: #15803d; border-color: rgba(21,128,61,.3); background: rgba(21,128,61,.06); }
+  .session-badge.open .dot { background: #15803d; box-shadow: 0 0 0 3px rgba(21,128,61,.15); }
+  .session-badge.closed .dot { background: #99968e; }
+  .td-datastatus { font-size: 11px; color: #99968e; margin: -14px 0 18px; }
+  .td-overview { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .td-idx { flex: 1; min-width: 140px; border: 1px solid #e2e0da; border-radius: 6px; padding: 10px 14px; background: #ffffff; }
+  .td-idx-name { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: #99968e; margin-bottom: 3px; }
+  .td-idx-value { font-family: 'Times New Roman', Times, serif; font-size: 17px; font-weight: 700; color: #1a1a1a; font-variant-numeric: tabular-nums; }
+  .td-idx-change { font-size: 12px; font-weight: 700; margin-left: 8px; font-variant-numeric: tabular-nums; }
+  .td-idx-change.up { color: #15803d; }
+  .td-idx-change.down { color: #b91c1c; }
+  .td-watchnext { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.55; color: #47453f; background: #f7f7f5; border: 1px solid #e2e0da; border-radius: 6px; padding: 12px 16px; margin: 10px 0 4px; }
+  .td-watchnext b { color: #be185d; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; font-size: 10.5px; letter-spacing: .07em; flex-shrink: 0; white-space: nowrap; padding-top: 1px; }
   @media (max-width: 900px) {
     .td-grid { grid-template-columns: 1fr; }
   }
@@ -75,7 +90,8 @@
     <h1>Daily market brief</h1>
     <span class="muted" id="results-label"></span>
   </div>
-  <p class="hero-synopsis" style="margin:-8px 0 8px;">Posted every trading morning, before market open. A read on the day's overall mood plus real, verified news — never a buy, sell, or hold call on any individual stock.</p>
+  <p class="hero-synopsis" style="margin:-8px 0 12px;">Posted every trading morning, before market open. A read on the day's overall mood plus real, verified news — never a buy, sell, or hold call on any individual stock.</p>
+  <div style="margin:0 0 8px;"><span class="session-badge" id="session-badge"><span class="dot"></span><span id="session-badge-text">&mdash;</span></span></div>
 
   <div class="td-grid" id="brief-grid"></div>
   <div id="brief-detail"></div>
@@ -97,10 +113,25 @@
     return out;
   }
 
+  function idxChangeHTML(idx) {
+    if (typeof idx.changePct !== 'number') return '';
+    const up = idx.changePct >= 0;
+    return `<span class="td-idx-change ${up ? 'up' : 'down'}">${up ? '+' : ''}${idx.changePct.toFixed(2)}%</span>`;
+  }
+
   function detailHTML(b) {
     return `
+      ${b.dataStatus ? `<div class="td-datastatus">Data status: ${b.dataStatus}</div>` : ''}
+      ${b.indices && b.indices.length ? `
+      <h4>Market overview</h4>
+      <div class="td-overview">${b.indices.map((idx) => `
+        <div class="td-idx">
+          <div class="td-idx-name">${idx.name}</div>
+          <span class="td-idx-value">${idx.value || '&mdash;'}</span>${idxChangeHTML(idx)}
+        </div>`).join('')}</div>` : ''}
       <h4>Verdict &middot; Market mood</h4><p>${b.verdict}</p>
-      <h4>Assumptions</h4><ul>${b.assumptions.map((a) => `<li>${a}</li>`).join('')}</ul>
+      ${b.watchNext ? `<div class="td-watchnext"><b>Watch next</b><span>${b.watchNext}</span></div>` : ''}
+      <h4>Key drivers</h4><ul>${b.assumptions.map((a) => `<li>${a}</li>`).join('')}</ul>
       <h4>News</h4><ul>${b.news.map((n) => `<li>${n}</li>`).join('')}</ul>
       ${b.stocksToWatch && b.stocksToWatch.length ? `
       <h4>Stocks to watch</h4>
@@ -155,12 +186,30 @@
     toggleBrief(0);
   }
 
+  function updateSessionBadge() {
+    const el = document.getElementById('session-badge');
+    const textEl = document.getElementById('session-badge-text');
+    const nowIst = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const day = nowIst.getDay();
+    const minutes = nowIst.getHours() * 60 + nowIst.getMinutes();
+    const isWeekday = day >= 1 && day <= 5;
+    const isMarketHours = minutes >= 9 * 60 + 15 && minutes <= 15 * 60 + 30;
+    const isOpen = isWeekday && isMarketHours;
+    el.classList.toggle('open', isOpen);
+    el.classList.toggle('closed', !isOpen);
+    const timeLabel = nowIst.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    textEl.textContent = (isOpen ? 'Market open' : 'Market closed') + ' · ' + timeLabel + ' IST';
+  }
+
   (function loadBriefsData() {
     const s = document.createElement('script');
     s.src = 'briefs-data.js?v=' + Date.now();
     s.onload = renderBriefs;
     document.head.appendChild(s);
   })();
+
+  updateSessionBadge();
+  setInterval(updateSessionBadge, 60000);
 </script>
 <footer class="site-footer">
   <div class="footer-top">
