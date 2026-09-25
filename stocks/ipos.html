@@ -33,9 +33,13 @@
   .ipo-status.closed { background: rgba(180,83,9,0.1); color: #92400e; }
   .ipo-status.listed { background: rgba(29,78,216,0.1); color: #1d4ed8; }
   .ipo-desc { font-size: 12.5px; color: var(--text-muted); margin: 4px 0 12px; line-height: 1.5; }
+  .ipo-sme-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 2px; }
   .ipo-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin-bottom: 10px; }
   .ipo-meta-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 600; }
   .ipo-meta-value { font-size: 13px; color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ipo-sub-badge { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ipo-sub-badge.hot { color: var(--pill-success-text); }
+  .ipo-sub-badge.cold { color: #b91c1c; }
   .ipo-sub-note { font-size: 12px; color: var(--text-secondary); padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.5; }
   .ipo-framework { padding: 24px 28px; margin-top: 32px; }
   .ipo-framework h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 20px; margin: 0 0 6px; color: var(--text); }
@@ -104,7 +108,9 @@
 
 <script>
   // Real, dated IPO data as of 25 Sep 2026 — sourced from public reporting (Business Standard,
-  // Groww, Chittorgarh, and issue-specific news coverage). Not a live feed; see disclaimer above.
+  // Groww, Chittorgarh, Upstox, Kotak Neo, and issue-specific news coverage). Subscription figures
+  // are a snapshot from the afternoon of 25 Sep 2026 and move constantly until an issue closes —
+  // not a live feed; see disclaimer below.
   const IPOS = [
     {
       name: "Reliance Jio (Jio Platforms)", status: "upcoming",
@@ -114,18 +120,108 @@
       note: "DRHP filed 19 Jun 2026; a 100% fresh issue of up to 27 crore equity shares (no offer-for-sale). Widely expected around Diwali 2026, though no official date has been set."
     },
     {
+      name: "Moneyview", status: "open",
+      desc: "Digital lending fintech.",
+      issueSize: "₹1,092 Cr (₹750 Cr fresh issue + ₹342 Cr offer-for-sale)", priceBand: "₹32 – ₹34",
+      dates: "Opens 24 Sep, closes 28 Sep 2026 · Listing 1 Oct 2026",
+      subscription: "5.58x", subStyle: "hot",
+      note: "The most heavily subscribed mainboard issue currently open, by a wide margin."
+    },
+    {
+      name: "A-One Steels India", status: "open",
+      desc: "Steel manufacturer.",
+      issueSize: "₹405 Cr (₹355 Cr fresh issue + ₹50 Cr offer-for-sale)", priceBand: "₹385 – ₹405",
+      dates: "Opens 24 Sep, closes 28 Sep 2026 · Listing 1 Oct 2026",
+      subscription: "1.26x", subStyle: "",
+      note: "Lot size 37 shares."
+    },
+    {
+      name: "German Green Steel and Power", status: "open",
+      desc: "Gujarat-based TMT steel producer.",
+      issueSize: "₹304 Cr (₹290 Cr fresh issue + ₹14 Cr offer-for-sale)", priceBand: "₹132 – ₹139",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
+      subscription: "1.58x", subStyle: "",
+      note: ""
+    },
+    {
       name: "Runwal Enterprises", status: "open",
       desc: "Mumbai-based real estate developer.",
       issueSize: "₹500 Cr", priceBand: "₹290 – ₹305",
       dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
-      note: "Lot size 49 shares (~₹14,945 minimum retail investment at the upper band)."
+      subscription: "0.41x", subStyle: "cold",
+      note: "Lot size 49 shares (~₹14,945 minimum retail investment at the upper band). Under-subscribed so far, with 4 days still to go."
     },
     {
       name: "Orient Cables (India)", status: "open",
       desc: "Cable manufacturer.",
       issueSize: "₹552 Cr (₹320 Cr fresh issue + ₹232 Cr offer-for-sale)", priceBand: "₹258 – ₹272",
       dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
+      subscription: "1.66x", subStyle: "",
       note: "Lot size 55 shares (~₹14,960 minimum retail investment at the upper band)."
+    },
+    {
+      name: "AceVector (Snapdeal)", status: "open",
+      desc: "Parent of e-commerce marketplace Snapdeal.",
+      issueSize: "₹420 Cr (₹287 Cr fresh issue + ₹133 Cr offer-for-sale)", priceBand: "₹30 – ₹32",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing 5 Oct 2026",
+      subscription: "0.20x", subStyle: "cold",
+      note: "Sharply under-subscribed so far — the weakest demand among currently open mainboard issues."
+    },
+    {
+      name: "Peshwa Wheat", status: "open", sme: true,
+      desc: "Wheat and flour milling.",
+      issueSize: "₹53.52 Cr", priceBand: "₹95 – ₹101",
+      dates: "Opens 24 Sep, closes 28 Sep 2026 · BSE SME listing 1 Oct 2026",
+      subscription: "1.97x", subStyle: "",
+      note: ""
+    },
+    {
+      name: "Roopa Screen", status: "open", sme: true,
+      desc: "Printing/screen manufacturing.",
+      issueSize: "₹19.20 Cr", priceBand: "₹60 – ₹64",
+      dates: "Opens 24 Sep, closes 28 Sep 2026 · BSE SME listing 1 Oct 2026",
+      subscription: "4.95x", subStyle: "hot",
+      note: ""
+    },
+    {
+      name: "Green Asia Impex", status: "open", sme: true,
+      desc: "Import/export trading.",
+      issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹85 – ₹90",
+      dates: "Opens 24 Sep, closes 28 Sep 2026 · NSE SME listing 1 Oct 2026",
+      subscription: "Not yet available", subStyle: "",
+      note: ""
+    },
+    {
+      name: "Sai Urja Indo Ventures", status: "open", sme: true,
+      desc: "Renewable energy-linked SME issue.",
+      issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹107 – ₹113",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · BSE SME listing 5 Oct 2026",
+      subscription: "0.04x", subStyle: "cold",
+      note: "Extremely under-subscribed so far among the SME issues currently open."
+    },
+    {
+      name: "Bench Mark Infotech Services", status: "open", sme: true,
+      desc: "IT services SME issue.",
+      issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹104 – ₹110",
+      dates: "Opens 25 Sep, closes 29 Sep 2026",
+      subscription: "0.21x", subStyle: "cold",
+      note: ""
+    },
+    {
+      name: "Himalayan Solar", status: "open", sme: true,
+      desc: "Solar energy SME issue.",
+      issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹98 – ₹103",
+      dates: "Opens 25 Sep, closes 29 Sep 2026",
+      subscription: "0.34x", subStyle: "cold",
+      note: ""
+    },
+    {
+      name: "Dudani Retail", status: "open", sme: true,
+      desc: "Retail SME issue.",
+      issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹29 (fixed price)",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
+      subscription: "Not yet available", subStyle: "",
+      note: ""
     },
     {
       name: "Varmora Granito", status: "closed",
@@ -142,13 +238,13 @@
       note: "Closed ~5.7–6x overall subscribed. Listed at ₹1,800 (+0.84% over issue price), touched an intraday high of ₹1,869, and closed its first trading day at ₹1,818. See our full coverage on the <a href=\"daily-brief.html\" style=\"color:var(--accent-solid); font-weight:600;\">Daily Brief</a>."
     },
     {
-      name: "Om Galaxy", status: "listed",
+      name: "Om Galaxy", status: "listed", sme: true,
       desc: "SME-platform issue.",
       issueSize: "₹105 Cr", priceBand: "—",
       dates: "Listed 18 Sep 2026", note: ""
     },
     {
-      name: "Maharaja & Speedex India", status: "listed",
+      name: "Maharaja & Speedex India", status: "listed", sme: true,
       desc: "SME-platform issue.",
       issueSize: "₹80.13 Cr", priceBand: "—",
       dates: "Listed 18 Sep 2026", note: ""
@@ -176,7 +272,10 @@
     document.getElementById("ipo-grid").innerHTML = list.map((i) => `
       <div class="card-box ipo-card">
         <div class="ipo-card-top">
-          <h3 class="ipo-name">${i.name}</h3>
+          <div>
+            ${i.sme ? '<span class="ipo-sme-tag">SME</span>' : ''}
+            <h3 class="ipo-name">${i.name}</h3>
+          </div>
           <span class="ipo-status ${i.status}">${STATUS_LABEL[i.status]}</span>
         </div>
         <div class="ipo-desc">${i.desc}</div>
@@ -184,8 +283,9 @@
           <div><div class="ipo-meta-label">Issue size</div><div class="ipo-meta-value">${i.issueSize}</div></div>
           <div><div class="ipo-meta-label">Price band</div><div class="ipo-meta-value">${i.priceBand}</div></div>
         </div>
-        <div class="ipo-meta-grid" style="grid-template-columns:1fr; margin-bottom: ${i.note ? '10px' : '0'};">
+        <div class="ipo-meta-grid">
           <div><div class="ipo-meta-label">Dates</div><div class="ipo-meta-value" style="font-size:12.5px;">${i.dates}</div></div>
+          ${i.subscription ? `<div><div class="ipo-meta-label">Subscription</div><div class="ipo-sub-badge ${i.subStyle || ''}">${i.subscription}</div></div>` : ''}
         </div>
         ${i.note ? `<div class="ipo-sub-note">${i.note}</div>` : ""}
       </div>
