@@ -20,6 +20,30 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "25 Sep 2026",
+    mood: "mixed",
+    moodLabel: "Mixed",
+    wittyLine: "The market took a breather today after yesterday's tumble. Tata Sons, meanwhile, took out the lawyers.",
+    verdict: "A quiet, range-bound session after yesterday's steep sell-off - markets are essentially pausing to catch their breath. Cooling crude oil, on growing hopes of a US-Iran truce, is helping ease yesterday's inflation scare, but Nifty IT remains a specific drag, extending a rough 2026 for the sector. The bigger story today is off the exchange: Tata Sons has formally defended Chandrasekaran's reappointment with three legal opinions, pushing the unresolved Tata Trusts dispute closer to an open legal battle.",
+    assumptions: [
+      "Sensex down ~0.07% to around 73,526 and Nifty down ~0.12% to around 23,035 in early trade, essentially flat after Thursday's 1.6%+ fall",
+      "Crude oil eased further to around $94/barrel on growing hopes of a US-Iran truce that could ease tensions around the Strait of Hormuz - a reversal from the spike that drove yesterday's sell-off",
+      "Nifty IT remained a specific drag again today, extending a rough 2026 for the sector - the index is down roughly 22% year-to-date amid soft global tech spending and elevated global interest rates",
+      "NSE closed its first day of trading (24 Sep) at ₹1,818, a modest gain from its ₹1,800 listing price and around 1.8% above its ₹1,785 issue price"
+    ],
+    news: [
+      "Tata Sons formally responded to Tata Trusts chairman Noel Tata's objections, submitting three separate legal opinions backing the legitimacy of N. Chandrasekaran's 17 September reappointment as chairman for a further five years. Coverage now frames the unresolved dispute as heading toward an open legal battle.",
+      "Crude oil eased to around $94/barrel, down from this week's highs near $105, on growing hopes of a US-Iran truce that could ease tensions around the Strait of Hormuz and start restoring Persian Gulf exports.",
+      "Nifty IT stocks remained under pressure again today, extending a difficult 2026 for the sector - the index is down roughly 22% for the year so far amid soft global technology spending, cautious client demand commentary, and elevated global interest rates."
+    ],
+    stocksToWatch: [
+      { ticker: "TATA GROUP", name: "TCS, Tata Motors, Tata Chemicals, Titan, Tata Steel & others", reason: "Tata Sons has now formally defended Chandrasekaran's reappointment with three legal opinions, pushing the dispute with Tata Trusts toward what's being described as an open legal battle." }
+    ],
+    stockUpdates: [
+      { ticker: "NSE", name: "National Stock Exchange", update: "Closed its first day of trading (24 Sep) at ₹1,818 - a modest gain from its ₹1,800 listing price and around 1.8% above its ₹1,785 IPO issue price, after touching an intraday high of ₹1,869." }
+    ]
+  },
+  {
     date: "24 Sep 2026",
     mood: "negative",
     moodLabel: "Negative",
