@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Bonds</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  :root {
+    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
+    --border: #e2e0da; --border-hover: #c9c6bd;
+    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
+    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
+    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
+    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
+    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+  }
+  .ambient, .grain { display: none; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
+  .bond-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0 8px; }
+  .bond-card { padding: 20px 22px; }
+  .bond-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .bond-issuer { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 16px; color: var(--text); margin: 0 0 2px; }
+  .bond-category { font-size: 11px; color: var(--text-muted); }
+  .bond-rating { flex-shrink: 0; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 100px; white-space: nowrap; background: var(--pill-success-bg); color: var(--pill-success-text); }
+  .bond-rating.sovereign { background: rgba(29,78,216,0.1); color: #1d4ed8; }
+  .bond-coupon-row { display: flex; align-items: baseline; gap: 8px; margin: 14px 0 4px; }
+  .bond-coupon { font-family: 'Times New Roman', Times, serif; font-size: 26px; font-weight: 700; color: var(--text); }
+  .bond-coupon-label { font-size: 11px; color: var(--text-muted); }
+  .bond-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin: 14px 0; padding-top: 12px; border-top: 1px solid var(--border); }
+  .bond-meta-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 600; }
+  .bond-meta-value { font-size: 12.5px; color: var(--text); font-weight: 600; }
+  .bond-note { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+  .risk-box { padding: 20px 24px; margin-top: 28px; }
+  .risk-box h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 19px; margin: 0 0 14px; color: var(--text); }
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .risk-grid { grid-template-columns: 1fr; } }
+  .risk-item h4 { font-size: 13px; color: var(--text); margin: 0 0 4px; }
+  .risk-item p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; Bonds.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div class="section-heading" style="padding-top:32px;">
+    <h1>Bonds</h1>
+  </div>
+  <p class="hero-synopsis" style="margin:-8px 0 0; max-width:700px;">Four real, currently relevant examples spanning the risk-and-coupon spectrum available to Indian investors &mdash; from a government-backed savings bond to a corporate NCD. New to bond terminology? Start with our <a href="learn.html#bond-basics" style="color:var(--accent-solid); font-weight:600;">bond basics primer</a> first.</p>
+
+  <div class="bond-grid" id="bond-grid"></div>
+
+  <div class="card-box risk-box">
+    <h2>Risks every bond carries, in different amounts</h2>
+    <div class="risk-grid">
+      <div class="risk-item">
+        <h4>Interest rate (price) risk</h4>
+        <p>When market rates rise, existing bonds with lower fixed coupons become less attractive, so their resale price falls &mdash; and vice versa. This only matters if you sell before maturity; holding to maturity, you still get the coupon and face value as promised.</p>
+      </div>
+      <div class="risk-item">
+        <h4>Credit / default risk</h4>
+        <p>The risk the issuer can't pay. A credit rating (AAA down to D) is one agency's opinion at one point in time &mdash; not a guarantee, and ratings have been wrong before, including on debt that later defaulted.</p>
+      </div>
+      <div class="risk-item">
+        <h4>Liquidity risk</h4>
+        <p>Many Indian corporate bonds trade thinly on the secondary market. Selling before maturity may mean accepting a worse price than the bond's "fair" value, simply because few buyers are around.</p>
+      </div>
+      <div class="risk-item">
+        <h4>Reinvestment risk</h4>
+        <p>If rates fall by the time your bond matures or a coupon is paid out, reinvesting that money at a comparable rate may no longer be possible &mdash; a real risk for shorter-tenure or higher-coupon bonds bought precisely because rates were high.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-disclaimer">
+    Coupon rates, yields, and terms shown are sourced from public reporting (RBI notifications, issuer prospectuses, and financial news coverage) as of late September 2026, and change over time — floating-rate coupons reset every six months, G-Sec yields move daily, and new NCD tranches carry their own separate terms. This is not a live feed; always confirm current terms directly with the issuer or your broker before investing. Nothing on this page is investment advice or a recommendation to buy any specific bond. Always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+<script>
+  // Real bond examples, terms as of late Sep 2026 — see disclaimer for sourcing/staleness caveats.
+  const BONDS = [
+    {
+      issuer: "RBI Floating Rate Savings Bond (2020)", category: "Sovereign · retail savings bond", rating: "Sovereign", ratingClass: "sovereign",
+      coupon: "8.05%", couponLabel: "p.a. (Jul–Dec 2026, floating)",
+      tenure: "7 years", payout: "Semi-annual", eligibility: "Resident individuals & HUFs only", taxStatus: "Taxable",
+      note: "Rate resets every 1 Jan and 1 Jul, set at the National Savings Certificate (NSC) rate + 0.35% — it moves with NSC, not with your expectations of where rates are headed."
+    },
+    {
+      issuer: "Government of India 10-Year G-Sec", category: "Sovereign · benchmark bond", rating: "Sovereign", ratingClass: "sovereign",
+      coupon: "~7.04%", couponLabel: "yield (as of 22 Sep 2026)",
+      tenure: "10 years", payout: "Semi-annual", eligibility: "Open to all (via RBI Retail Direct, brokers, or bond funds)", taxStatus: "Taxable",
+      note: "The reference point the rest of India's bond market is priced against. Yield moves daily with rate expectations and inflation data — the 7.04% figure is a snapshot, not fixed."
+    },
+    {
+      issuer: "Power Finance Corporation (PFC) NCD", category: "PSU · non-convertible debenture", rating: "AAA", ratingClass: "",
+      coupon: "6.85% – 7.05%", couponLabel: "p.a. (Jan 2026 public tranche)",
+      tenure: "Varies by series", payout: "Series-dependent", eligibility: "Open to all", taxStatus: "Taxable",
+      note: "A government-owned NBFC's public NCD issue — illustrates how even a AAA-rated issuer prices only modestly above sovereign G-Secs."
+    },
+    {
+      issuer: "Muthoot Fincorp NCD", category: "NBFC · non-convertible debenture", rating: "Check current rating", ratingClass: "",
+      coupon: "8.56% – 9.25%", couponLabel: "p.a. (2026 public issue, by payout option)",
+      tenure: "Series-dependent", payout: "Monthly, annual, or cumulative options", eligibility: "Open to all", taxStatus: "Taxable",
+      note: "A meaningfully higher coupon than the PSU/sovereign examples above — the market's way of compensating for a lower-rated, less liquid issuer. Higher coupon is compensation for risk, not a bonus."
+    }
+  ];
+
+  document.getElementById('bond-grid').innerHTML = BONDS.map((b) => `
+    <div class="card-box bond-card">
+      <div class="bond-card-top">
+        <div>
+          <div class="bond-issuer">${b.issuer}</div>
+          <div class="bond-category">${b.category}</div>
+        </div>
+        <span class="bond-rating ${b.ratingClass}">${b.rating}</span>
+      </div>
+      <div class="bond-coupon-row">
+        <span class="bond-coupon">${b.coupon}</span>
+        <span class="bond-coupon-label">${b.couponLabel}</span>
+      </div>
+      <div class="bond-meta-grid">
+        <div><div class="bond-meta-label">Tenure</div><div class="bond-meta-value">${b.tenure}</div></div>
+        <div><div class="bond-meta-label">Payout</div><div class="bond-meta-value">${b.payout}</div></div>
+        <div><div class="bond-meta-label">Eligibility</div><div class="bond-meta-value">${b.eligibility}</div></div>
+        <div><div class="bond-meta-label">Tax status</div><div class="bond-meta-value">${b.taxStatus}</div></div>
+      </div>
+      <div class="bond-note">${b.note}</div>
+    </div>
+  `).join('');
+</script>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <span class="wordmark">ReviewHub</span>
+      <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="../movies/index.html">Movies</a></li>
+        <li><a href="../cars/index.html">Cars</a></li>
+        <li><a href="../stocks/index.html">Stocks</a></li>
+        <li><span class="soon">And more <span class="tag">Soon</span></span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ReviewHub</h4>
+      <ul>
+        <li><a href="daily-brief.html">Daily brief</a></li>
+        <li><a href="market-scan.html">Penny stocks</a></li>
+        <li><a href="creator-watch.html">Creator watch</a></li>
+        <li><a href="ipos.html">IPOs</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="tools.html">Calculators</a></li>
+        <li><a href="journal.html">Trade journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A note on our content</h4>
+      <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available sources, for informational purposes only. No copyright infringement is intended.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

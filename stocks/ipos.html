@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — IPO tracker</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  :root {
+    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
+    --border: #e2e0da; --border-hover: #c9c6bd;
+    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
+    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
+    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
+    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
+    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+  }
+  .ambient, .grain { display: none; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
+  .ipo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 22px; }
+  .ipo-tab { font-size: 12.5px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); padding: 7px 16px; border-radius: 100px; cursor: pointer; background: none; }
+  .ipo-tab:hover { color: var(--text); }
+  .ipo-tab.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .ipo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .ipo-card { padding: 20px 22px; }
+  .ipo-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .ipo-name { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 17px; color: var(--text); margin: 0; }
+  .ipo-status { flex-shrink: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 3px 9px; border-radius: 100px; white-space: nowrap; }
+  .ipo-status.upcoming { background: var(--pill-neutral-bg); color: var(--pill-neutral-text); }
+  .ipo-status.open { background: var(--pill-success-bg); color: var(--pill-success-text); }
+  .ipo-status.closed { background: rgba(180,83,9,0.1); color: #92400e; }
+  .ipo-status.listed { background: rgba(29,78,216,0.1); color: #1d4ed8; }
+  .ipo-desc { font-size: 12.5px; color: var(--text-muted); margin: 4px 0 12px; line-height: 1.5; }
+  .ipo-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin-bottom: 10px; }
+  .ipo-meta-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 600; }
+  .ipo-meta-value { font-size: 13px; color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ipo-sub-note { font-size: 12px; color: var(--text-secondary); padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.5; }
+  .ipo-framework { padding: 24px 28px; margin-top: 32px; }
+  .ipo-framework h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 20px; margin: 0 0 6px; color: var(--text); }
+  .ipo-framework > p { font-size: 13px; color: var(--text-muted); margin: 0 0 18px; max-width: 640px; line-height: 1.55; }
+  .fw-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: fw; }
+  .fw-list li { counter-increment: fw; display: flex; gap: 14px; }
+  .fw-list li::before { content: counter(fw); flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--bg-elevated-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 12px; color: var(--text); }
+  .fw-q { font-weight: 600; font-size: 13.5px; color: var(--text); margin-bottom: 2px; }
+  .fw-hint { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; IPOs.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div class="section-heading" style="padding-top:32px;">
+    <h1>IPO tracker</h1>
+    <span class="muted" id="ipo-count"></span>
+  </div>
+  <p class="hero-synopsis" style="margin:-8px 0 0; max-width:700px;">Real, dated details on IPOs currently in the Indian market pipeline &mdash; issue size, price band, and key dates, factual only. Nothing here is a recommendation to apply, and figures (especially subscription numbers and GMP) will have moved since this was published.</p>
+
+  <div class="ipo-tabs" id="ipo-tabs"></div>
+  <div class="ipo-grid" id="ipo-grid"></div>
+
+  <div class="card-box ipo-framework">
+    <h2>How to research any IPO</h2>
+    <p>A checklist, not a verdict generator &mdash; work through these before forming your own view on any issue, including the ones tracked above.</p>
+    <ol class="fw-list">
+      <li><div><div class="fw-q">What does the company actually do?</div><div class="fw-hint">Get past the tagline — what specifically generates its revenue, and for whom?</div></div></li>
+      <li><div><div class="fw-q">How does it make money?</div><div class="fw-hint">One dominant revenue line, or several? Which is growing, which is shrinking?</div></div></li>
+      <li><div><div class="fw-q">What does its financial history actually show?</div><div class="fw-hint">Revenue and profit trend over 3+ years, not just the most recent flattering quarter.</div></div></li>
+      <li><div><div class="fw-q">What's happening in its industry right now?</div><div class="fw-hint">Growing, mature, or under pressure — and is this IPO timed to ride a trend?</div></div></li>
+      <li><div><div class="fw-q">How does it compare to its listed peers?</div><div class="fw-hint">Same growth rate, margins, and debt load — or is it being priced like a peer it doesn't actually resemble?</div></div></li>
+      <li><div><div class="fw-q">Is the asking valuation reasonable?</div><div class="fw-hint">Compare its P/E, P/B, or EV/EBITDA at the IPO price band against listed peers — see our <a href="learn.html#valuation" style="color:var(--accent-solid); font-weight:600;">valuation primer</a>.</div></div></li>
+      <li><div><div class="fw-q">What are the genuine strengths?</div><div class="fw-hint">Market position, brand, distribution, technology — specific advantages, not marketing language.</div></div></li>
+      <li><div><div class="fw-q">What are the disclosed risks?</div><div class="fw-hint">The prospectus's own "Risk Factors" section is required reading — it's where companies must legally disclose what could go wrong.</div></div></li>
+      <li><div><div class="fw-q">What would you still need to know?</div><div class="fw-hint">Write down your open questions before applying — a genuine gap in your own understanding is a reason to wait, not to guess.</div></div></li>
+    </ol>
+  </div>
+
+  <div class="ai-disclaimer">
+    Issue sizes, price bands, dates, and subscription figures are sourced from public reporting at the time this page was last updated and are not live — always confirm current details on the exchange (NSE/BSE) or the issue's official RHP/prospectus before applying. Grey Market Premium (GMP), where mentioned, is an unofficial, unregulated indicator and not a guarantee of listing performance. Nothing on this page is investment advice or a recommendation to apply for, buy, sell, or hold any security. Always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+<script>
+  // Real, dated IPO data as of 25 Sep 2026 — sourced from public reporting (Business Standard,
+  // Groww, Chittorgarh, and issue-specific news coverage). Not a live feed; see disclaimer above.
+  const IPOS = [
+    {
+      name: "Reliance Jio (Jio Platforms)", status: "upcoming",
+      desc: "India's largest telecom operator's parent — expected to be one of the biggest IPOs in Indian history.",
+      issueSize: "~₹37,700 Cr (est.)", priceBand: "Not yet announced",
+      dates: "SEBI approved 28 Aug 2026; RHP (with exact dates/price) still awaited",
+      note: "DRHP filed 19 Jun 2026; a 100% fresh issue of up to 27 crore equity shares (no offer-for-sale). Widely expected around Diwali 2026, though no official date has been set."
+    },
+    {
+      name: "Runwal Enterprises", status: "open",
+      desc: "Mumbai-based real estate developer.",
+      issueSize: "₹500 Cr", priceBand: "₹290 – ₹305",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
+      note: "Lot size 49 shares (~₹14,945 minimum retail investment at the upper band)."
+    },
+    {
+      name: "Orient Cables (India)", status: "open",
+      desc: "Cable manufacturer.",
+      issueSize: "₹552 Cr (₹320 Cr fresh issue + ₹232 Cr offer-for-sale)", priceBand: "₹258 – ₹272",
+      dates: "Opens 25 Sep, closes 29 Sep 2026 · Listing ~5 Oct 2026",
+      note: "Lot size 55 shares (~₹14,960 minimum retail investment at the upper band)."
+    },
+    {
+      name: "Varmora Granito", status: "closed",
+      desc: "Tiles and bathware manufacturer.",
+      issueSize: "₹708.02 Cr", priceBand: "₹140 – ₹148",
+      dates: "Closed 24 Sep 2026 · Listing expected 29 Sep 2026",
+      note: "Subscribed 1.02x retail, 3.10x QIB, 0.94x NII. GMP has hovered near ₹0–₹9 (roughly flat to the upper band) in the days around closing — a modest listing-day pop, if any, is currently implied."
+    },
+    {
+      name: "National Stock Exchange (NSE)", status: "listed",
+      desc: "India's largest stock exchange.",
+      issueSize: "₹22,562 Cr", priceBand: "₹1,785 (issue price)",
+      dates: "Listed 24 Sep 2026",
+      note: "Closed ~5.7–6x overall subscribed. Listed at ₹1,800 (+0.84% over issue price), touched an intraday high of ₹1,869, and closed its first trading day at ₹1,818. See our full coverage on the <a href=\"daily-brief.html\" style=\"color:var(--accent-solid); font-weight:600;\">Daily Brief</a>."
+    },
+    {
+      name: "Om Galaxy", status: "listed",
+      desc: "SME-platform issue.",
+      issueSize: "₹105 Cr", priceBand: "—",
+      dates: "Listed 18 Sep 2026", note: ""
+    },
+    {
+      name: "Maharaja & Speedex India", status: "listed",
+      desc: "SME-platform issue.",
+      issueSize: "₹80.13 Cr", priceBand: "—",
+      dates: "Listed 18 Sep 2026", note: ""
+    }
+  ];
+
+  const STATUS_LABEL = { upcoming: "Upcoming", open: "Open", closed: "Closed", listed: "Listed" };
+  let activeTab = "all";
+
+  function renderTabs() {
+    const counts = { all: IPOS.length };
+    IPOS.forEach((i) => { counts[i.status] = (counts[i.status] || 0) + 1; });
+    const tabs = ["all", "upcoming", "open", "closed", "listed"];
+    document.getElementById("ipo-tabs").innerHTML = tabs.map((t) => `
+      <button class="ipo-tab${t === activeTab ? " active" : ""}" data-tab="${t}">${t === "all" ? "All" : STATUS_LABEL[t]} (${counts[t] || 0})</button>
+    `).join("");
+    document.querySelectorAll(".ipo-tab").forEach((btn) => {
+      btn.addEventListener("click", () => { activeTab = btn.dataset.tab; renderTabs(); renderGrid(); });
+    });
+  }
+
+  function renderGrid() {
+    const list = activeTab === "all" ? IPOS : IPOS.filter((i) => i.status === activeTab);
+    document.getElementById("ipo-count").textContent = `${list.length} of ${IPOS.length}`;
+    document.getElementById("ipo-grid").innerHTML = list.map((i) => `
+      <div class="card-box ipo-card">
+        <div class="ipo-card-top">
+          <h3 class="ipo-name">${i.name}</h3>
+          <span class="ipo-status ${i.status}">${STATUS_LABEL[i.status]}</span>
+        </div>
+        <div class="ipo-desc">${i.desc}</div>
+        <div class="ipo-meta-grid">
+          <div><div class="ipo-meta-label">Issue size</div><div class="ipo-meta-value">${i.issueSize}</div></div>
+          <div><div class="ipo-meta-label">Price band</div><div class="ipo-meta-value">${i.priceBand}</div></div>
+        </div>
+        <div class="ipo-meta-grid" style="grid-template-columns:1fr; margin-bottom: ${i.note ? '10px' : '0'};">
+          <div><div class="ipo-meta-label">Dates</div><div class="ipo-meta-value" style="font-size:12.5px;">${i.dates}</div></div>
+        </div>
+        ${i.note ? `<div class="ipo-sub-note">${i.note}</div>` : ""}
+      </div>
+    `).join("") || `<div class="empty-state">No IPOs in this category right now.</div>`;
+  }
+
+  renderTabs();
+  renderGrid();
+</script>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <span class="wordmark">ReviewHub</span>
+      <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="../movies/index.html">Movies</a></li>
+        <li><a href="../cars/index.html">Cars</a></li>
+        <li><a href="../stocks/index.html">Stocks</a></li>
+        <li><span class="soon">And more <span class="tag">Soon</span></span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ReviewHub</h4>
+      <ul>
+        <li><a href="daily-brief.html">Daily brief</a></li>
+        <li><a href="market-scan.html">Penny stocks</a></li>
+        <li><a href="creator-watch.html">Creator watch</a></li>
+        <li><a href="bonds.html">Bonds</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="tools.html">Calculators</a></li>
+        <li><a href="journal.html">Trade journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A note on our content</h4>
+      <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available sources, for informational purposes only. No copyright infringement is intended.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — Learn the stock market</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  :root {
+    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
+    --border: #e2e0da; --border-hover: #c9c6bd;
+    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
+    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
+    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
+    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
+    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+  }
+  .ambient, .grain { display: none; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
+  .learn-layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: flex-start; margin-top: 20px; }
+  @media (max-width: 800px) { .learn-layout { grid-template-columns: 1fr; } }
+  .learn-toc { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 2px; }
+  .learn-toc a { font-size: 12.5px; color: var(--text-muted); padding: 7px 10px; border-radius: 6px; text-decoration: none; }
+  .learn-toc a:hover { background: var(--bg-elevated); color: var(--text); }
+  .learn-topic { padding: 24px 28px; margin-bottom: 18px; scroll-margin-top: 20px; }
+  .learn-topic .eyebrow { margin-bottom: 6px; }
+  .learn-topic h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 21px; margin: 0 0 10px; color: var(--text); }
+  .learn-topic p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin: 0 0 12px; }
+  .learn-topic p:last-child { margin-bottom: 0; }
+  .learn-example { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+  .learn-example b { color: var(--text); }
+  .learn-formula { font-family: ui-monospace, monospace; font-size: 12.5px; background: var(--bg-elevated-2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; display: inline-block; color: var(--text); margin: 4px 0 12px; }
+  .learn-caution { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.55; color: #92620c; background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.25); border-radius: 6px; padding: 10px 14px; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+        <span class="tagline">Stocks &middot; Learn.</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      </div>
+    </div>
+    <a class="back-link" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All stocks
+    </a>
+    <div class="rule"></div>
+  </div>
+
+  <div class="section-heading" style="padding-top:32px;">
+    <h1>Learn the stock market</h1>
+  </div>
+  <p class="hero-synopsis" style="margin:-8px 0 0; max-width:700px;">Twelve short, plain-English explanations of the concepts that come up everywhere else on this site &mdash; from what a share actually is, to how to read a balance sheet, to why a low P/E isn't automatically "cheap."</p>
+
+  <div class="learn-layout">
+    <nav class="learn-toc">
+      <a href="#basics">1. Stock market basics</a>
+      <a href="#statements">2. Financial statements</a>
+      <a href="#revenue-profit">3. Revenue &amp; profit</a>
+      <a href="#pe">4. P/E ratio</a>
+      <a href="#roe-roce">5. ROE &amp; ROCE</a>
+      <a href="#debt">6. Debt</a>
+      <a href="#cashflow">7. Cash flow</a>
+      <a href="#valuation">8. Valuation</a>
+      <a href="#ipo-basics">9. IPO basics</a>
+      <a href="#bond-basics">10. Bond basics</a>
+      <a href="#risk">11. Risk management</a>
+      <a href="#diversification">12. Diversification</a>
+    </nav>
+
+    <div>
+      <div class="card-box learn-topic" id="basics">
+        <div class="eyebrow">01</div>
+        <h2>Stock market basics</h2>
+        <p>A share is a small, fractional slice of ownership in a company. When you buy one share of a company with 100 crore shares outstanding, you own one-hundred-millionth of it &mdash; entitled to your slice of profits (via dividends, if the company pays them) and voting rights at shareholder meetings.</p>
+        <p>Stock exchanges (in India, mainly the NSE and BSE) are marketplaces that match buyers and sellers. A <b>market order</b> executes immediately at the best available price; a <b>limit order</b> only executes at a price you specify or better. <b>Market capitalization</b> (share price &times; total shares outstanding) is the market's current price tag on the whole company &mdash; it is not the same as the company's cash, revenue, or profit.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="statements">
+        <div class="eyebrow">02</div>
+        <h2>Financial statements</h2>
+        <p>Every listed company publishes three core statements, and each answers a different question:</p>
+        <div class="learn-example">
+          <b>Income statement (P&amp;L)</b> &mdash; how much did the company earn and spend over a period (a quarter or year)?<br>
+          <b>Balance sheet</b> &mdash; what does the company own and owe at one specific point in time?<br>
+          <b>Cash flow statement</b> &mdash; how much actual cash moved in and out, split across operating, investing, and financing activities?
+        </div>
+        <p>A company can report a profit on its income statement while its cash flow statement shows it's short on cash &mdash; timing differences (customers who haven't paid yet) and non-cash items (like depreciation) explain the gap. Reading all three together, not just one, gives the fuller picture.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="revenue-profit">
+        <div class="eyebrow">03</div>
+        <h2>Revenue &amp; profit</h2>
+        <p>These aren't the same number, and the gap between them matters:</p>
+        <div class="learn-example">
+          <b>Revenue</b> (the "top line") &mdash; total sales, before any costs are subtracted.<br>
+          <b>Gross profit</b> &mdash; revenue minus the direct cost of producing what was sold.<br>
+          <b>Operating profit / EBITDA</b> &mdash; gross profit minus operating expenses (salaries, rent, marketing), before interest, tax, depreciation and amortization.<br>
+          <b>Net profit</b> (the "bottom line") &mdash; what's left after every expense, including interest and tax.
+        </div>
+        <p>Example: a company sells &#8377;100 crore of goods (revenue), spends &#8377;60 crore making them (gross profit: &#8377;40 crore), &#8377;20 crore running the business (operating profit: &#8377;20 crore), and pays &#8377;5 crore in interest and tax (net profit: &#8377;15 crore).</p>
+      </div>
+
+      <div class="card-box learn-topic" id="pe">
+        <div class="eyebrow">04</div>
+        <h2>P/E ratio</h2>
+        <p>The Price-to-Earnings ratio divides a company's share price by its earnings per share (EPS) &mdash; in effect, how many years of current profit you're paying for at today's price.</p>
+        <div class="learn-formula">P/E = Share price &divide; Earnings per share</div>
+        <p>A high P/E often (not always) signals that the market expects fast future growth; a low P/E can mean a genuine bargain, or it can mean the market expects trouble ahead. P/E only means something in context &mdash; compared against the same company's own history, or against close industry peers with similar growth and risk profiles. A P/E of 40 might be ordinary for a fast-growing software company and alarming for a mature utility.</p>
+        <div class="learn-caution">A low P/E alone is not evidence a stock is undervalued, and a high P/E alone is not evidence it's overpriced.</div>
+      </div>
+
+      <div class="card-box learn-topic" id="roe-roce">
+        <div class="eyebrow">05</div>
+        <h2>ROE &amp; ROCE</h2>
+        <p>Both measure how efficiently a company turns capital into profit, but they use different capital bases:</p>
+        <div class="learn-formula">ROE = Net profit &divide; Shareholders' equity</div>
+        <div class="learn-formula">ROCE = EBIT &divide; (Total assets &minus; Current liabilities)</div>
+        <p><b style="color:var(--text);">Return on Equity</b> looks only at shareholders' own money. <b style="color:var(--text);">Return on Capital Employed</b> looks at all capital used in the business, including debt &mdash; which makes it harder to inflate. A company can post a high ROE simply by taking on more debt (borrowed money isn't in the equity denominator), so comparing ROE and ROCE side by side, and checking the debt load behind them, gives a more honest read than either ratio alone.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="debt">
+        <div class="eyebrow">06</div>
+        <h2>Debt</h2>
+        <p>Debt isn't inherently bad &mdash; borrowing to fund growth can amplify shareholder returns when it works. The two questions that matter are how much debt there is relative to the business's size, and how comfortably it can be serviced:</p>
+        <div class="learn-formula">Debt-to-equity = Total debt &divide; Shareholders' equity</div>
+        <div class="learn-formula">Interest coverage = EBIT &divide; Interest expense</div>
+        <p>A high debt-to-equity ratio means more of the business is funded by borrowing rather than owners' capital &mdash; riskier if profits dip. A low interest coverage ratio (say, under 2-3x) means a company's operating profit barely covers its interest bill, leaving little room for a bad year.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="cashflow">
+        <div class="eyebrow">07</div>
+        <h2>Cash flow</h2>
+        <p><b style="color:var(--text);">Operating cash flow</b> is the actual cash generated by the core business, stripped of accounting adjustments. <b style="color:var(--text);">Free cash flow</b> goes a step further:</p>
+        <div class="learn-formula">Free cash flow = Operating cash flow &minus; Capital expenditure</div>
+        <p>Free cash flow is what's genuinely left over after a company has already spent what it needs to maintain and grow its operations &mdash; the pool it can use to pay dividends, buy back shares, pay down debt, or make acquisitions, without raising new money.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="valuation">
+        <div class="eyebrow">08</div>
+        <h2>Valuation</h2>
+        <p>P/E is only one lens. A few others commonly used alongside it:</p>
+        <div class="learn-example">
+          <b>P/B (Price-to-Book)</b> &mdash; share price versus net asset value per share; more relevant for asset-heavy businesses like banks.<br>
+          <b>EV/EBITDA</b> &mdash; enterprise value (market cap plus debt, minus cash) versus EBITDA; useful for comparing companies with different debt levels or tax situations.<br>
+          <b>DCF (Discounted Cash Flow)</b> &mdash; estimates a company's value from projected future cash flows, discounted back to today's terms; more rigorous, but only as reliable as its underlying growth and discount-rate assumptions.
+        </div>
+        <p>No single valuation method is "correct" in isolation &mdash; each answers a slightly different question, and experienced investors typically triangulate across a few of them, always relative to a company's own history and its closest peers.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="ipo-basics">
+        <div class="eyebrow">09</div>
+        <h2>IPO basics</h2>
+        <p>An Initial Public Offering is the first time a company sells shares to the public, moving from private to listed. In India's standard "book-building" process, the company sets a <b>price band</b> (a range, not a fixed price) and investors bid within it across three categories &mdash; Qualified Institutional Buyers (QIBs), Non-Institutional Investors (NIIs/HNIs), and Retail Individual Investors &mdash; each with a reserved portion of the issue. The final price is set based on demand, and "subscription" figures (e.g. "6x subscribed") describe how many times the shares on offer were bid for.</p>
+        <p>You'll often see a <b>Grey Market Premium (GMP)</b> quoted before listing &mdash; an unofficial, unregulated indicator of what dealers expect the stock to list at, traded informally outside any exchange. It is not a regulated or guaranteed figure, and can move sharply (or vanish) right up to listing day. See our <a href="ipos.html" style="color:var(--accent-solid); font-weight:600;">IPOs page</a> for currently tracked issues.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="bond-basics">
+        <div class="eyebrow">10</div>
+        <h2>Bond basics</h2>
+        <p>A bond is a loan you make to a government or company, which promises to pay you back. The core terms:</p>
+        <div class="learn-example">
+          <b>Face value</b> &mdash; the amount repaid at maturity.<br>
+          <b>Coupon rate</b> &mdash; the fixed interest rate paid on face value, usually annually or semi-annually.<br>
+          <b>Maturity</b> &mdash; the date the face value is repaid.<br>
+          <b>Yield to maturity (YTM)</b> &mdash; the actual annualized return if held to maturity, accounting for the price you paid (which may differ from face value).<br>
+          <b>Credit rating</b> &mdash; an agency's opinion (e.g. AAA, AA, BBB) on how likely the issuer is to repay on time.
+        </div>
+        <p>A bond's market price moves inversely to interest rates: when rates rise, existing bonds with lower fixed coupons become less attractive, so their price falls (and vice versa). See our <a href="bonds.html" style="color:var(--accent-solid); font-weight:600;">Bonds page</a> for more on how these terms play out in real instruments.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="risk">
+        <div class="eyebrow">11</div>
+        <h2>Risk management</h2>
+        <p>Before asking "what will I make," disciplined investors ask "what can I afford to lose." Three habits do most of the work:</p>
+        <div class="learn-example">
+          <b>Position sizing</b> &mdash; deciding how much capital to put into any single idea, so no one mistake is fatal to your overall capital.<br>
+          <b>Stop-loss</b> &mdash; a predetermined price at which you exit a losing position, decided before you enter, not after emotions are involved.<br>
+          <b>Risk per trade</b> &mdash; capping how much of your total capital any single trade can lose, commonly 1-2% for active traders.
+        </div>
+        <p>Try the <a href="tools.html#position" style="color:var(--accent-solid); font-weight:600;">position sizing calculator</a> to see how these connect in practice.</p>
+      </div>
+
+      <div class="card-box learn-topic" id="diversification">
+        <div class="eyebrow">12</div>
+        <h2>Portfolio diversification</h2>
+        <p>Diversification means spreading money across assets that don't all move for the same reasons &mdash; different asset classes (equity, debt, gold, cash), sectors, and company sizes &mdash; so that one bad outcome doesn't sink the whole portfolio.</p>
+        <div class="learn-caution">Diversification reduces company- and sector-specific ("unsystematic") risk, but it cannot eliminate broad, market-wide ("systematic") risk &mdash; a genuine market-wide downturn will still affect a well-diversified portfolio, just typically less severely than a concentrated one.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-disclaimer" style="margin-top:8px;">
+    These explanations describe general, widely-used financial concepts for educational purposes only — they are not tailored to your personal situation and are not investment advice. Always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <span class="wordmark">ReviewHub</span>
+      <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="../movies/index.html">Movies</a></li>
+        <li><a href="../cars/index.html">Cars</a></li>
+        <li><a href="../stocks/index.html">Stocks</a></li>
+        <li><span class="soon">And more <span class="tag">Soon</span></span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ReviewHub</h4>
+      <ul>
+        <li><a href="daily-brief.html">Daily brief</a></li>
+        <li><a href="market-scan.html">Penny stocks</a></li>
+        <li><a href="creator-watch.html">Creator watch</a></li>
+        <li><a href="ipos.html">IPOs</a></li>
+        <li><a href="bonds.html">Bonds</a></li>
+        <li><a href="tools.html">Calculators</a></li>
+        <li><a href="journal.html">Trade journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A note on our content</h4>
+      <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available sources, for informational purposes only. No copyright infringement is intended.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
