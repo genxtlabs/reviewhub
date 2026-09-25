@@ -43,6 +43,22 @@
   .sortable-th:hover { color: var(--text-secondary); }
   .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.5; font-size: 10px; }
   .sortable-th.active .sort-icon { opacity: 1; color: var(--accent-solid); }
+  .edu-box { margin-top: 18px; padding: 18px 22px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; }
+  .edu-box h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15px; margin: 0 0 8px; color: var(--text); }
+  .edu-box p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; margin: 0 0 10px; }
+  .edu-box p:last-child { margin-bottom: 0; }
+  .risk-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .risk-list li { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+  .risk-list b { color: var(--text); }
+  .scan-filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-top: 22px; padding: 16px 18px; background: var(--bg-elevated-2); border: 1px solid var(--border); border-radius: 10px; }
+  .scan-filter-field { display: flex; flex-direction: column; gap: 5px; }
+  .scan-filter-field label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); font-weight: 600; }
+  .scan-filter-field input { width: 100px; font-family: inherit; font-size: 13px; color: var(--text); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; }
+  .scan-filter-field input:focus { outline: none; border-color: var(--accent-solid); }
+  .scan-search { flex: 1; min-width: 180px; }
+  .scan-search input { width: 100%; }
+  .scan-filter-reset { font-size: 12.5px; font-weight: 600; color: var(--accent-solid); background: none; border: none; cursor: pointer; padding: 7px 4px; }
+  .scan-count { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -73,10 +89,27 @@
   <div style="padding-top:32px;">
     <span class="snapshot-tag">
       <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Snapshot &middot; 02 Sep 2026 (data via Screener.in)
+      Fundamentals snapshot &middot; 02 Sep 2026 (data via Screener.in) &mdash; not a live feed
     </span>
-    <h1 class="serif" style="font-size:32px; font-weight:600; margin:10px 0 8px; color:var(--text);">NSE stocks under &#8377;100</h1>
-    <p class="hero-synopsis" style="margin:0 0 4px; max-width:700px;">Every stock below passed the exact, disclosed screen shown here &mdash; nothing was hand-picked. Purely informational &mdash; nothing on this page is a recommendation to buy, sell, or hold any security.</p>
+    <h1 class="serif" style="font-size:32px; font-weight:600; margin:10px 0 8px; color:var(--text);">NSE penny stocks under &#8377;100</h1>
+    <p class="hero-synopsis" style="margin:0 0 4px; max-width:700px;">Every stock below passed the exact, disclosed screen shown here &mdash; nothing was hand-picked. Purely informational &mdash; nothing on this page is a recommendation to buy, sell, or hold any security, and prices shown are a point-in-time snapshot, not current.</p>
+  </div>
+
+  <div class="edu-box">
+    <h3>What actually counts as a "penny stock"?</h3>
+    <p>There's no single official line. In the US, regulators generally mean shares under $5; in India, market convention is looser and inconsistent &mdash; sometimes "under &#8377;10," sometimes just "low-priced" relative to the rest of the market. The &#8377;100 cutoff used on this page is a screening convenience we chose, not a regulatory definition.</p>
+    <p><b style="color:var(--text);">A low share price by itself says nothing about whether a company is small, undervalued, or a good investment.</b> It's usually just a function of how many shares are outstanding, or a stock's own history (a split, or a long decline from a much higher price) &mdash; not its actual size or quality. A &#8377;90 stock with 100 crore shares outstanding is a far larger company than a &#8377;9,000 stock with 1 lakh shares outstanding.</p>
+  </div>
+
+  <div class="edu-box">
+    <h3>Key risks specific to this category</h3>
+    <ul class="risk-list">
+      <li><b>Liquidity risk</b> &mdash; many penny stocks trade thinly, so it can be hard to buy or sell at the price you expect, and even modest order sizes can move the price.</li>
+      <li><b>Volatility</b> &mdash; single-day swings of 5&ndash;20%+ are common here and can happen with little or no company-specific news.</li>
+      <li><b>Wide bid-ask spreads</b> &mdash; the gap between buy and sell prices can quietly eat into returns, especially on smaller names.</li>
+      <li><b>Thin coverage</b> &mdash; few or no analysts track these companies closely, so public information can be sparse or slow to update.</li>
+      <li><b>Manipulation risk</b> &mdash; SEBI has repeatedly flagged low-priced, thinly traded stocks as more susceptible to pump-and-dump activity and circular trading.</li>
+    </ul>
   </div>
 
   <div class="criteria-box">
@@ -92,6 +125,27 @@
     </ul>
     <div class="criteria-source">336 stocks matched this screen in total. Showing the top 25 by market capitalization below, sorted largest first. Full list and live screen: <a href="https://www.screener.in/screens/398574/stocks-under-100/" target="_blank" rel="noopener">screener.in/screens/398574</a></div>
   </div>
+
+  <div class="scan-filters">
+    <div class="scan-filter-field scan-search">
+      <label for="scan-search-input">Search company</label>
+      <input type="text" id="scan-search-input" placeholder="e.g. Yes Bank" autocomplete="off">
+    </div>
+    <div class="scan-filter-field">
+      <label for="scan-price-min">Min price (&#8377;)</label>
+      <input type="number" id="scan-price-min" min="0" placeholder="0">
+    </div>
+    <div class="scan-filter-field">
+      <label for="scan-price-max">Max price (&#8377;)</label>
+      <input type="number" id="scan-price-max" min="0" placeholder="100">
+    </div>
+    <div class="scan-filter-field">
+      <label for="scan-mcap-min">Min market cap (&#8377;Cr)</label>
+      <input type="number" id="scan-mcap-min" min="0" placeholder="0">
+    </div>
+    <button class="scan-filter-reset" id="scan-filter-reset">Reset filters</button>
+  </div>
+  <div class="scan-count" id="scan-count"></div>
 
   <div class="scan-table-wrap">
     <table class="scan-table" id="scan-table">
@@ -172,6 +226,17 @@
 
   let sortKey = "mcap";
   let sortDir = "desc";
+  let filters = { search: "", priceMin: null, priceMax: null, mcapMin: null };
+
+  function applyFilters(rows) {
+    return rows.filter((r) => {
+      if (filters.search && !r.name.toLowerCase().includes(filters.search.toLowerCase())) return false;
+      if (filters.priceMin != null && r.cmp < filters.priceMin) return false;
+      if (filters.priceMax != null && r.cmp > filters.priceMax) return false;
+      if (filters.mcapMin != null && r.mcap < filters.mcapMin) return false;
+      return true;
+    });
+  }
 
   function renderHead() {
     const tr = document.getElementById("scan-thead-row");
@@ -198,11 +263,13 @@
   }
 
   function renderBody() {
-    const rows = SCAN_ROWS.slice().sort((a, b) => {
+    const filtered = applyFilters(SCAN_ROWS);
+    const rows = filtered.slice().sort((a, b) => {
       const av = a[sortKey], bv = b[sortKey];
       const cmp = typeof av === "string" ? av.localeCompare(bv) : av - bv;
       return sortDir === "asc" ? cmp : -cmp;
     });
+    document.getElementById("scan-count").textContent = `Showing ${filtered.length} of ${SCAN_ROWS.length} stocks`;
     document.getElementById("scan-tbody").innerHTML = rows.map((r) => `
       <tr>
         <td class="scan-rank">${r.mcaprank}</td>
@@ -213,8 +280,18 @@
         <td>${r.roce.toFixed(2)}</td>
         <td>${r.roic.toFixed(2)}</td>
         <td>${r.div.toFixed(2)}</td>
-      </tr>`).join("");
+      </tr>`).join("") || `<tr><td colspan="8" class="empty-state">No stocks match these filters.</td></tr>`;
   }
+
+  document.getElementById("scan-search-input").addEventListener("input", (e) => { filters.search = e.target.value; renderBody(); });
+  document.getElementById("scan-price-min").addEventListener("input", (e) => { filters.priceMin = e.target.value === "" ? null : Number(e.target.value); renderBody(); });
+  document.getElementById("scan-price-max").addEventListener("input", (e) => { filters.priceMax = e.target.value === "" ? null : Number(e.target.value); renderBody(); });
+  document.getElementById("scan-mcap-min").addEventListener("input", (e) => { filters.mcapMin = e.target.value === "" ? null : Number(e.target.value); renderBody(); });
+  document.getElementById("scan-filter-reset").addEventListener("click", () => {
+    filters = { search: "", priceMin: null, priceMax: null, mcapMin: null };
+    ["scan-search-input", "scan-price-min", "scan-price-max", "scan-mcap-min"].forEach((id) => { document.getElementById(id).value = ""; });
+    renderBody();
+  });
 
   renderHead();
   renderBody();
