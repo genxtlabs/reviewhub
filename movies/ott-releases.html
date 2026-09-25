@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>ReviewHub — OTT releases this week</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .ott-week-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 8px; margin-bottom: 4px; }
+  .ott-week-head h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 22px; margin: 0; color: var(--text); }
+  .ott-count { font-size: 13px; color: var(--text-muted); }
+  .ott-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin: 18px 0 48px; }
+  .ott-card { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .ott-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .ott-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 17px; color: var(--text); margin: 0; line-height: 1.3; }
+  .ott-platform { flex-shrink: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 4px 10px; border-radius: 100px; white-space: nowrap; color: #fff; }
+  .ott-meta { display: flex; gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: var(--text-muted); }
+  .ott-meta span { background: var(--bg-elevated); border: 1px solid var(--border); padding: 2px 9px; border-radius: 100px; }
+  .ott-synopsis { font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+  .ott-review-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12.5px; font-weight: 700; color: var(--accent-solid); text-decoration: none; }
+  .ott-review-score { font-family: 'Fraunces', serif; font-weight: 700; }
+  .ott-archive-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); background: var(--bg-elevated); border: 1px solid var(--border); padding: 4px 12px; border-radius: 100px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<div class="vhero" id="ott-vhero" style="--vaccent:#f87171; background-image:url('../assets/movies-hero.jpg');">
+  <div class="vhero-nav">
+    <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <a href="index.html" class="top-admin-link">Movies</a>
+      <a href="best-rated.html" class="top-admin-link">Best Rated</a>
+      <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="vhero-content">
+    <div class="vhero-eyebrow" style="color:var(--vaccent);">Movies &middot; OTT</div>
+    <h1 class="vhero-title">Every OTT release, <span class="accent">every week.</span></h1>
+    <p class="vhero-sub">Every movie hitting Indian streaming platforms this week — Netflix, Prime Video, ZEE5, SonyLIV, Sun NXT, JioHotstar and more — posted fresh every Friday night or Saturday morning.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="ott-releases-container"></div>
+
+  <div class="ai-disclaimer">
+    Titles, platforms, languages and synopses are sourced from public streaming-platform listings and entertainment news coverage at the time each week is published — always confirm availability directly on the platform, as regional rollout and dates can shift. This is a factual release calendar, not a review or recommendation; where we've separately reviewed a title (see the "Read our review" link), that score and verdict come from our own aggregated YouTube-review coverage, published independently of this list.
+  </div>
+</div>
+
+<script>
+  const PLATFORM_COLOR = {
+    "Netflix": "#e50914",
+    "Prime Video": "#1f9dd8",
+    "ZEE5": "#7c3aed",
+    "SonyLIV": "#0f4c9c",
+    "Sun NXT": "#f97316",
+    "JioHotstar": "#0f3f87",
+    "Lionsgate Play": "#a16207",
+    "Aha": "#dc2626",
+    "JioCinema": "#0f3f87"
+  };
+
+  function renderReleases() {
+    const el = document.getElementById('ott-releases-container');
+    if (typeof OTT_RELEASES === 'undefined' || !OTT_RELEASES.length) {
+      el.innerHTML = `<div class="empty-state">No OTT release lists posted yet.</div>`;
+      return;
+    }
+
+    el.innerHTML = OTT_RELEASES.map((week, wi) => {
+      const isLatest = wi === 0;
+      const movieLookup = (typeof MOVIES !== 'undefined') ? MOVIES : [];
+      return `
+        <div>
+          ${!isLatest ? `<span class="ott-archive-tag">Week of ${week.weekLabel}</span>` : ''}
+          <div class="ott-week-head">
+            <h2>${isLatest ? `This week&rsquo;s OTT releases` : `OTT releases &middot; ${week.weekLabel}`}</h2>
+            <span class="ott-count">${week.entries.length} title${week.entries.length === 1 ? '' : 's'}</span>
+          </div>
+          <div class="ott-grid">
+            ${week.entries.map((e) => {
+              const reviewed = e.existingMovieId ? movieLookup.find((m) => m.id === e.existingMovieId) : null;
+              const verdict = reviewed && typeof VERDICTS !== 'undefined' ? VERDICTS[reviewed.verdictKey] : null;
+              return `
+              <div class="card-box ott-card">
+                <div class="ott-card-top">
+                  <h3 class="ott-title">${e.title}</h3>
+                  <span class="ott-platform" style="background:${PLATFORM_COLOR[e.platform] || '#57534e'};">${e.platform}</span>
+                </div>
+                <div class="ott-meta"><span>${e.language}</span><span>${e.genre}</span></div>
+                <div class="ott-synopsis">${e.synopsis}</div>
+                ${reviewed ? `
+                <a class="ott-review-link" href="movie.html?id=${reviewed.id}">
+                  <span class="ott-review-score" style="color:${verdict.color};">${reviewed.score}/10</span>
+                  <span>&middot; ${verdict.label} &mdash; read our full review &rarr;</span>
+                </a>` : ''}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  (function loadData() {
+    let pending = 2;
+    function done() { if (--pending === 0) renderReleases(); }
+    const s1 = document.createElement('script'); s1.src = 'ott-releases-data.js?v=' + Date.now(); s1.onload = done; s1.onerror = done; document.head.appendChild(s1);
+    const s2 = document.createElement('script'); s2.src = '../data.js?v=' + Date.now(); s2.onload = done; s2.onerror = done; document.head.appendChild(s2);
+  })();
+</script>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <span class="wordmark">ReviewHub</span>
+      <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="../movies/index.html">Movies</a></li>
+        <li><a href="../cars/index.html">Cars</a></li>
+        <li><a href="../stocks/index.html">Stocks</a></li>
+        <li><span class="soon">And more <span class="tag">Soon</span></span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ReviewHub</h4>
+      <ul>
+        <li><a href="index.html">All movies</a></li>
+        <li><a href="best-rated.html">Best rated movies</a></li>
+        <li><a href="ott-releases.html">OTT releases this week</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A note on our content</h4>
+      <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available YouTube review videos, for informational purposes only. No copyright infringement is intended &mdash; all video content, thumbnails, and imagery belong to their original creators and rights holders.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
