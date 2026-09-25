@@ -10,17 +10,26 @@
   .ott-week-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 8px; margin-bottom: 4px; }
   .ott-week-head h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 22px; margin: 0; color: var(--text); }
   .ott-count { font-size: 13px; color: var(--text-muted); }
-  .ott-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin: 18px 0 48px; }
-  .ott-card { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
-  .ott-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .ott-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 17px; color: var(--text); margin: 0; line-height: 1.3; }
-  .ott-platform { flex-shrink: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 4px 10px; border-radius: 100px; white-space: nowrap; color: #fff; }
-  .ott-meta { display: flex; gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: var(--text-muted); }
-  .ott-meta span { background: var(--bg-elevated); border: 1px solid var(--border); padding: 2px 9px; border-radius: 100px; }
-  .ott-synopsis { font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
-  .ott-review-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12.5px; font-weight: 700; color: var(--accent-solid); text-decoration: none; }
-  .ott-review-score { font-family: 'Fraunces', serif; font-weight: 700; }
   .ott-archive-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); background: var(--bg-elevated); border: 1px solid var(--border); padding: 4px 12px; border-radius: 100px; margin-bottom: 4px; }
+
+  .ott-board { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 14px; margin: 18px 0 48px; align-items: flex-start; }
+  .ott-column { flex: 0 0 260px; display: flex; flex-direction: column; gap: 12px; }
+  .ott-logo { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-radius: 10px; color: #fff; font-weight: 700; font-size: 14px; letter-spacing: 0.01em; }
+  .ott-logo .ott-logo-count { margin-left: auto; font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.22); padding: 2px 9px; border-radius: 100px; }
+
+  .ott-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .ott-poster { position: relative; width: 100%; aspect-ratio: 2/3; }
+  .ott-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ott-poster-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+  .ott-poster-fallback svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; }
+  .ott-poster-fallback .initial { position: relative; font-family: 'Fraunces', serif; font-size: 46px; color: rgba(255,255,255,0.92); }
+  .ott-card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .ott-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15.5px; color: var(--text); margin: 0; line-height: 1.3; }
+  .ott-meta { display: flex; gap: 6px; flex-wrap: wrap; font-size: 10.5px; color: var(--text-muted); }
+  .ott-meta span { background: var(--bg-elevated); border: 1px solid var(--border); padding: 2px 8px; border-radius: 100px; }
+  .ott-synopsis { font-size: 12px; line-height: 1.55; color: var(--text-secondary); }
+  .ott-review-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11.5px; font-weight: 700; color: var(--accent-solid); text-decoration: none; }
+  .ott-review-score { font-family: 'Fraunces', serif; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -50,7 +59,7 @@
   <div id="ott-releases-container"></div>
 
   <div class="ai-disclaimer">
-    Titles, platforms, languages and synopses are sourced from public streaming-platform listings and entertainment news coverage at the time each week is published — always confirm availability directly on the platform, as regional rollout and dates can shift. This is a factual release calendar, not a review or recommendation; where we've separately reviewed a title (see the "Read our review" link), that score and verdict come from our own aggregated YouTube-review coverage, published independently of this list.
+    Titles, platforms, languages and synopses are sourced from public streaming-platform listings and entertainment news coverage at the time each week is published — always confirm availability directly on the platform, as regional rollout and dates can shift. This is a factual release calendar, not a review or recommendation; where we've separately reviewed a title (see the "Read our review" link), that score and verdict come from our own aggregated YouTube-review coverage, published independently of this list. Posters are shown only where we have a verified image from our own review database — other titles use a placeholder card rather than an unverified image.
   </div>
 </div>
 
@@ -64,8 +73,49 @@
     "JioHotstar": "#0f3f87",
     "Lionsgate Play": "#a16207",
     "Aha": "#dc2626",
-    "JioCinema": "#0f3f87"
+    "JioCinema": "#0f3f87",
+    "Manorama MAX": "#0891b2"
   };
+
+  function darken(hex) {
+    const n = parseInt(hex.replace('#', ''), 16);
+    const r = Math.max(0, (n >> 16) - 60), g = Math.max(0, ((n >> 8) & 0xff) - 60), b = Math.max(0, (n & 0xff) - 60);
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  }
+
+  function posterMarkup(entry, reviewed) {
+    const realPoster = reviewed && (reviewed.posterImage || reviewed.posterUrl);
+    if (realPoster) {
+      return `<div class="ott-poster"><img src="${realPoster}" alt="" loading="lazy"></div>`;
+    }
+    const grad = (reviewed && reviewed.posterGrad) || `linear-gradient(135deg, ${PLATFORM_COLOR[entry.platform] || '#57534e'}, ${darken(PLATFORM_COLOR[entry.platform] || '#57534e')})`;
+    return `
+      <div class="ott-poster">
+        <div class="ott-poster-fallback" style="background:${grad};">
+          <svg viewBox="0 0 200 300"><circle cx="100" cy="150" r="70" fill="none" stroke="#ffffff" stroke-width="1"></circle><circle cx="100" cy="150" r="46" fill="none" stroke="#ffffff" stroke-width="1"></circle><circle cx="100" cy="150" r="22" fill="none" stroke="#ffffff" stroke-width="1"></circle></svg>
+          <span class="initial">${entry.title.charAt(0)}</span>
+        </div>
+      </div>`;
+  }
+
+  function cardMarkup(e, movieLookup) {
+    const reviewed = e.existingMovieId ? movieLookup.find((m) => m.id === e.existingMovieId) : null;
+    const verdict = reviewed && typeof VERDICTS !== 'undefined' ? VERDICTS[reviewed.verdictKey] : null;
+    return `
+      <div class="card-box ott-card">
+        ${posterMarkup(e, reviewed)}
+        <div class="ott-card-body">
+          <h3 class="ott-title">${e.title}</h3>
+          <div class="ott-meta"><span>${e.language}</span><span>${e.genre}</span></div>
+          <div class="ott-synopsis">${e.synopsis}</div>
+          ${reviewed ? `
+          <a class="ott-review-link" href="movie.html?id=${reviewed.id}">
+            <span class="ott-review-score" style="color:${verdict.color};">${reviewed.score}/10</span>
+            <span>&middot; ${verdict.label} &mdash; our review &rarr;</span>
+          </a>` : ''}
+        </div>
+      </div>`;
+  }
 
   function renderReleases() {
     const el = document.getElementById('ott-releases-container');
@@ -74,35 +124,35 @@
       return;
     }
 
+    const movieLookup = (typeof MOVIES !== 'undefined') ? MOVIES : [];
+
     el.innerHTML = OTT_RELEASES.map((week, wi) => {
       const isLatest = wi === 0;
-      const movieLookup = (typeof MOVIES !== 'undefined') ? MOVIES : [];
+
+      const byPlatform = {};
+      week.entries.forEach((e) => {
+        if (!byPlatform[e.platform]) byPlatform[e.platform] = [];
+        byPlatform[e.platform].push(e);
+      });
+      const platforms = Object.keys(byPlatform);
+
       return `
         <div>
           ${!isLatest ? `<span class="ott-archive-tag">Week of ${week.weekLabel}</span>` : ''}
           <div class="ott-week-head">
             <h2>${isLatest ? `This week&rsquo;s OTT releases` : `OTT releases &middot; ${week.weekLabel}`}</h2>
-            <span class="ott-count">${week.entries.length} title${week.entries.length === 1 ? '' : 's'}</span>
+            <span class="ott-count">${week.entries.length} title${week.entries.length === 1 ? '' : 's'} &middot; ${platforms.length} platform${platforms.length === 1 ? '' : 's'}</span>
           </div>
-          <div class="ott-grid">
-            ${week.entries.map((e) => {
-              const reviewed = e.existingMovieId ? movieLookup.find((m) => m.id === e.existingMovieId) : null;
-              const verdict = reviewed && typeof VERDICTS !== 'undefined' ? VERDICTS[reviewed.verdictKey] : null;
-              return `
-              <div class="card-box ott-card">
-                <div class="ott-card-top">
-                  <h3 class="ott-title">${e.title}</h3>
-                  <span class="ott-platform" style="background:${PLATFORM_COLOR[e.platform] || '#57534e'};">${e.platform}</span>
+          <div class="ott-board">
+            ${platforms.map((p) => `
+              <div class="ott-column">
+                <div class="ott-logo" style="background:${PLATFORM_COLOR[p] || '#57534e'};">
+                  <span>${p}</span>
+                  <span class="ott-logo-count">${byPlatform[p].length}</span>
                 </div>
-                <div class="ott-meta"><span>${e.language}</span><span>${e.genre}</span></div>
-                <div class="ott-synopsis">${e.synopsis}</div>
-                ${reviewed ? `
-                <a class="ott-review-link" href="movie.html?id=${reviewed.id}">
-                  <span class="ott-review-score" style="color:${verdict.color};">${reviewed.score}/10</span>
-                  <span>&middot; ${verdict.label} &mdash; read our full review &rarr;</span>
-                </a>` : ''}
-              </div>`;
-            }).join('')}
+                ${byPlatform[p].map((e) => cardMarkup(e, movieLookup)).join('')}
+              </div>
+            `).join('')}
           </div>
         </div>`;
     }).join('');
