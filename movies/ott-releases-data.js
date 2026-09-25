@@ -15,7 +15,8 @@ const OTT_RELEASES = [
     weekLabel: "25 Sep 2026",
     entries: [
       { title: "Agadha", platform: "ZEE5", language: "Telugu", genre: "Supernatural thriller", synopsis: "A spiritually gifted woman searches for answers after a disturbing death leads her toward a forbidden forest cave and a mysterious dark entity." },
-      { title: "Toxic: A Fairy Tale for Grown-Ups", platform: "ZEE5", language: "Kannada (dubbed Hindi, Tamil, Telugu, Malayalam)", genre: "Gangster crime drama", synopsis: "Yash stars in a gangster drama of ambition, violence and betrayal.", existingMovieId: 10 },
+      { title: "Hi", platform: "ZEE5", language: "Tamil", genre: "Romantic drama", synopsis: "A Nayanthara and Kavin-starrer romantic drama, premiering on Tamil ZEE5.", existingMovieId: 20 },
+      { title: "Bhootam Bhayyam", platform: "ZEE5", language: "Marathi", genre: "Horror comedy", synopsis: "A quirky supernatural adventure built around a century-old curse, arriving on ZEE5 two months after its theatrical release." },
       { title: "Habeebi", platform: "SonyLIV", language: "Tamil (dubbed Telugu, Kannada, Malayalam, Hindi)", genre: "Period romance drama", synopsis: "Set in 1980s southern Tamil Nadu, a young Muslim man falls for his cousin, navigating family opposition and social tradition." },
       { title: "Angikaaram", platform: "Sun NXT", language: "Tamil & Telugu", genre: "Sports courtroom drama", synopsis: "A 200-metre runner fights in court after losing a Commonwealth Games opportunity." },
       { title: "Mango Pachcha", platform: "JioHotstar", language: "Kannada (dubbed Tamil, Telugu, Hindi, Malayalam)", genre: "Crime action drama", synopsis: "A CD shop owner uncovers family secrets, including an unknown half-brother, after his father's death." },
