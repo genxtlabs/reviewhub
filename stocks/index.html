@@ -19,6 +19,103 @@
   }
   .ambient, .grain { display: none; }
   .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
+
+  /* Search box in top nav */
+  .nav-search { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28); border-radius: 100px; padding: 7px 14px; min-width: 220px; }
+  .nav-search input { background: none; border: none; outline: none; color: #fff; font-size: 12.5px; width: 100%; }
+  .nav-search input::placeholder { color: rgba(255,255,255,.65); }
+  .nav-search svg { flex-shrink: 0; color: rgba(255,255,255,.75); width: 14px; height: 14px; }
+
+  /* Session badge (reused from Daily Brief) */
+  .session-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; border: 1px solid var(--border); color: var(--text-muted); }
+  .session-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); }
+  .session-badge.open { color: #15803d; border-color: rgba(21,128,61,.3); background: rgba(21,128,61,.06); }
+  .session-badge.open .dot { background: #15803d; box-shadow: 0 0 0 3px rgba(21,128,61,.15); }
+
+  /* Market snapshot strip */
+  .snapshot-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 24px 0 4px; }
+  .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 14px 0 6px; }
+  .snapshot-tile { padding: 16px 20px; }
+  .snapshot-name { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 700; margin-bottom: 6px; }
+  .snapshot-value { font-family: 'Times New Roman', Times, serif; font-size: 24px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .snapshot-change { font-size: 13px; font-weight: 700; margin-left: 8px; }
+  .snapshot-change.up { color: var(--verdict-must); }
+  .snapshot-change.down { color: var(--verdict-skip); }
+  .snapshot-status { font-size: 11px; color: var(--text-muted); margin: 2px 0 18px; }
+
+  /* Two-column dashboard layout */
+  .dash-layout { display: grid; grid-template-columns: 1fr 340px; gap: 22px; align-items: start; margin-top: 8px; }
+  @media (max-width: 900px) { .dash-layout { grid-template-columns: 1fr; } }
+  .dash-main { min-width: 0; }
+  .dash-side { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 20px; }
+
+  /* Category tile grid */
+  .tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 26px; }
+  .tile { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+  .tile:hover { border-color: var(--accent-solid); transform: translateY(-2px); }
+  .tile-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .tile-icon svg { width: 16px; height: 16px; }
+  .tile-label { font-size: 12.5px; font-weight: 700; color: var(--text); }
+  .tile-sub { font-size: 10.5px; color: var(--text-muted); line-height: 1.4; }
+
+  /* Section blocks */
+  .dash-section { margin-bottom: 28px; }
+  .dash-section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+  .dash-section-head h2 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 18px; margin: 0; color: var(--text); }
+  .dash-section-head a { font-size: 12px; font-weight: 700; color: var(--accent-solid); text-decoration: none; white-space: nowrap; }
+
+  /* Story cards */
+  .story-list { display: flex; flex-direction: column; gap: 10px; }
+  .story-card { padding: 14px 18px; font-size: 13px; line-height: 1.55; color: var(--text-secondary); }
+  .story-tag { display: inline-block; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-solid); background: rgba(190,24,93,.08); padding: 2px 8px; border-radius: 100px; margin-bottom: 6px; }
+
+  /* Watch list rows */
+  .watch-list { display: flex; flex-direction: column; }
+  .watchrow { display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--border); }
+  .watchrow:last-child { border-bottom: none; }
+  .watchrow-ticker { font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 13px; color: var(--text); flex-shrink: 0; width: 110px; }
+  .watchrow-name { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .watchrow-reason { font-size: 12.5px; line-height: 1.5; color: var(--text-secondary); }
+
+  /* Research feed */
+  .feed-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .feed-tab { font-size: 11.5px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); padding: 5px 13px; border-radius: 100px; cursor: pointer; background: none; }
+  .feed-tab.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .feed-card { padding: 16px 18px; text-decoration: none; display: block; }
+  .feed-card-type { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); margin-bottom: 6px; }
+  .feed-card-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+  .feed-card-summary { font-size: 12px; line-height: 1.5; color: var(--text-muted); }
+  .feed-card-date { font-size: 10.5px; color: var(--text-faint); margin-top: 8px; }
+
+  /* Mini tables (IPOs / Bonds) */
+  .mini-table { width: 100%; border-collapse: collapse; }
+  .mini-table th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .mini-table td { padding: 10px; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--text-secondary); }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .mini-table .mt-name { font-weight: 700; color: var(--text); }
+  .mini-table-wrap { overflow-x: auto; }
+
+  /* Sidebar cards */
+  .verdict-card { padding: 20px 22px; }
+  .verdict-card h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 15px; margin: 0 0 4px; color: var(--text); }
+  .verdict-witty { font-style: italic; font-size: 13px; color: var(--text-secondary); margin: 8px 0 12px; line-height: 1.5; }
+  .verdict-checklist { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .verdict-checklist li { display: flex; gap: 8px; font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
+  .verdict-checklist svg { flex-shrink: 0; margin-top: 2px; }
+  .verdict-btn { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: var(--accent-solid); padding: 8px 16px; border-radius: 6px; text-decoration: none; }
+  .dates-list { display: flex; flex-direction: column; gap: 10px; }
+  .date-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; line-height: 1.5; }
+  .date-chip { flex-shrink: 0; font-weight: 700; color: var(--accent-solid); font-family: 'Times New Roman', Times, serif; font-size: 12px; width: 52px; }
+  .date-desc { color: var(--text-secondary); }
+
+  /* Learn banner */
+  .learn-banner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 22px 28px; background: var(--bg-elevated-2); border: 1px solid var(--border); border-radius: 10px; margin: 8px 0 32px; }
+  .learn-banner-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .learn-banner-links a { font-size: 12px; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--border); padding: 6px 13px; border-radius: 100px; text-decoration: none; background: #fff; }
+  .learn-banner-links a:hover { border-color: var(--accent-solid); color: var(--accent-solid); }
+  .learn-banner-cta { font-size: 12.5px; font-weight: 700; color: #fff; background: var(--accent-solid); padding: 9px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; }
+
   .stock-card { display: flex; flex-direction: column; gap: 10px; }
   .ticker-badge { display: inline-flex; align-items: center; width: fit-content; font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em; color: #15803d; background: rgba(21,128,61,0.08); border: 1px solid rgba(21,128,61,0.3); padding: 3px 10px; border-radius: 100px; }
   .price-line { display: flex; align-items: baseline; gap: 10px; margin-top: 2px; }
@@ -46,6 +143,10 @@
       <a href="learn.html" class="top-admin-link">Learn</a>
       <a href="tools.html" class="top-admin-link">Calculators</a>
       <a href="journal.html" class="top-admin-link">Trade Journal</a>
+      <label class="nav-search">
+        <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <input type="text" id="nav-search-input" placeholder="Search briefs, IPOs, bonds, news&hellip;" autocomplete="off">
+      </label>
       <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
       </a>
@@ -53,15 +154,109 @@
   </div>
   <div class="vhero-content">
     <div class="vhero-eyebrow" style="color:var(--vaccent);">Stocks</div>
-    <h1 class="vhero-title">Invest <span class="accent">Smarter.</span></h1>
-    <p class="vhero-sub">Data-grounded reads on tracked NSE stocks, updated daily. Informational only — not investment advice.</p>
+    <h1 class="vhero-title">Understand the market. <span class="accent">Research the business.</span></h1>
+    <p class="vhero-sub">Daily news, company research, IPOs, bonds, education, and tools — all in one place. Informational only, never investment advice.</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+      <a href="daily-brief.html" style="font-size:13px; font-weight:700; color:#1a1a1a; background:#fff; padding:11px 20px; border-radius:6px; text-decoration:none;">Today's Market &rarr;</a>
+      <a href="ipos.html" style="font-size:13px; font-weight:700; color:#fff; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.4); padding:10px 20px; border-radius:6px; text-decoration:none;">Explore IPOs</a>
+      <a href="learn.html" style="font-size:13px; font-weight:700; color:#fff; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.4); padding:10px 20px; border-radius:6px; text-decoration:none;">Learn Stock Market</a>
+    </div>
   </div>
 </div>
 
 <div class="wrap">
-  <a href="daily-brief.html" id="brief-teaser" class="card-box" style="display:none; padding:24px 28px; margin:28px 0 6px; text-decoration:none;"></a>
 
-  <div class="filter-row" style="padding-top:16px;">
+  <div class="snapshot-bar">
+    <span class="muted" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint);">Market snapshot</span>
+    <span class="session-badge" id="session-badge"><span class="dot"></span><span id="session-badge-text">&mdash;</span></span>
+  </div>
+  <div class="snapshot-grid" id="snapshot-grid"></div>
+  <div class="snapshot-status" id="snapshot-status"></div>
+
+  <div class="dash-layout">
+    <div class="dash-main">
+
+      <div class="tile-grid">
+        <a class="card-box tile" href="daily-brief.html"><div class="tile-icon" style="background:rgba(21,128,61,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2"><path d="M4 19h16M6 15l4-5 3 3 5-7"/></svg></div><span class="tile-label">Daily Market</span><span class="tile-sub">News, verdict &amp; interesting stocks</span></a>
+        <a class="card-box tile" href="market-scan.html"><div class="tile-icon" style="background:rgba(180,83,9,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg></div><span class="tile-label">Penny Stocks</span><span class="tile-sub">Low-price stocks &amp; movements</span></a>
+        <a class="card-box tile" href="creator-watch.html"><div class="tile-icon" style="background:rgba(190,24,93,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#be185d" stroke-width="2"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M17 10l4-3v10l-4-3"/></svg></div><span class="tile-label">Creator Insights</span><span class="tile-sub">Top finance YouTubers</span></a>
+        <a class="card-box tile" href="ipos.html"><div class="tile-icon" style="background:rgba(29,78,216,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><path d="M3 21h18M6 21V9l6-5 6 5v12"/></svg></div><span class="tile-label">IPOs</span><span class="tile-sub">Upcoming, open &amp; recent</span></a>
+        <a class="card-box tile" href="bonds.html"><div class="tile-icon" style="background:rgba(101,163,13,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#65a30d" stroke-width="2"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18"/></svg></div><span class="tile-label">Bonds</span><span class="tile-sub">Yields, terms &amp; risk</span></a>
+        <a class="card-box tile" href="#companies"><div class="tile-icon" style="background:rgba(29,78,216,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><span class="tile-label">Companies</span><span class="tile-sub">In-depth company research</span></a>
+        <a class="card-box tile" href="learn.html"><div class="tile-icon" style="background:rgba(190,24,93,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#be185d" stroke-width="2"><path d="M4 19V6a2 2 0 012-2h12v15H6a2 2 0 00-2 2z"/></svg></div><span class="tile-label">Learn</span><span class="tile-sub">Stock market made simple</span></a>
+        <a class="card-box tile" href="tools.html"><div class="tile-icon" style="background:rgba(180,83,9,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h3M13 12h3M8 16h3M13 16h3"/></svg></div><span class="tile-label">Tools</span><span class="tile-sub">Calculators &amp; utilities</span></a>
+      </div>
+
+      <div class="dash-section">
+        <div class="dash-section-head"><h2>Top stories today</h2><a href="daily-brief.html">View full brief &rarr;</a></div>
+        <div class="story-list" id="story-list"></div>
+      </div>
+
+      <div class="dash-section">
+        <div class="dash-section-head"><h2>Stocks to watch today</h2><a href="daily-brief.html">Full brief &rarr;</a></div>
+        <div class="card-box" style="padding: 6px 18px;">
+          <div class="watch-list" id="watch-list"></div>
+        </div>
+      </div>
+
+      <div class="dash-section">
+        <div class="dash-section-head"><h2>Latest research &amp; analysis</h2></div>
+        <div class="feed-tabs" id="feed-tabs"></div>
+        <div class="feed-grid" id="feed-grid"></div>
+      </div>
+
+      <div class="dash-section">
+        <div class="dash-section-head"><h2>Upcoming &amp; open IPOs</h2><a href="ipos.html">View all &rarr;</a></div>
+        <div class="card-box mini-table-wrap">
+          <table class="mini-table">
+            <thead><tr><th>Company</th><th>Price band</th><th>Issue size</th><th>Key date</th></tr></thead>
+            <tbody id="ipo-mini-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dash-section">
+        <div class="dash-section-head"><h2>Bond examples</h2><a href="bonds.html">View all &rarr;</a></div>
+        <div class="card-box mini-table-wrap">
+          <table class="mini-table">
+            <thead><tr><th>Issuer</th><th>Coupon/yield</th><th>Tenure</th><th>Rating</th></tr></thead>
+            <tbody id="bond-mini-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dash-side">
+      <div class="card-box verdict-card" id="verdict-card"></div>
+      <div class="card-box verdict-card">
+        <h3>Key dates to watch</h3>
+        <div class="dates-list">
+          <div class="date-row"><span class="date-chip">28 Sep</span><span class="date-desc">Moneyview, A-One Steels, Peshwa Wheat, Roopa Screen &amp; Green Asia Impex IPOs close.</span></div>
+          <div class="date-row"><span class="date-chip">29 Sep</span><span class="date-desc">Runwal Enterprises, Orient Cables, AceVector, German Green Steel &amp; more SME IPOs close. Varmora Granito lists.</span></div>
+          <div class="date-row"><span class="date-chip">1 Oct</span><span class="date-desc">Moneyview, A-One Steels &amp; several SME issues list.</span></div>
+          <div class="date-row"><span class="date-chip">5 Oct</span><span class="date-desc">Runwal Enterprises, Orient Cables, AceVector &amp; German Green Steel list.</span></div>
+          <div class="date-row"><span class="date-chip">5&ndash;7 Oct</span><span class="date-desc">RBI Monetary Policy Committee meeting — a hawkish surprise could pressure markets.</span></div>
+        </div>
+        <div style="font-size:11px; color:var(--text-faint); margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">Dates as reported publicly and subject to change — always confirm on the exchange or issuer's own site.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="learn-banner">
+    <div>
+      <div style="font-family:'Times New Roman',Times,serif; font-weight:600; font-size:16px; color:var(--text); margin-bottom:4px;">Learn, research, and grow</div>
+      <div class="learn-banner-links">
+        <a href="learn.html#basics">Stock market basics</a>
+        <a href="learn.html#statements">Financial statements</a>
+        <a href="learn.html#valuation">Valuation</a>
+        <a href="learn.html#ipo-basics">IPOs &amp; bonds</a>
+      </div>
+    </div>
+    <a class="learn-banner-cta" href="learn.html">Start learning &rarr;</a>
+  </div>
+
+  <div class="filter-row" id="companies" style="padding-top:8px; scroll-margin-top:20px;">
     <input type="text" id="search-input" class="search-input" placeholder="Search by name or ticker&hellip;" autocomplete="off">
   </div>
 
@@ -76,7 +271,7 @@
   </div>
 
   <div class="section-heading">
-    <h1>Today&rsquo;s board</h1>
+    <h1>Companies &mdash; today&rsquo;s board</h1>
     <span class="muted" id="results-label"></span>
   </div>
 
@@ -84,30 +279,182 @@
 </div>
 
 <script>
-  function renderBriefTeaser() {
-    const el = document.getElementById('brief-teaser');
-    if (!el || typeof DAILY_BRIEFS === 'undefined' || !DAILY_BRIEFS.length) return;
-    const b = DAILY_BRIEFS[0];
-    el.style.display = 'flex';
-    el.style.alignItems = 'center';
-    el.style.justifyContent = 'space-between';
-    el.style.gap = '20px';
-    el.style.flexWrap = 'wrap';
-    el.innerHTML = `
-      <div>
-        <div style="font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#4ade80; margin-bottom:6px;">Daily brief &middot; ${b.date}</div>
-        <div style="font-family:'Times New Roman',Times,serif; font-style:italic; font-weight:500; font-size:17px; color:var(--text); margin-bottom:6px;">&ldquo;${b.wittyLine}&rdquo;</div>
-        <div style="font-size:13px; color:var(--text-secondary); max-width:640px;">${b.verdict}</div>
-      </div>
-      <span style="font-size:13px; font-weight:700; color:#4ade80; white-space:nowrap;">Read full brief &amp; archive &rarr;</span>`;
+  function updateSessionBadge() {
+    const el = document.getElementById('session-badge');
+    const textEl = document.getElementById('session-badge-text');
+    const nowIst = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const day = nowIst.getDay();
+    const minutes = nowIst.getHours() * 60 + nowIst.getMinutes();
+    const isOpen = day >= 1 && day <= 5 && minutes >= 9 * 60 + 15 && minutes <= 15 * 60 + 30;
+    el.classList.toggle('open', isOpen);
+    const timeLabel = nowIst.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    textEl.textContent = (isOpen ? 'Market open' : 'Market closed') + ' · ' + timeLabel + ' IST';
+  }
+  updateSessionBadge();
+  setInterval(updateSessionBadge, 60000);
+
+  const MOOD_ICON_COLOR = { positive: '#15803d', upbeat: '#4d7c0f', mixed: '#b45309', negative: '#b91c1c' };
+
+  function renderSnapshot(brief) {
+    const grid = document.getElementById('snapshot-grid');
+    const status = document.getElementById('snapshot-status');
+    if (!brief || !brief.indices || !brief.indices.length) { grid.innerHTML = ''; status.textContent = ''; return; }
+    grid.innerHTML = brief.indices.map((idx) => {
+      const hasChange = typeof idx.changePct === 'number';
+      const up = hasChange && idx.changePct >= 0;
+      return `
+      <div class="card-box snapshot-tile">
+        <div class="snapshot-name">${idx.name}</div>
+        <span class="snapshot-value">${idx.value || '—'}</span>${hasChange ? `<span class="snapshot-change ${up ? 'up' : 'down'}">${up ? '+' : ''}${idx.changePct.toFixed(2)}%</span>` : ''}
+      </div>`;
+    }).join('');
+    status.textContent = `As of the ${brief.date} Daily Brief · ${brief.dataStatus || 'not a live feed'} — not real-time data.`;
   }
 
-  (function loadBriefsData() {
-    const s = document.createElement('script');
-    s.src = 'briefs-data.js?v=' + Date.now();
-    s.onload = renderBriefTeaser;
-    document.head.appendChild(s);
-  })();
+  function renderVerdictCard(brief) {
+    const el = document.getElementById('verdict-card');
+    if (!brief) { el.innerHTML = ''; return; }
+    const color = MOOD_ICON_COLOR[brief.mood] || '#726f68';
+    el.innerHTML = `
+      <h3>Today's market verdict</h3>
+      <div class="verdict-witty">&ldquo;${brief.wittyLine}&rdquo;</div>
+      <ul class="verdict-checklist">
+        ${brief.assumptions.slice(0, 4).map((a) => `
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="${color}" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="${color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${a}</span></li>
+        `).join('')}
+      </ul>
+      <a class="verdict-btn" href="daily-brief.html">Read full analysis &rarr;</a>
+    `;
+  }
+
+  function renderStories(brief) {
+    const el = document.getElementById('story-list');
+    if (!brief || !brief.news || !brief.news.length) { el.innerHTML = `<div class="empty-state">No stories yet.</div>`; return; }
+    el.innerHTML = brief.news.map((n) => `
+      <div class="card-box story-card"><span class="story-tag">Market News</span><div>${n}</div></div>
+    `).join('');
+  }
+
+  function renderWatchlist(brief) {
+    const el = document.getElementById('watch-list');
+    const rows = [
+      ...(brief?.stocksToWatch || []).map((s) => ({ ...s, kind: 'Watch' })),
+      ...(brief?.stockUpdates || []).map((s) => ({ ticker: s.ticker, name: s.name, reason: s.update, kind: 'Update' }))
+    ];
+    if (!rows.length) { el.innerHTML = `<div class="empty-state">Nothing flagged today.</div>`; return; }
+    el.innerHTML = rows.map((r) => `
+      <div class="watchrow">
+        <div><div class="watchrow-ticker">${r.ticker}</div><div class="watchrow-name">${r.name}</div></div>
+        <div class="watchrow-reason">${r.reason}</div>
+      </div>`).join('');
+  }
+
+  // Unified research feed, built from real content already tracked elsewhere on the site.
+  let feedItems = [];
+  let feedTab = 'all';
+  let feedQuery = '';
+
+  function buildFeed() {
+    const items = [];
+    if (typeof DAILY_BRIEFS !== 'undefined') {
+      DAILY_BRIEFS.slice(0, 3).forEach((b) => items.push({
+        type: 'market', typeLabel: 'Market', title: b.wittyLine, date: b.date, summary: b.verdict, link: 'daily-brief.html'
+      }));
+    }
+    if (typeof CREATOR_WATCH !== 'undefined') {
+      CREATOR_WATCH.slice(0, 3).forEach((v) => items.push({
+        type: 'creator', typeLabel: 'Creator Insights', title: v.videoTitle, date: v.publishedDate, summary: v.summary, link: 'creator-watch.html'
+      }));
+    }
+    if (typeof IPOS !== 'undefined') {
+      IPOS.filter((i) => i.status === 'open' || i.status === 'upcoming').slice(0, 3).forEach((i) => items.push({
+        type: 'ipo', typeLabel: 'IPOs', title: i.name, date: i.dates, summary: i.desc, link: 'ipos.html'
+      }));
+    }
+    if (typeof BONDS !== 'undefined') {
+      BONDS.slice(0, 2).forEach((b) => items.push({
+        type: 'bond', typeLabel: 'Bonds', title: b.issuer, date: b.couponLabel, summary: b.note, link: 'bonds.html'
+      }));
+    }
+    items.push(
+      { type: 'education', typeLabel: 'Education', title: 'P/E ratio, explained', date: '', summary: 'Why a low P/E alone is never proof a stock is cheap.', link: 'learn.html#pe' },
+      { type: 'education', typeLabel: 'Education', title: 'How to build a diversified portfolio', date: '', summary: 'Spreading risk across asset classes, sectors, and company sizes.', link: 'learn.html#diversification' }
+    );
+    return items;
+  }
+
+  function renderFeedTabs() {
+    const types = ['all', 'market', 'creator', 'ipo', 'bond', 'education'];
+    const labels = { all: 'All', market: 'Market', creator: 'Creator Insights', ipo: 'IPOs', bond: 'Bonds', education: 'Education' };
+    document.getElementById('feed-tabs').innerHTML = types.map((t) => `<button class="feed-tab${t === feedTab ? ' active' : ''}" data-tab="${t}">${labels[t]}</button>`).join('');
+    document.querySelectorAll('.feed-tab').forEach((btn) => btn.addEventListener('click', () => { feedTab = btn.dataset.tab; renderFeedTabs(); renderFeedGrid(); }));
+  }
+
+  function renderFeedGrid() {
+    let list = feedTab === 'all' ? feedItems : feedItems.filter((i) => i.type === feedTab);
+    if (feedQuery.trim()) {
+      const q = feedQuery.trim().toLowerCase();
+      list = list.filter((i) => i.title.toLowerCase().includes(q) || i.summary.toLowerCase().includes(q));
+    }
+    document.getElementById('feed-grid').innerHTML = list.map((i) => `
+      <a class="card-box feed-card" href="${i.link}">
+        <div class="feed-card-type">${i.typeLabel}</div>
+        <div class="feed-card-title">${i.title}</div>
+        <div class="feed-card-summary">${i.summary.length > 130 ? i.summary.slice(0, 130) + '…' : i.summary}</div>
+        ${i.date ? `<div class="feed-card-date">${i.date}</div>` : ''}
+      </a>`).join('') || `<div class="empty-state">No matching results.</div>`;
+  }
+
+  document.getElementById('nav-search-input').addEventListener('input', (e) => {
+    feedQuery = e.target.value;
+    renderFeedGrid();
+    if (feedQuery.trim()) document.getElementById('feed-tabs').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  function renderIpoMini() {
+    const tbody = document.getElementById('ipo-mini-body');
+    if (typeof IPOS === 'undefined') return;
+    const rows = IPOS.filter((i) => i.status === 'open' || i.status === 'upcoming').slice(0, 6);
+    tbody.innerHTML = rows.map((i) => `
+      <tr><td class="mt-name">${i.name}${i.sme ? ' <span style="color:var(--text-faint); font-weight:400;">(SME)</span>' : ''}</td><td>${i.priceBand}</td><td>${i.issueSize}</td><td>${i.dates}</td></tr>
+    `).join('');
+  }
+
+  function renderBondMini() {
+    const tbody = document.getElementById('bond-mini-body');
+    if (typeof BONDS === 'undefined') return;
+    tbody.innerHTML = BONDS.map((b) => `
+      <tr><td class="mt-name">${b.issuer}</td><td>${b.coupon}</td><td>${b.tenure}</td><td>${b.rating}</td></tr>
+    `).join('');
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = src + '?v=' + Date.now();
+      s.onload = resolve;
+      s.onerror = resolve;
+      document.head.appendChild(s);
+    });
+  }
+
+  Promise.all([
+    loadScript('briefs-data.js'),
+    loadScript('creator-watch-data.js'),
+    loadScript('ipos-data.js'),
+    loadScript('bonds-data.js')
+  ]).then(() => {
+    const brief = (typeof DAILY_BRIEFS !== 'undefined' && DAILY_BRIEFS[0]) || null;
+    renderSnapshot(brief);
+    renderVerdictCard(brief);
+    renderStories(brief);
+    renderWatchlist(brief);
+    renderIpoMini();
+    renderBondMini();
+    feedItems = buildFeed();
+    renderFeedTabs();
+    renderFeedGrid();
+  });
 </script>
 <script src="config.js"></script>
 <script src="js/api.js"></script>
@@ -191,7 +538,7 @@
       renderFilters();
       renderGrid();
     } catch (err) {
-      document.getElementById('stock-grid').innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">Couldn't load the board right now. Try refreshing.</div>`;
+      document.getElementById('stock-grid').innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">Couldn't load the board right now — this section needs the stocks backend to be deployed. Explore the sections above in the meantime.</div>`;
     }
   }
 
