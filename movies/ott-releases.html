@@ -98,6 +98,17 @@
       </div>`;
   }
 
+  const PLATFORM_ORDER = ["Prime Video", "Netflix", "JioHotstar", "ZEE5", "SonyLIV", "Sun NXT", "Lionsgate Play"];
+  function sortPlatforms(platforms) {
+    return platforms.slice().sort((a, b) => {
+      const ia = PLATFORM_ORDER.indexOf(a), ib = PLATFORM_ORDER.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
+  }
+
   function cardMarkup(e, movieLookup) {
     const reviewed = e.existingMovieId ? movieLookup.find((m) => m.id === e.existingMovieId) : null;
     const verdict = reviewed && typeof VERDICTS !== 'undefined' ? VERDICTS[reviewed.verdictKey] : null;
@@ -134,7 +145,7 @@
         if (!byPlatform[e.platform]) byPlatform[e.platform] = [];
         byPlatform[e.platform].push(e);
       });
-      const platforms = Object.keys(byPlatform);
+      const platforms = sortPlatforms(Object.keys(byPlatform));
 
       return `
         <div>
