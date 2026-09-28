@@ -45,9 +45,16 @@
   <div class="leaderboard" id="leaderboard-list"></div>
 </div>
 
-<script src="../data.js"></script>
-<script src="../store.js"></script>
 <script>
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = src + '?v=' + Date.now();
+      s.onload = resolve;
+      document.head.appendChild(s);
+    });
+  }
+  function main() {
   let filterBrand = 'All';
 
   function renderFilters() {
@@ -106,6 +113,8 @@
   }
 
   render();
+  }
+  loadScript('../data.js').then(() => loadScript('../store.js')).then(main);
 </script>
 <footer class="site-footer">
   <div class="footer-top">

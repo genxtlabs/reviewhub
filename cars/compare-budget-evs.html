@@ -145,9 +145,16 @@
   </footer>
 </main>
 
-<script src="../data.js"></script>
-<script src="../store.js"></script>
 <script>
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = src + '?v=' + Date.now();
+      s.onload = resolve;
+      document.head.appendChild(s);
+    });
+  }
+  function main() {
   // The five cars in this comparison, by id (see data.js CARS array).
   const COMPARE_IDS = [8, 9, 10, 11, 12];
 
@@ -251,6 +258,8 @@
   }
 
   render();
+  }
+  loadScript('../data.js').then(() => loadScript('../store.js')).then(main);
 </script>
 </body>
 </html>
