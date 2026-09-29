@@ -1,4 +1,4 @@
-// Real bond examples, terms as of late Sep 2026 — sourced from RBI notifications, issuer
+// Real bond examples, terms as of 29 Sep 2026 — sourced from RBI notifications, issuer
 // prospectuses, and financial news coverage. Not a live feed — see bonds.html's disclaimer.
 // Shared by bonds.html (full page) and index.html (dashboard widget).
 const BONDS = [
@@ -10,9 +10,9 @@ const BONDS = [
   },
   {
     issuer: "Government of India 10-Year G-Sec", category: "Sovereign · benchmark bond", rating: "Sovereign", ratingClass: "sovereign",
-    coupon: "~7.04%", couponLabel: "yield (as of 22 Sep 2026)",
+    coupon: "~7.19%", couponLabel: "yield (as of 28 Sep 2026)",
     tenure: "10 years", payout: "Semi-annual", eligibility: "Open to all (via RBI Retail Direct, brokers, or bond funds)", taxStatus: "Taxable",
-    note: "The reference point the rest of India's bond market is priced against. Yield moves daily with rate expectations and inflation data — the 7.04% figure is a snapshot, not fixed."
+    note: "The reference point the rest of India's bond market is priced against. Yield moves daily with rate expectations and inflation data — it jumped to a 2.5-year high this week as crude oil prices and a weaker rupee pressured the bond market. The 7.19% figure is a snapshot, not fixed."
   },
   {
     issuer: "Power Finance Corporation (PFC) NCD", category: "PSU · non-convertible debenture", rating: "AAA", ratingClass: "",
@@ -21,7 +21,7 @@ const BONDS = [
     note: "A government-owned NBFC's public NCD issue — illustrates how even a AAA-rated issuer prices only modestly above sovereign G-Secs."
   },
   {
-    issuer: "Muthoot Fincorp NCD", category: "NBFC · non-convertible debenture", rating: "Check current rating", ratingClass: "",
+    issuer: "Muthoot Fincorp NCD", category: "NBFC · non-convertible debenture", rating: "AA (CRISIL)", ratingClass: "",
     coupon: "8.56% – 9.25%", couponLabel: "p.a. (2026 public issue, by payout option)",
     tenure: "Series-dependent", payout: "Monthly, annual, or cumulative options", eligibility: "Open to all", taxStatus: "Taxable",
     note: "A meaningfully higher coupon than the PSU/sovereign examples above — the market's way of compensating for a lower-rated, less liquid issuer. Higher coupon is compensation for risk, not a bonus."
