@@ -33,11 +33,16 @@ function seedOneMovie(m, existing) {
     status: 'published',
     summaryText: (existing && existing.summaryText) || m.summaryText || buildSummaryText(m, counts),
     videos,
+    _src: sourceSignature(m),
   };
 }
 
-function reviewedVideoCount(m) {
-  return (m.videos || []).filter((v) => v.verdictKey).length;
+// Fingerprint of everything data.js controls for this entry, so a cached
+// copy can tell whether the source has changed at all (a new poster,
+// brochure, price correction, synopsis edit, ...) - not just whether it
+// gained more reviewed videos.
+function sourceSignature(x) {
+  return JSON.stringify(x);
 }
 
 function seedStore() {
@@ -47,10 +52,11 @@ function seedStore() {
 }
 
 // A returning visitor's localStorage was seeded before new movies were added
-// to data.js's MOVIES list (or before a since-cached movie had its reviews
-// written) — reconcile it: refresh any cached movie that data.js has since
-// gained more reviews for, and append whichever real ones are missing
-// entirely (by id), without touching anything else they've published/edited.
+// to data.js's MOVIES list, or before a since-cached movie's data.js entry
+// changed in any way (more reviews, a corrected poster/price/synopsis, ...)
+// — reconcile it: refresh any cached movie whose source has since changed,
+// and append whichever real ones are missing entirely (by id), without
+// touching anything else they've published/edited.
 function migrateNewSeedMovies(existing) {
   const sourceById = new Map(MOVIES.map((m) => [String(m.id), m]));
   const existingIds = new Set(existing.map((m) => String(m.id)));
@@ -58,7 +64,7 @@ function migrateNewSeedMovies(existing) {
   let changed = false;
   const refreshed = existing.map((m) => {
     const src = sourceById.get(String(m.id));
-    if (src && reviewedVideoCount(src) > reviewedVideoCount(m)) {
+    if (src && sourceSignature(src) !== m._src) {
       changed = true;
       return seedOneMovie(src, m);
     }
@@ -132,6 +138,7 @@ function seedOneCar(c, existing) {
     status: 'published',
     summaryText: (existing && existing.summaryText) || c.summaryText || buildSummaryText(c, counts),
     videos,
+    _src: sourceSignature(c),
   };
 }
 
@@ -148,7 +155,7 @@ function migrateNewSeedCars(existing) {
   let changed = false;
   const refreshed = existing.map((c) => {
     const src = sourceById.get(String(c.id));
-    if (src && reviewedVideoCount(src) > reviewedVideoCount(c)) {
+    if (src && sourceSignature(src) !== c._src) {
       changed = true;
       return seedOneCar(src, c);
     }
