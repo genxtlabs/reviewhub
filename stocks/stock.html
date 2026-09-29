@@ -79,7 +79,7 @@
     try {
       ({ stock, digests } = await stocksApiGet(`/api/stocks/${encodeURIComponent(ticker)}`));
     } catch (err) {
-      contentEl.innerHTML = `<div class="empty-state">Couldn't load this stock right now. <a href="index.html">Back to all stocks</a></div>`;
+      contentEl.innerHTML = `<div class="empty-state">Live per-company boards are coming soon. <a href="index.html">Back to all stocks</a></div>`;
       return;
     }
 

@@ -309,7 +309,9 @@
     <a class="learn-banner-cta" href="learn.html">Start learning &rarr;</a>
   </div>
 
-  <div class="filter-row" id="companies" style="padding-top:8px; scroll-margin-top:20px;">
+  <div id="companies" style="scroll-margin-top:20px;">
+  <div id="companies-controls" style="display:none;">
+  <div class="filter-row" style="padding-top:8px;">
     <input type="text" id="search-input" class="search-input" placeholder="Search by name or ticker&hellip;" autocomplete="off">
   </div>
 
@@ -322,13 +324,15 @@
     <span class="filter-label">Sort by</span>
     <div class="chip-row" id="sort-filter"></div>
   </div>
+  </div>
 
   <div class="section-heading">
     <h1 style="font-weight:800;">Companies &mdash; today&rsquo;s board</h1>
     <span class="muted" id="results-label"></span>
   </div>
 
-  <div class="grid" id="stock-grid"><div class="empty-state" style="grid-column:1 / -1;">Loading&hellip;</div></div>
+  <div class="grid" id="stock-grid"><div class="empty-state" style="grid-column:1 / -1;">Live per-company boards are coming soon &mdash; in the meantime, explore the Daily Brief, IPOs, and Bonds above.</div></div>
+  </div>
 </div>
 
 <script>
@@ -572,10 +576,12 @@
   async function init() {
     try {
       allStocks = await stocksApiGet('/api/stocks');
+      document.getElementById('companies-controls').style.display = '';
       renderFilters();
       renderGrid();
     } catch (err) {
-      document.getElementById('stock-grid').innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">Couldn't load the board right now — this section needs the stocks backend to be deployed. Explore the sections above in the meantime.</div>`;
+      document.getElementById('companies-controls').style.display = 'none';
+      document.getElementById('stock-grid').innerHTML = `<div class="empty-state" style="grid-column:1 / -1;">Live per-company boards are coming soon &mdash; in the meantime, explore the Daily Brief, IPOs, and Bonds above.</div>`;
     }
   }
 
