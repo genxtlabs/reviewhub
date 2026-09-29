@@ -4,8 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>ReviewHub — Daily market brief</title>
+<title>Daily Stock Market Brief — Sensex, Nifty &amp; IPO News | ReviewHub</title>
+<meta name="description" content="A daily, human-readable read on Sensex, Nifty and India market mood, posted every trading morning — real verified news, index levels, and stocks to watch. Never a buy/sell call.">
+<link rel="canonical" href="https://genxtlabs.com/stocks/daily-brief.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Daily Stock Market Brief — Sensex, Nifty & IPO News | ReviewHub">
+<meta property="og:description" content="A daily, human-readable read on Sensex, Nifty and India market mood, posted every trading morning — real verified news, index levels, and stocks to watch.">
+<meta property="og:url" content="https://genxtlabs.com/stocks/daily-brief.html">
+<meta property="article:modified_time" content="2026-09-29T10:00:00+05:30">
 <link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Daily Stock Market Brief — 29 Sep 2026",
+  "datePublished": "2026-09-29T10:00:00+05:30",
+  "dateModified": "2026-09-29T10:00:00+05:30",
+  "url": "https://genxtlabs.com/stocks/daily-brief.html",
+  "publisher": { "@type": "Organization", "name": "ReviewHub", "url": "https://genxtlabs.com" },
+  "author": { "@type": "Organization", "name": "ReviewHub Editorial Team" },
+  "about": ["Sensex", "Nifty 50", "Indian stock market"],
+  "isAccessibleForFree": true
+}
+</script>
 <style>
   :root {
     --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
@@ -88,16 +109,134 @@
 
   <div class="section-heading" style="padding-top:32px;">
     <h1>Daily market brief</h1>
-    <span class="muted" id="results-label"></span>
+    <span class="muted" id="results-label">8 briefs</span>
   </div>
   <p class="hero-synopsis" style="margin:-8px 0 12px;">Posted every trading morning, before market open. A read on the day's overall mood plus real, verified news — never a buy, sell, or hold call on any individual stock.</p>
+  <p style="font-size:11px; color:#99968e; margin:-8px 0 12px;">By the ReviewHub Editorial Team &middot; Last updated <time datetime="2026-09-29">29 Sep 2026</time> &middot; Sourced from NSE, BSE, RBI and financial news wires (see sourcing note below)</p>
   <div style="margin:0 0 8px;"><span class="session-badge" id="session-badge"><span class="dot"></span><span id="session-badge-text">&mdash;</span></span></div>
 
-  <div class="td-grid" id="brief-grid"></div>
-  <div id="brief-detail"></div>
+  <h2 style="font-size:15px; margin:18px 0 10px;">Recent briefs</h2>
+  <div class="td-grid" id="brief-grid">
+      <div class="td-card active" id="td-card-0" onclick="toggleBrief(0)">
+        <div class="td-card-head">
+          <span class="td-date">29 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#b91c1c22; color:#b91c1c">Negative</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Yesterday's rout wasn't a one-off - the opening bell rang red again today. At least the IPO desk has something else to watch: two issues close for subscription this afternoon.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">RUNWAL ENT</span><span class="td-tape-item">ORIENT CABLES</span><span class="td-tape-item">MONEYVIEW</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-1" onclick="toggleBrief(1)">
+        <div class="td-card-head">
+          <span class="td-date">28 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#b91c1c22; color:#b91c1c">Negative</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Crude went from 'truce hopes' to '$108 and rising' in about 72 hours. Seven straight red sessions later, Dalal Street is running low on chairs.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">RUNWAL ENT</span><span class="td-tape-item">ORIENT CABLES</span><span class="td-tape-item">MONEYVIEW</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-2" onclick="toggleBrief(2)">
+        <div class="td-card-head">
+          <span class="td-date">25 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#b4530922; color:#b45309">Mixed</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;The market took a breather today after yesterday's tumble. Tata Sons, meanwhile, took out the lawyers.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">TATA GROUP</span><span class="td-tape-item">NSE</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-3" onclick="toggleBrief(3)">
+        <div class="td-card-head">
+          <span class="td-date">24 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#b91c1c22; color:#b91c1c">Negative</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Everyone else's portfolio had a rough day. NSE, trading in public for the very first time, somehow didn't.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">TATA GROUP</span><span class="td-tape-item">NSE</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-4" onclick="toggleBrief(4)">
+        <div class="td-card-head">
+          <span class="td-date">23 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#15803d22; color:#15803d">Positive</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Metals and cooling oil did the heavy lifting for the market today. The Tata Sons saga did some lifting of its own — straight into a TVS warehouse.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">NSE</span><span class="td-tape-item">TATA GROUP</span><span class="td-tape-item">TVSMOTOR</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-5" onclick="toggleBrief(5)">
+        <div class="td-card-head">
+          <span class="td-date">22 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#15803d22; color:#15803d">Positive</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Oil's down for the fourth day running. NSE's own listing premium is falling almost as fast.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">NSE</span><span class="td-tape-item">TATA GROUP</span><span class="td-tape-item">HDFCBANK</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-6" onclick="toggleBrief(6)">
+        <div class="td-card-head">
+          <span class="td-date">21 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#4d7c0f22; color:#4d7c0f">Upbeat</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;The market cheered cheaper oil today. HDFC Bank, meanwhile, finally cheered up about who's taking the corner office.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">HDFCBANK</span><span class="td-tape-item">MANIKAPLA</span></div>
+        </div>
+      </div>
+      <div class="td-card" id="td-card-7" onclick="toggleBrief(7)">
+        <div class="td-card-head">
+          <span class="td-date">15-18 Sep 2026</span>
+          <span class="td-mood-badge" style="background:#b4530922; color:#b45309">Mixed</span>
+        </div>
+        <div class="td-card-body">
+          <div class="td-witty">&ldquo;Sensex just logged its longest losing streak since 2020. Nifty, standing right next to it, quietly had its best run in a month.&rdquo;</div>
+          <div class="td-tape"><span class="td-tape-item">TCS</span><span class="td-tape-item">BHEL</span><span class="td-tape-item">BAJAJHLDNG</span><span class="td-tape-item">CANBK</span><span class="td-tape-item">BFRL</span><span class="td-tape-item">AUROPHARMA</span></div>
+        </div>
+      </div>
+  </div>
+  <div id="brief-detail"><div class="td-detail"><button class="td-close-btn" onclick="event.stopPropagation(); toggleBrief(0)">Close &times;</button><div style="clear:both;"></div>
+      <div class="td-datastatus">Data status: Intraday — early trade (~10:00 AM IST)</div>
+      
+      <h4>Market overview</h4>
+      <div class="td-overview">
+        <div class="td-idx">
+          <div class="td-idx-name">SENSEX</div>
+          <span class="td-idx-value">72,194</span><span class="td-idx-change down">-0.79%</span>
+        </div>
+        <div class="td-idx">
+          <div class="td-idx-name">NIFTY 50</div>
+          <span class="td-idx-value">22,606</span><span class="td-idx-change down">-0.77%</span>
+        </div></div>
+      <h4>Verdict &middot; Market mood</h4><p>Markets opened lower for an eighth straight session, extending Monday's sharp sell-off, as the same pressures - expensive crude near $107/barrel, a weaker rupee past 96/dollar, and persistent foreign investor selling - carry into Tuesday. Financials, metals and auto stocks are among the sectors investors are watching most closely in early trade.</p>
+      <div class="td-watchnext"><b>Watch next</b><span>Whether crude eases back from $107 as the US-Iran standoff develops further, how far the rupee slides past 96/dollar, and today's subscription closes for the Runwal Enterprises and Orient Cables IPOs.</span></div>
+      <h4>Key drivers</h4><ul><li>Sensex was down around 578 points (-0.79%) to about 72,194 and Nifty 50 down around 175 points (-0.77%) to about 22,606 as of 10:00 AM IST, following Monday's 1.52%/1.56% fall</li><li>Brent crude held near $107/barrel, keeping India's import-cost and inflation concerns elevated after Monday's spike</li><li>The rupee traded around 96.15 to the US dollar, near its weakest levels, adding to the pressure of costlier crude imports</li><li>Foreign institutional investors have pulled billions out of Indian equities through September, with elevated US Treasury yields continuing to draw global capital away from emerging markets</li></ul>
+      <h4>News</h4><ul><li>Brent crude held near $107 a barrel, extending Monday's spike after US-Iran talks over the Strait of Hormuz broke down, keeping oil-driven inflation and rupee concerns front and center for the market.</li><li>The Indian rupee traded near 96.15 against the US dollar, pressured by the costlier crude import bill and a stronger dollar.</li><li>Foreign institutional investor selling continued into September, compounding pressure from elevated US Treasury yields drawing capital away from emerging markets like India.</li></ul>
+      
+      <h4>Stocks to watch</h4>
+      <div class="td-note">Real names with news or events today &mdash; not a buy, sell, or hold signal.</div>
+      
+        <div class="td-watch-row">
+          <div><div class="td-row-ticker">RUNWAL ENT</div><div class="td-row-name">Runwal Enterprises</div></div>
+          <div class="td-row-text">Its ₹1,000 crore IPO's subscription window closes today after a slow start - just 0.44x covered as of Sunday night - with allotment due Wednesday (30 Sep) ahead of listing on 5 October.</div>
+        </div>
+        <div class="td-watch-row">
+          <div><div class="td-row-ticker">ORIENT CABLES</div><div class="td-row-name">Orient Cables (India)</div></div>
+          <div class="td-row-text">Its IPO also closes today for subscription, having surged to 8.77x by the end of day two - well ahead of Runwal Enterprises - with listing also due 5 October.</div>
+        </div>
+        <div class="td-watch-row">
+          <div><div class="td-row-ticker">MONEYVIEW</div><div class="td-row-name">Moneyview</div></div>
+          <div class="td-row-text">Allotment for its blockbuster ₹1,091.68 crore IPO (98.46x oversubscribed on the final day) is expected to be finalized today, ahead of a 1 October listing.</div>
+        </div>
+      
+    </div></div>
 
   <div class="ai-disclaimer">
     This brief is generated from publicly available news and data for informational purposes only. The "verdict" reflects overall market mood/sentiment, never a recommendation on any individual security. Nothing here is investment advice — always do your own research or consult a registered investment adviser before making financial decisions.
+    <p style="margin:10px 0 0;">Index levels and news are cross-checked against exchange data (<a href="https://www.nseindia.com" target="_blank" rel="noopener">NSE</a>, <a href="https://www.bseindia.com" target="_blank" rel="noopener">BSE</a>), <a href="https://rbi.org.in" target="_blank" rel="noopener">RBI</a> notifications, and financial news wires (Business Standard, India TV, HDFC Sky) before publishing. Compiled and reviewed by the ReviewHub Editorial Team.</p>
   </div>
 </div>
 
