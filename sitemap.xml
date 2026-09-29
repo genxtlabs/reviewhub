@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://genxtlabs.com/index.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+
+  <url><loc>https://genxtlabs.com/movies/index.html</loc><lastmod>2026-09-29</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://genxtlabs.com/movies/best-rated.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://genxtlabs.com/movies/ott-releases.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://genxtlabs.com/cars/index.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://genxtlabs.com/cars/best-rated.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://genxtlabs.com/cars/compare-budget-evs.html</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <url><loc>https://genxtlabs.com/stocks/index.html</loc><lastmod>2026-09-29</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/daily-brief.html</loc><lastmod>2026-09-29</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/ipos.html</loc><lastmod>2026-09-29</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/bonds.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/market-scan.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/creator-watch.html</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/learn.html</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/tools.html</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://genxtlabs.com/stocks/journal.html</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+</urlset>

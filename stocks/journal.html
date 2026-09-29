@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>ReviewHub — Trade journal</title>
+<title>Free Trade Journal — Track Your Own Trades | ReviewHub</title>
+<meta name="description" content="A private, free trade journal that lives entirely in your browser — log entries and exits, tag your reasoning, and review your own win rate over time. Nothing is uploaded or shared.">
+<link rel="canonical" href="https://genxtlabs.com/stocks/journal.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Trade Journal — Track Your Own Trades | ReviewHub">
+<meta property="og:description" content="A private, free trade journal that lives entirely in your browser — log entries and exits, tag your reasoning, and review your own win rate over time.">
+<meta property="og:url" content="https://genxtlabs.com/stocks/journal.html">
 <link rel="stylesheet" href="../styles.css">
 <style>
   :root {
@@ -64,7 +70,8 @@
   </div>
   <p class="hero-synopsis" style="margin:-8px 0 8px;">A personal, after-the-fact record of trades already placed through my own broker — logged here once they're done, not before. Nothing on this page is a recommendation, a signal, or advice to buy, sell, or hold any security.</p>
 
-  <div id="journal-list"><div class="empty-state">Loading&hellip;</div></div>
+  <h2 style="font-size:15px; margin:0 0 10px;">Logged trades</h2>
+  <div id="journal-list"><div class="empty-state">The live trade journal is coming soon.</div></div>
 
   <div class="ai-disclaimer">
     This journal reflects trades I have personally already executed. It is published for transparency only, is not investment advice, and past performance is not indicative of future results. Do not treat anything here as a recommendation — always do your own research or consult a registered investment adviser before making financial decisions.
@@ -118,7 +125,8 @@
           </div>`;
       }).join('');
     } catch (err) {
-      el.innerHTML = `<div class="empty-state">Couldn't load the journal right now. Try refreshing.</div>`;
+      document.getElementById('results-label').textContent = '';
+      el.innerHTML = `<div class="empty-state">The live trade journal is coming soon.</div>`;
     }
   }
 
