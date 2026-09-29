@@ -29,6 +29,68 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "29 Sep 2026",
+    mood: "negative",
+    moodLabel: "Negative",
+    dataStatus: "Intraday — early trade (~10:00 AM IST)",
+    indices: [
+      { name: "SENSEX", value: "72,194", changePct: -0.79 },
+      { name: "NIFTY 50", value: "22,606", changePct: -0.77 }
+    ],
+    watchNext: "Whether crude eases back from $107 as the US-Iran standoff develops further, how far the rupee slides past 96/dollar, and today's subscription closes for the Runwal Enterprises and Orient Cables IPOs.",
+    wittyLine: "Yesterday's rout wasn't a one-off - the opening bell rang red again today. At least the IPO desk has something else to watch: two issues close for subscription this afternoon.",
+    verdict: "Markets opened lower for an eighth straight session, extending Monday's sharp sell-off, as the same pressures - expensive crude near $107/barrel, a weaker rupee past 96/dollar, and persistent foreign investor selling - carry into Tuesday. Financials, metals and auto stocks are among the sectors investors are watching most closely in early trade.",
+    assumptions: [
+      "Sensex was down around 578 points (-0.79%) to about 72,194 and Nifty 50 down around 175 points (-0.77%) to about 22,606 as of 10:00 AM IST, following Monday's 1.52%/1.56% fall",
+      "Brent crude held near $107/barrel, keeping India's import-cost and inflation concerns elevated after Monday's spike",
+      "The rupee traded around 96.15 to the US dollar, near its weakest levels, adding to the pressure of costlier crude imports",
+      "Foreign institutional investors have pulled billions out of Indian equities through September, with elevated US Treasury yields continuing to draw global capital away from emerging markets"
+    ],
+    news: [
+      "Brent crude held near $107 a barrel, extending Monday's spike after US-Iran talks over the Strait of Hormuz broke down, keeping oil-driven inflation and rupee concerns front and center for the market.",
+      "The Indian rupee traded near 96.15 against the US dollar, pressured by the costlier crude import bill and a stronger dollar.",
+      "Foreign institutional investor selling continued into September, compounding pressure from elevated US Treasury yields drawing capital away from emerging markets like India."
+    ],
+    stocksToWatch: [
+      { ticker: "RUNWAL ENT", name: "Runwal Enterprises", reason: "Its ₹1,000 crore IPO's subscription window closes today after a slow start - just 0.44x covered as of Sunday night - with allotment due Wednesday (30 Sep) ahead of listing on 5 October." },
+      { ticker: "ORIENT CABLES", name: "Orient Cables (India)", reason: "Its IPO also closes today for subscription, having surged to 8.77x by the end of day two - well ahead of Runwal Enterprises - with listing also due 5 October." },
+      { ticker: "MONEYVIEW", name: "Moneyview", reason: "Allotment for its blockbuster ₹1,091.68 crore IPO (98.46x oversubscribed on the final day) is expected to be finalized today, ahead of a 1 October listing." }
+    ],
+    stockUpdates: []
+  },
+  {
+    date: "28 Sep 2026",
+    mood: "negative",
+    moodLabel: "Negative",
+    dataStatus: "End-of-day close",
+    indices: [
+      { name: "SENSEX", value: "72,772", changePct: -1.52 },
+      { name: "NIFTY 50", value: "22,780", changePct: -1.56 }
+    ],
+    watchNext: "Whether crude oil holds above $105 as the Strait of Hormuz standoff continues, further reaction in PSU Bank and Realty stocks, and Tuesday's IPO subscription closes for Runwal Enterprises and Orient Cables.",
+    wittyLine: "Crude went from 'truce hopes' to '$108 and rising' in about 72 hours. Seven straight red sessions later, Dalal Street is running low on chairs.",
+    verdict: "A sharp, broad sell-off - the seventh straight losing session - as hopes for a US-Iran truce collapsed entirely. Brent crude jumped as much as 3.7% to near $108/barrel after President Trump rejected Iran's offer to reopen the Strait of Hormuz and end hostilities, reviving fears of a Gulf supply disruption just as the rupee slid past 96/dollar. PSU Bank and Realty stocks bore the brunt, while foreign investors continued selling into the weakness.",
+    assumptions: [
+      "Sensex fell 1,124.02 points (-1.52%) to 72,771.72 and Nifty 50 dropped 360.25 points (-1.56%) to 22,780.25 - the seventh consecutive losing session and a near six-month low",
+      "Brent crude jumped as much as 3.7% to around $108/barrel (WTI above $95) after President Trump rejected Iran's proposal to reopen the Strait of Hormuz and end hostilities, while Iran maintained diplomacy was the only way forward",
+      "Nifty PSU Bank fell about 3.2% and Nifty Realty dropped over 2%, with Telecom, Energy, Metal, Private Bank and Oil & Gas indices each down more than 1%",
+      "The rupee weakened roughly 0.19% to around 96 to the US dollar, adding to import-cost pressure from the pricier crude",
+      "Just 1 of 30 Sensex stocks (Infosys) and 3 of 50 Nifty stocks closed higher; Tata Motors Passenger Vehicles, Adani Enterprises and Jio Financial Services were among the biggest laggards"
+    ],
+    news: [
+      "Brent crude futures jumped as much as 3.7% to around $108 a barrel (WTI above $95) after US President Donald Trump said he had rejected an Iranian proposal to reopen the Strait of Hormuz and end hostilities, while Iran said diplomacy remained the only way forward - reviving fears of a Gulf oil-supply disruption.",
+      "The Indian rupee weakened roughly 0.19% to around 96 against the US dollar, pressured by the more expensive crude import bill and a stronger dollar.",
+      "Foreign institutional investors extended their selling streak through September, adding to the pressure on an equity market already down for seven straight sessions."
+    ],
+    stocksToWatch: [
+      { ticker: "RUNWAL ENT", name: "Runwal Enterprises", reason: "Its ₹1,000 crore IPO's subscription window closes Tuesday (29 Sep) after a slow start - just 0.44x covered as of Sunday night - with listing due 5 October." },
+      { ticker: "ORIENT CABLES", name: "Orient Cables (India)", reason: "Its IPO also closes Tuesday (29 Sep) after surging to 8.77x subscription by the end of day two, well ahead of Runwal Enterprises in investor demand." }
+    ],
+    stockUpdates: [
+      { ticker: "MONEYVIEW", name: "Moneyview", update: "Its ₹1,091.68 crore IPO closed on its final day with a massive 98.46x overall subscription (QIBs 227.45x, NIIs 115.41x, retail 19.57x); allotment is due 29 September ahead of a 1 October listing." }
+    ]
+  },
+  {
     date: "25 Sep 2026",
     mood: "mixed",
     moodLabel: "Mixed",
