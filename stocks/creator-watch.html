@@ -11,33 +11,36 @@
 <meta property="og:title" content="Indian Finance YouTuber Watch — Attributed, Not Scored | ReviewHub">
 <meta property="og:description" content="What reputable Indian finance YouTubers are actually saying, summarized and attributed — never scored or endorsed by ReviewHub.">
 <meta property="og:url" content="https://genxtlabs.com/stocks/creator-watch.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="../styles.css">
 <style>
   :root {
-    --bg: #ffffff; --bg-elevated: #f6f6f4; --bg-elevated-2: #eeeeeb;
-    --border: #e2e0da; --border-hover: #c9c6bd;
-    --text: #1a1a1a; --text-secondary: #47453f; --text-muted: #726f68; --text-faint: #99968e;
-    --accent-solid: #be185d; --accent-solid-hover: #9d174d;
-    --verdict-must: #15803d; --verdict-good: #65a30d; --verdict-onetime: #b45309; --verdict-wait: #1d4ed8; --verdict-skip: #b91c1c;
-    --pill-success-bg: rgba(21,128,61,0.1); --pill-success-text: #15803d;
-    --pill-neutral-bg: rgba(0,0,0,0.045); --pill-neutral-text: var(--text-muted);
-    --pill-danger-bg: rgba(185,28,28,0.08); --pill-danger-text: #b91c1c;
+    --navy: #151e28; --navy-2: #1e2834; --navy-border: #2f363f;
+    --bg: #ffffff; --bg-elevated: #f7f8fa; --bg-elevated-2: #eef0f3;
+    --border: #e5e7eb; --border-hover: #d1d5db;
+    --text: #151e28; --text-secondary: #4b5563; --text-muted: #6b7280; --text-faint: #9ca3af;
+    --accent-solid: #2b7fc4; --accent-solid-hover: #1e40af;
+    --verdict-must: #19af55; --verdict-good: #4d7c0f; --verdict-onetime: #f5a623; --verdict-wait: #2b7fc4; --verdict-skip: #d82f44;
+    --pill-success-bg: rgba(25,175,85,0.1); --pill-success-text: #178a45;
+    --pill-neutral-bg: rgba(21,30,40,0.05); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(216,47,68,0.08); --pill-danger-text: #d82f44;
   }
   .ambient, .grain { display: none; }
-  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f7f5; }
+  * { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f8fa; }
   .cw-entry { padding: 22px 26px; margin-bottom: 16px; display: flex; gap: 18px; align-items: flex-start; }
-  .cw-avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, serif; font-weight: 700; font-size: 16px; color: #fff; }
+  .cw-avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
   .cw-body { flex: 1; min-width: 0; }
   .cw-channel-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
   .cw-channel { font-weight: 700; font-size: 13.5px; color: var(--text); }
   .cw-meta { font-size: 11.5px; color: var(--text-muted); white-space: nowrap; }
-  .cw-title { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 16.5px; margin: 2px 0 10px; }
+  .cw-title { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; font-weight: 600; font-size: 16.5px; margin: 2px 0 10px; }
   .cw-title a { color: var(--text); text-decoration: none; }
   .cw-title a:hover { color: var(--accent-solid); }
   .cw-summary { font-size: 13.5px; line-height: 1.65; color: var(--text-secondary); }
   .cw-watch-link { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--accent-solid); text-decoration: none; }
   .cw-topics { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
-  .cw-topic { font-size: 10.5px; font-weight: 600; color: var(--text-muted); background: #f0f0ed; border: 1px solid var(--border); padding: 2px 9px; border-radius: 100px; }
+  .cw-topic { font-size: 10.5px; font-weight: 600; color: var(--text-muted); background: #eef0f3; border: 1px solid var(--border); padding: 2px 9px; border-radius: 100px; }
   .cw-verify { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.55; color: #92620c; background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.25); border-radius: 6px; padding: 8px 12px; margin-top: 10px; }
   .cw-verify b { flex-shrink: 0; white-space: nowrap; }
   .cw-directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0 32px; }
@@ -46,14 +49,25 @@
   .cw-dir-name:hover { color: var(--accent-solid); }
   .cw-dir-focus { font-size: 12px; line-height: 1.5; color: var(--text-muted); margin-top: 4px; }
   .cw-compare { margin: 28px 0; padding: 20px 24px; }
-  .cw-compare h3 { font-family: 'Times New Roman', Times, serif; font-weight: 600; font-size: 16px; margin: 0 0 4px; color: var(--text); }
+  .cw-compare h3 { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; font-weight: 600; font-size: 16px; margin: 0 0 4px; color: var(--text); }
   .cw-compare-sub { font-size: 11px; color: var(--text-muted); margin-bottom: 14px; }
   .cw-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 640px) { .cw-compare-grid { grid-template-columns: 1fr; } }
-  .cw-compare-take { padding: 12px 14px; background: #f7f7f5; border: 1px solid var(--border); border-radius: 8px; }
+  .cw-compare-take { padding: 12px 14px; background: #f7f8fa; border: 1px solid var(--border); border-radius: 8px; }
   .cw-compare-take b { display: block; font-size: 12.5px; color: var(--text); margin-bottom: 5px; }
   .cw-compare-take span { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); }
   .cw-compare-note { font-size: 12px; line-height: 1.55; color: var(--text-muted); font-style: italic; margin-top: 12px; }
+  .tt-header { background: var(--navy); }
+  .tt-header-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; flex-wrap: wrap; gap: 14px; }
+  .tt-header-left { display: flex; align-items: center; gap: 28px; }
+  .tt-header .wordmark { color: #fff; font-size: 21px; }
+  .tt-nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .tt-nav a { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.72); padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .tt-nav a:hover { color: #fff; }
+  .tt-nav a.active { color: #fff; border-bottom-color: #f5a623; }
+  .tt-header-right { display: flex; align-items: center; gap: 14px; }
+  .back-link-new { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text-muted); margin: 18px 0 0; }
+  .wordmark { font-family: 'Times New Roman', Times, serif !important; }
 </style>
 </head>
 <body>
@@ -61,27 +75,39 @@
 <div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
 <div class="grain"></div>
 
-<div class="wrap">
-  <div class="header">
-    <div class="header-top">
-      <div style="display:flex; align-items:baseline; gap:14px;">
-        <a href="../index.html" class="wordmark" style="color:inherit;">ReviewHub</a>
-        <span class="tagline">Stocks &middot; Creator watch.</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:14px;">
-        <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
-      </a>
+<div class="tt-header">
+  <div class="tt-header-top">
+    <div class="tt-header-left">
+      <a href="../index.html" class="wordmark">ReviewHub</a>
+      <div class="tt-nav">
+        <a href="../index.html">Home</a>
+        <a href="../movies/index.html">Movies</a>
+        <a href="../cars/index.html">Cars</a>
+        <a href="index.html">Stocks</a>
+        <a href="daily-brief.html">Daily Brief</a>
+        <a href="market-scan.html">Penny Stocks</a>
+        <a href="creator-watch.html" class="active">Creator Watch</a>
+        <a href="ipos.html">IPOs</a>
+        <a href="bonds.html">Bonds</a>
+        <a href="learn.html">Learn</a>
+        <a href="tools.html">Calculators</a>
+        <a href="journal.html">Trade Journal</a>
       </div>
     </div>
-    <a class="back-link" href="index.html">
-      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      All stocks
-    </a>
-    <div class="rule"></div>
+    <div class="tt-header-right">
+      <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram" style="background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="#fff" stroke="none"/></svg>
+      </a>
+    </div>
   </div>
+</div>
 
-  <div class="section-heading" style="padding-top:32px;">
+<div class="wrap">
+  <a class="back-link-new" href="index.html">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    All stocks
+  </a>
+<div class="section-heading" style="padding-top:32px;">
     <h1>Creator watch</h1>
     <span class="muted" id="results-label">5 videos</span>
   </div>
@@ -89,7 +115,7 @@
 
   <div id="cw-directory" class="cw-directory">
       <div class="card-box cw-dir-card">
-        <div class="cw-avatar" style="background:#9d174d; width:38px; height:38px; font-size:14px;">C</div>
+        <div class="cw-avatar" style="background:#1e40af; width:38px; height:38px; font-size:14px;">C</div>
         <div>
           <a class="cw-dir-name" href="https://www.youtube.com/@CARachanaRanade" target="_blank" rel="noopener">CA Rachana Phadke Ranade</a>
           <div class="cw-dir-focus">CA-led personal finance and markets education — budgeting, taxes, mutual funds, and plain-language market explainers.</div>
@@ -131,7 +157,7 @@
   </div>
   <div id="cw-list">
       <div class="card-box cw-entry">
-        <div class="cw-avatar" style="background:#9d174d;">C</div>
+        <div class="cw-avatar" style="background:#1e40af;">C</div>
         <div class="cw-body">
           <div class="cw-channel-row">
             <span class="cw-channel">CA Rachana Phadke Ranade</span>
@@ -145,7 +171,7 @@
         </div>
       </div>
       <div class="card-box cw-entry">
-        <div class="cw-avatar" style="background:#9d174d;">C</div>
+        <div class="cw-avatar" style="background:#1e40af;">C</div>
         <div class="cw-body">
           <div class="cw-channel-row">
             <span class="cw-channel">CA Rachana Phadke Ranade</span>
