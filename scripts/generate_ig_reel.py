@@ -86,11 +86,16 @@ def main():
     all_entries = load_entries(js_array_name)
 
     if args.all_missing:
+        # Movies and cars share the same id numbers and output folder, so a
+        # numeric-prefix glob here would wrongly match the other vertical's
+        # file (car id 1 vs movie id 1's "1-irumudi.mp4"). Check the exact
+        # slug-qualified filename instead.
         targets = []
         for e in all_entries:
-            jpgs = list(OUTPUT_DIR.glob(f"{e['id']}-*.jpg"))
-            mp4s = list(OUTPUT_DIR.glob(f"{e['id']}-*.mp4"))
-            if jpgs and not mp4s:
+            slug = slugify(e["title"])
+            jpg_path = OUTPUT_DIR / f"{e['id']}-{slug}.jpg"
+            mp4_path = OUTPUT_DIR / f"{e['id']}-{slug}.mp4"
+            if jpg_path.exists() and not mp4_path.exists():
                 targets.append(e["id"])
     else:
         if not args.ids:
