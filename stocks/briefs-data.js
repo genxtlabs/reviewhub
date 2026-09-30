@@ -29,6 +29,40 @@
 //                 (deals, dividends, approvals, results). Never phrased as a recommendation.
 const DAILY_BRIEFS = [
   {
+    date: "30 Sep 2026",
+    mood: "mixed",
+    moodLabel: "Mixed",
+    dataStatus: "End-of-day close",
+    indices: [
+      { name: "SENSEX", value: "72,480.29", changePct: -0.07 },
+      { name: "NIFTY 50", value: "22,620.45", changePct: -0.42 }
+    ],
+    watchNext: "Whether crude's pullback holds and helps break the three-day losing streak, allotment results due tomorrow for Orient Cables, German Green Steel, AceVector and Runwal Enterprises, and today's subscription start for Vishal Nirmiti and Nityas Gems & Jewellery.",
+    wittyLine: "Crude finally did what everyone's been asking all week - it fell. The market said thanks with a third straight loss anyway. Orient Cables, meanwhile, closed 97x oversubscribed like nobody told it stocks were supposed to be nervous.",
+    verdict: "Markets closed narrowly lower for a third straight session - Sensex down just 0.07%, Nifty down 0.42% - but the headline numbers undersell what was actually a calmer day underneath: breadth was strongly positive (1,720 advancers to 639 decliners on the NSE) as Brent crude pulled back sharply on signs of recovering Middle Eastern exports, finally easing the supply fears that drove this week's rout. The pressure instead concentrated in a handful of large caps - HDFC Bank, Infosys, and Bajaj Finance all fell - while TCS, IndiGo, and ICICI Bank led gainers. It was also a big day for IPOs: Orient Cables closed a blockbuster 97.28x oversubscribed, while Runwal Enterprises barely scraped past full subscription at 2.64x.",
+    assumptions: [
+      "Sensex fell 48.78 points (-0.07%) to 72,480.29 and Nifty 50 dropped 95.75 points (-0.42%) to 22,620.45 - a third consecutive losing session, but a much narrower move than the prior two days",
+      "Market breadth was genuinely positive - 1,720 advancing stocks against 639 declining on the NSE - with the Midcap and Smallcap indices both trading in the green",
+      "Brent crude pulled back sharply as recovering Middle Eastern export flows eased the immediate supply concerns that had driven crude toward $108/barrel earlier in the week",
+      "Foreign institutional investors sold a further ₹9,980.22 crore (28 Sep data), partly offset by ₹6,952.71 crore of domestic institutional buying"
+    ],
+    news: [
+      "Brent crude pulled back sharply after signs that Middle Eastern export flows are recovering, easing the acute supply concerns that had driven this week's spike toward $108/barrel.",
+      "Foreign institutional investors extended their selling streak, offloading a further ₹9,980.22 crore of Indian equities (28 Sep data), while domestic institutional investors continued buying, picking up ₹6,952.71 crore.",
+      "Two new mainboard IPOs opened for subscription: Vishal Nirmiti (₹178 crore, civil engineering and construction) and Nityas Gems & Jewellery (₹108.35 crore, lab-grown diamond jewellery), both closing 5 October."
+    ],
+    stocksToWatch: [
+      { ticker: "VISHAL NIRMITI", name: "Vishal Nirmiti", reason: "Its ₹178 crore IPO opened for subscription today, closing 5 October." },
+      { ticker: "NITYAS GEMS", name: "Nityas Gems & Jewellery", reason: "Its ₹108.35 crore IPO (lab-grown diamond jewellery) also opened today, closing 5 October." }
+    ],
+    stockUpdates: [
+      { ticker: "ORIENT CABLES", name: "Orient Cables (India)", update: "Closed its IPO subscription window at a blockbuster 97.28x overall (QIB 192.68x, NII 121.90x, retail 32.21x) - the standout of this week's IPO batch. Allotment due 30 Sep, listing 5 Oct." },
+      { ticker: "GERMAN GREEN STEEL", name: "German Green Steel and Power", update: "Closed its IPO at 30.41x overall subscription (NII 56.76x, QIB 21.91x, retail 23.97x). Allotment due 30 Sep, listing 5 Oct." },
+      { ticker: "ACEVECTOR", name: "AceVector (Snapdeal)", update: "Closed its IPO at a modest 5.07x overall subscription (NII 8.53x, retail 4.82x, QIB 3.42x) after a very weak opening. Allotment due 30 Sep, listing 5 Oct." },
+      { ticker: "RUNWAL ENTERPRISES", name: "Runwal Enterprises", update: "Closed its IPO just past full subscription at 2.64x overall (NII 4.14x, QIB 4.10x, retail only 1.19x) - the weakest demand among this batch. Allotment due 30 Sep, listing 5 Oct." }
+    ]
+  },
+  {
     date: "29 Sep 2026",
     mood: "negative",
     moodLabel: "Negative",

@@ -43,36 +43,36 @@ const IPOS = [
     note: "Final subscription: QIB 7.69x, NII 25.80x, retail 9.11x. Lot size 37 shares."
   },
   {
-    name: "German Green Steel and Power", status: "open",
+    name: "German Green Steel and Power", status: "closed",
     desc: "Gujarat-based TMT steel producer.",
     issueSize: "₹304 Cr (₹290 Cr fresh issue + ₹14 Cr offer-for-sale)", priceBand: "₹132 – ₹139",
-    dates: "Closes 29 Sep 2026 (today) · Listing ~5 Oct 2026",
-    subscription: "5.39x", subStyle: "hot",
-    note: "Climbing steadily through its bidding window - was 3x on day 2."
+    dates: "Closed 29 Sep 2026 · Listing ~5 Oct 2026",
+    subscription: "30.41x", subStyle: "hot",
+    note: "Closed strong - NII 56.76x, QIB 21.91x, retail 23.97x. Allotment due 30 Sep."
   },
   {
-    name: "Runwal Enterprises", status: "open",
+    name: "Runwal Enterprises", status: "closed",
     desc: "Mumbai-based real estate developer.",
     issueSize: "₹500 Cr", priceBand: "₹290 – ₹305",
-    dates: "Closes 29 Sep 2026 (today) · Listing ~5 Oct 2026",
-    subscription: "0.70x", subStyle: "cold",
-    note: "Lot size 49 shares (~₹14,945 minimum retail investment at the upper band). QIB 1.05x, NII 0.93x, retail 0.41x - improved from Sunday's 0.44x but still under-subscribed overall heading into the final hours."
+    dates: "Closed 29 Sep 2026 · Listing ~5 Oct 2026",
+    subscription: "2.64x", subStyle: "",
+    note: "Lot size 49 shares (~₹14,945 minimum retail investment at the upper band). Scraped past full subscription late - QIB 4.10x, NII 4.14x, but retail only 1.19x, the weakest demand in this batch. Allotment due 30 Sep."
   },
   {
-    name: "Orient Cables (India)", status: "open",
+    name: "Orient Cables (India)", status: "closed",
     desc: "Cable manufacturer.",
     issueSize: "₹552 Cr (₹320 Cr fresh issue + ₹232 Cr offer-for-sale)", priceBand: "₹258 – ₹272",
-    dates: "Closes 29 Sep 2026 (today) · Listing ~5 Oct 2026",
-    subscription: "8.32x", subStyle: "hot",
-    note: "Lot size 55 shares (~₹14,960 minimum retail investment at the upper band). NII 17.37x, retail 9.16x as of day 2 close; QIB lagging at just 6%."
+    dates: "Closed 29 Sep 2026 · Listing ~5 Oct 2026",
+    subscription: "97.28x", subStyle: "hot",
+    note: "Lot size 55 shares (~₹14,960 minimum retail investment at the upper band). Blockbuster final-day surge - QIB 192.68x, NII 121.90x, retail 32.21x. The standout of this IPO batch. Allotment due 30 Sep."
   },
   {
-    name: "AceVector (Snapdeal)", status: "open",
+    name: "AceVector (Snapdeal)", status: "closed",
     desc: "Parent of e-commerce marketplace Snapdeal.",
     issueSize: "₹420 Cr (₹287 Cr fresh issue + ₹133 Cr offer-for-sale)", priceBand: "₹30 – ₹32",
-    dates: "Closes 29 Sep 2026 (today) · Listing 5 Oct 2026",
-    subscription: "1.19x", subStyle: "",
-    note: "Recovered from a very weak opening (0.20x-0.24x on day 1) to cross fully subscribed heading into the close."
+    dates: "Closed 29 Sep 2026 · Listing 5 Oct 2026",
+    subscription: "5.07x", subStyle: "",
+    note: "Closed modestly subscribed - NII 8.53x, retail 4.82x, QIB 3.42x - after a very weak opening. Allotment due 30 Sep."
   },
   {
     name: "Peshwa Wheat", status: "closed", sme: true,
