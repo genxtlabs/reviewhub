@@ -18,8 +18,6 @@ import argparse
 import re
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
-
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE_PATH = ROOT / "scripts" / "ig_post_template.html"
 OUTPUT_DIR = ROOT / "social-posts"
@@ -119,6 +117,8 @@ def render(page, entry, out_path, entry_type="movie"):
 
 
 def main():
+    from playwright.sync_api import sync_playwright
+
     ap = argparse.ArgumentParser()
     ap.add_argument("ids", nargs="*", help="Movie or car ids to render")
     ap.add_argument("--type", choices=["movie", "car"], default="movie", help="Which vertical (default: movie)")
