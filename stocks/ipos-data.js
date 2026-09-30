@@ -1,8 +1,24 @@
 // Real, dated IPO data — sourced from public reporting (Business Standard, Groww, Chittorgarh,
 // Upstox, Kotak Neo, and issue-specific news coverage). Subscription figures are a snapshot from
-// the morning of 29 Sep 2026 and move constantly until an issue closes — not a live feed.
+// the morning of 30 Sep 2026 and move constantly until an issue closes — not a live feed.
 // Shared by ipos.html (full tracker) and index.html (dashboard widgets).
 const IPOS = [
+  {
+    name: "SRIT India", status: "closed",
+    desc: "IT services company offering digital and automation solutions across healthcare, e-governance and telecom.",
+    issueSize: "₹218.40 Cr (fresh issue)", priceBand: "₹123 – ₹130",
+    dates: "Closed 30 Sep 2026 · BSE/NSE listing 6 Oct 2026",
+    subscription: "14.34x", subStyle: "hot",
+    note: "Closed strong - NII 32.36x, retail 14.77x. Allotment due 1 Oct."
+  },
+  {
+    name: "Shah Investor's Home", status: "closed",
+    desc: "Retail broking company providing equity and derivatives brokerage services.",
+    issueSize: "₹90.17 Cr", priceBand: "₹159 – ₹167",
+    dates: "Closed 30 Sep 2026 · Listing ~6 Oct 2026",
+    subscription: "3.08x", subStyle: "hot",
+    note: "NII led at 5.81x, retail 3.05x, QIB 1.08x. Allotment due 1 Oct."
+  },
   {
     name: "Reliance Jio (Jio Platforms)", status: "upcoming",
     desc: "India's largest telecom operator's parent — expected to be one of the biggest IPOs in Indian history.",
