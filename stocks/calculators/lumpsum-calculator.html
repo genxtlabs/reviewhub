@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<title>Lumpsum Calculator — Calculate Lumpsum Returns | ReviewHub</title>
+<meta name="description" content="Free lumpsum calculator — enter your one-time investment, expected annual return and duration to see the projected maturity value, with the formula shown.">
+<link rel="canonical" href="https://genxtlabs.com/stocks/calculators/lumpsum-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lumpsum Calculator — Calculate Lumpsum Returns | ReviewHub">
+<meta property="og:description" content="Free lumpsum calculator — enter your one-time investment, expected annual return and duration to see the projected maturity value, with the formula shown.">
+<meta property="og:url" content="https://genxtlabs.com/stocks/calculators/lumpsum-calculator.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Lumpsum Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "url": "https://genxtlabs.com/stocks/calculators/lumpsum-calculator.html",
+  "description": "Free lumpsum calculator - enter your one-time investment, expected annual return and duration to see the projected maturity value."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is a lumpsum investment?", "acceptedAnswer": {"@type": "Answer", "text": "A lumpsum investment means putting in a single, one-time amount - for example into a mutual fund - rather than spreading it across regular instalments like a SIP. The entire amount starts compounding from day one."}},
+    {"@type": "Question", "name": "How is lumpsum maturity value calculated?", "acceptedAnswer": {"@type": "Answer", "text": "FV = P x (1+r)^n, where P is the amount invested, r is the assumed annual rate of return, and n is the number of years. This assumes annual compounding of a constant rate, which is a simplification of how real markets actually move."}},
+    {"@type": "Question", "name": "Lumpsum or SIP - which is better?", "acceptedAnswer": {"@type": "Answer", "text": "Neither is universally better. A lumpsum invested right before a market rise outperforms a SIP, but a lumpsum invested right before a fall underperforms it - a SIP spreads out that timing risk. The right choice depends on whether you already have the full amount available and your comfort with short-term volatility."}},
+    {"@type": "Question", "name": "Does this assume a constant rate of return every year?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Real investments rarely grow at a perfectly constant rate - some years are up, some are down. This calculator shows what a constant average rate would produce, as a planning reference, not a forecast of actual year-to-year performance."}}
+  ]
+}
+</script>
+<style>
+  :root {
+    --navy: #151e28; --navy-2: #1e2834; --navy-border: #2f363f;
+    --bg: #ffffff; --bg-elevated: #f7f8fa; --bg-elevated-2: #eef0f3;
+    --border: #e5e7eb; --border-hover: #d1d5db;
+    --text: #151e28; --text-secondary: #4b5563; --text-muted: #6b7280; --text-faint: #9ca3af;
+    --accent-solid: #2b7fc4; --accent-solid-hover: #1e40af;
+    --verdict-must: #19af55; --verdict-good: #4d7c0f; --verdict-onetime: #f5a623; --verdict-wait: #2b7fc4; --verdict-skip: #d82f44;
+    --pill-success-bg: rgba(25,175,85,0.1); --pill-success-text: #178a45;
+    --pill-neutral-bg: rgba(21,30,40,0.05); --pill-neutral-text: var(--text-muted);
+    --pill-danger-bg: rgba(216,47,68,0.08); --pill-danger-text: #d82f44;
+  }
+  .ambient, .grain { display: none; }
+  * { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  .card, .card-box, .leaderboard-row, .score-panel, .summary-card, .video-card { background: #f7f8fa; }
+  .tool-card { padding: 24px 28px; margin-bottom: 20px; }
+  .tool-card h2 { font-weight: 600; font-size: 19px; margin: 0 0 4px; color: var(--text); }
+  .tool-desc { font-size: 13px; color: var(--text-muted); margin: 0 0 18px; line-height: 1.55; max-width: 640px; }
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) { .tool-grid { grid-template-columns: 1fr; } }
+  .tool-inputs { display: flex; flex-direction: column; gap: 14px; }
+  .tool-field label { display: block; font-size: 11.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; }
+  .tool-field input { width: 100%; font-family: inherit; font-size: 14px; color: var(--text); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; }
+  .tool-field input:focus { outline: none; border-color: var(--accent-solid); }
+  .tool-result { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; }
+  .tool-result-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+  .tool-result-value { font-size: 28px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .tool-result-sub { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+  .tool-formula { font-size: 11.5px; color: var(--text-faint); margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); font-family: ui-monospace, monospace; }
+  .article-card { padding: 26px 28px; margin-bottom: 20px; }
+  .article-card h2 { font-size: 17px; margin: 0 0 10px; color: var(--text); }
+  .article-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; margin: 0 0 12px; max-width: 700px; }
+  .article-card p:last-child { margin-bottom: 0; }
+  .faq-item { margin-bottom: 18px; }
+  .faq-item:last-child { margin-bottom: 0; }
+  .faq-q { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 5px; }
+  .faq-a { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; max-width: 700px; }
+  .related-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .related-tools a { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--border); padding: 7px 14px; border-radius: 100px; text-decoration: none; }
+  .related-tools a:hover { color: var(--accent-solid); border-color: var(--accent-solid); }
+  .tt-header { background: var(--navy); }
+  .tt-header-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; flex-wrap: wrap; gap: 14px; }
+  .tt-header-left { display: flex; align-items: center; gap: 28px; }
+  .tt-header .wordmark { color: #fff; font-size: 21px; }
+  .tt-nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .tt-nav a { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.72); padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .tt-nav a:hover { color: #fff; }
+  .tt-nav a.active { color: #fff; border-bottom-color: #f5a623; }
+  .tt-header-right { display: flex; align-items: center; gap: 14px; }
+  .back-link-new { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text-muted); margin: 18px 0 0; }
+  .wordmark { font-family: 'Times New Roman', Times, serif !important; }
+</style>
+</head>
+<body>
+
+<div class="ambient"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div></div>
+<div class="grain"></div>
+
+<div class="tt-header">
+  <div class="tt-header-top">
+    <div class="tt-header-left">
+      <a href="../../index.html" class="wordmark">ReviewHub</a>
+      <div class="tt-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../../movies/index.html">Movies</a>
+        <a href="../../cars/index.html">Cars</a>
+        <a href="../index.html">Stocks</a>
+        <a href="../daily-brief.html">Daily Brief</a>
+        <a href="../market-scan.html">Penny Stocks</a>
+        <a href="../creator-watch.html">Creator Watch</a>
+        <a href="../ipos.html">IPOs</a>
+        <a href="../bonds.html">Bonds</a>
+        <a href="../learn.html">Learn</a>
+        <a href="../tools.html" class="active">Calculators</a>
+        <a href="../journal.html">Trade Journal</a>
+      </div>
+    </div>
+    <div class="tt-header-right">
+      <a class="nav-social" href="https://instagram.com/genxtlabs" target="_blank" rel="noopener" aria-label="ReviewHub on Instagram" style="background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="#fff" stroke="none"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <a class="back-link-new" href="../tools.html">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    All calculators
+  </a>
+
+  <div class="section-heading" style="padding-top:20px;">
+    <h1 style="margin:0;">Lumpsum calculator</h1>
+  </div>
+  <p class="hero-synopsis" style="margin:8px 0 0; max-width:700px;">Project the future value of a one-time lumpsum investment at an assumed constant annual return. Real markets don't grow in a straight line - this is a planning estimate, not a projection ReviewHub is making.</p>
+
+  <div class="card-box tool-card" style="margin-top:22px;">
+    <div class="tool-grid">
+      <div class="tool-inputs">
+        <div class="tool-field"><label for="ls-principal">Investment amount (&#8377;)</label><input type="number" id="ls-principal" value="100000" min="0"></div>
+        <div class="tool-field"><label for="ls-rate">Expected annual return (%)</label><input type="number" id="ls-rate" value="12" min="0" step="0.1"></div>
+        <div class="tool-field"><label for="ls-years">Duration (years)</label><input type="number" id="ls-years" value="10" min="1" step="1"></div>
+      </div>
+      <div class="tool-result">
+        <div class="tool-result-label">Projected maturity value</div>
+        <div class="tool-result-value" id="ls-out">&mdash;</div>
+        <div class="tool-result-sub" id="ls-sub"></div>
+        <div class="tool-formula">FV = P &times; (1+r)^n</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-box article-card">
+    <h2>How this calculator works</h2>
+    <p>A lumpsum investment puts your entire amount to work immediately, rather than phasing it in through instalments. That means the whole sum compounds for the full duration - which can work strongly in your favour if the market rises soon after you invest, or against you if it falls.</p>
+    <p>The projection uses standard annual compound growth: <strong>FV = P &times; (1+r)^n</strong>, where P is your investment amount, r is the assumed annual rate of return, and n is the number of years. This treats the rate as constant every year, which real markets never actually do - it's a simplification for planning, not a forecast.</p>
+    <p>If you're deciding between investing a lumpsum now versus spreading it out, compare this result against our <a href="sip-calculator.html" style="color:var(--accent-solid); font-weight:600;">SIP calculator</a> using the same total amount, rate and duration.</p>
+  </div>
+
+  <div class="card-box article-card">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <div class="faq-q">What is a lumpsum investment?</div>
+      <div class="faq-a">Putting in a single, one-time amount - for example into a mutual fund - rather than spreading it across regular instalments like a SIP. The entire amount starts compounding from day one.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Lumpsum or SIP - which is better?</div>
+      <div class="faq-a">Neither is universally better. A lumpsum invested right before a market rise outperforms a SIP, but one invested right before a fall underperforms it - a SIP spreads out that timing risk. The right call depends on whether you already have the full amount and your comfort with short-term volatility.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does this assume a constant rate of return every year?</div>
+      <div class="faq-a">Yes. Real investments rarely grow at a perfectly constant rate - some years are up, some are down. This shows what a constant average rate would produce, as a planning reference, not a forecast of actual year-to-year performance.</div>
+    </div>
+  </div>
+
+  <div class="card-box article-card">
+    <h2>Related calculators</h2>
+    <div class="related-tools">
+      <a href="sip-calculator.html">SIP calculator</a>
+      <a href="ppf-calculator.html">PPF calculator</a>
+      <a href="emi-calculator.html">EMI calculator</a>
+      <a href="../tools.html">All calculators</a>
+    </div>
+  </div>
+
+  <div class="ai-disclaimer">
+    This calculator performs fixed, transparent arithmetic on the numbers you enter - the formula is shown alongside the result. It is not a projection, forecast, or guarantee of real investment performance; the assumed rate of return is an input you choose, not a prediction ReviewHub is making. This is not investment advice - always do your own research or consult a registered investment adviser before making financial decisions.
+  </div>
+</div>
+
+<script>
+  function fmtINRFull(n) {
+    if (!isFinite(n)) return '&mdash;';
+    return '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+  }
+  function bindLive(ids, fn) {
+    ids.forEach((id) => document.getElementById(id).addEventListener('input', fn));
+    fn();
+  }
+  bindLive(['ls-principal', 'ls-rate', 'ls-years'], () => {
+    const p = Number(document.getElementById('ls-principal').value);
+    const rate = Number(document.getElementById('ls-rate').value) / 100;
+    const years = Number(document.getElementById('ls-years').value);
+    const out = document.getElementById('ls-out');
+    const sub = document.getElementById('ls-sub');
+    if (!p || !years) { out.textContent = '—'; sub.textContent = ''; return; }
+    const fv = p * Math.pow(1 + rate, years);
+    out.innerHTML = fmtINRFull(fv);
+    sub.innerHTML = `Invested: ${fmtINRFull(p)} &middot; Est. gain: ${fmtINRFull(fv - p)} over ${years} year${years == 1 ? '' : 's'}`;
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <span class="wordmark">ReviewHub</span>
+      <p class="footer-mission">We watch, listen to, and read hundreds of real reviews so you don't have to &mdash; then hand you one honest verdict. Review. Analyze. Decide better.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="../../movies/index.html">Movies</a></li>
+        <li><a href="../../cars/index.html">Cars</a></li>
+        <li><a href="../../stocks/index.html">Stocks</a></li>
+        <li><span class="soon">And more <span class="tag">Soon</span></span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ReviewHub</h4>
+      <ul>
+        <li><a href="../daily-brief.html">Daily brief</a></li>
+        <li><a href="../ipos.html">IPOs</a></li>
+        <li><a href="../bonds.html">Bonds</a></li>
+        <li><a href="../learn.html">Learn</a></li>
+        <li><a href="../tools.html">Calculators</a></li>
+        <li><a href="../journal.html">Trade journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>A note on our content</h4>
+      <p class="footer-trust">Scores, summaries, and pros/cons are aggregated by AI from publicly available sources, for informational purposes only. No copyright infringement is intended.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">&copy; 2026 ReviewHub. All verdicts are our own.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
