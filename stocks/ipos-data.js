@@ -1,8 +1,24 @@
 // Real, dated IPO data — sourced from public reporting (Business Standard, Groww, Chittorgarh,
-// Upstox, Kotak Neo, and issue-specific news coverage). Subscription figures are a snapshot from
-// the morning of 30 Sep 2026 and move constantly until an issue closes — not a live feed.
+// Upstox, Kotak Neo, 5paisa, Goodreturns, and issue-specific news coverage). Subscription figures
+// are a snapshot from the morning of 2 Oct 2026 and move constantly until an issue closes — not a live feed.
 // Shared by ipos.html (full tracker) and index.html (dashboard widgets).
 const IPOS = [
+  {
+    name: "Vishal Nirmiti", status: "open",
+    desc: "Manufactures pre-stressed concrete railway sleepers, pre-cast concrete products and fabricated steel pipes for railways, renewable power and industrial projects.",
+    issueSize: "₹178 Cr (₹145 Cr fresh issue + ₹33 Cr offer-for-sale)", priceBand: "₹208 – ₹220",
+    dates: "Closes 5 Oct 2026 · Listing ~8 Oct 2026",
+    subscription: "0.6x (as of day 3)", subStyle: "cold",
+    note: "QIB fully covered at 1.00x and HNI (10L+) at 1.10x, but retail lagging well behind at 0.50x overall. Allotment due 6 Oct."
+  },
+  {
+    name: "Nityas Gems & Jewellery", status: "open",
+    desc: "Gems and jewellery manufacturer and retailer.",
+    issueSize: "₹108.35 Cr", priceBand: "₹70 – ₹75",
+    dates: "Closes 5 Oct 2026 · Listing ~8 Oct 2026",
+    subscription: "0.43x (as of day 3)", subStyle: "cold",
+    note: "Retail leading demand at 0.72x, but QIB (0.30x) and the HNI categories remain well under-subscribed heading into the final two days. Allotment due 6 Oct."
+  },
   {
     name: "SRIT India", status: "closed",
     desc: "IT services company offering digital and automation solutions across healthcare, e-governance and telecom.",
@@ -27,20 +43,18 @@ const IPOS = [
     note: "DRHP filed 19 Jun 2026; a 100% fresh issue of up to 27 crore equity shares (no offer-for-sale). Widely expected around Diwali 2026, though no official date has been set."
   },
   {
-    name: "Moneyview", status: "closed",
+    name: "Moneyview", status: "listed",
     desc: "Digital lending fintech.",
     issueSize: "₹1,091.68 Cr (₹750 Cr fresh issue + ₹342 Cr offer-for-sale)", priceBand: "₹32 – ₹34",
-    dates: "Closed 28 Sep 2026 · Listing 1 Oct 2026",
-    subscription: "98.46x", subStyle: "hot",
-    note: "Closed as the most heavily subscribed mainboard issue of the batch by far — QIBs 227.45x, NIIs 115.41x, retail 19.57x. Allotment due 29 Sep."
+    dates: "Listed 1 Oct 2026",
+    note: "The standout listing of this entire batch — debuted at ₹55 on NSE (+61.76%) and ₹55.61 on BSE, against a ₹34 issue price, after closing as the most heavily subscribed mainboard issue of the batch (98.46x - QIBs 227.45x, NIIs 115.41x, retail 19.57x)."
   },
   {
-    name: "A-One Steels India", status: "closed",
+    name: "A-One Steels India", status: "listed",
     desc: "Steel manufacturer.",
     issueSize: "₹405 Cr (₹355 Cr fresh issue + ₹50 Cr offer-for-sale)", priceBand: "₹385 – ₹405",
-    dates: "Closed 28 Sep 2026 · Listing 1 Oct 2026",
-    subscription: "12.23x", subStyle: "hot",
-    note: "Final subscription: QIB 7.69x, NII 25.80x, retail 9.11x. Lot size 37 shares."
+    dates: "Listed 1 Oct 2026",
+    note: "Listed at ₹455 on NSE (+12.35%) and ₹462 on BSE (+14.07%) over the ₹405 issue price, though it gave back most of that pop intraday, trading around ₹415 by late morning - still +2.52% over issue price. Final subscription: QIB 7.69x, NII 25.80x, retail 9.11x."
   },
   {
     name: "German Green Steel and Power", status: "closed",
@@ -99,36 +113,36 @@ const IPOS = [
     note: "Weak demand throughout - 0.01x on day 1, 0.03x on day 2, closing at 0.42x."
   },
   {
-    name: "Sai Urja Indo Ventures", status: "open", sme: true,
+    name: "Sai Urja Indo Ventures", status: "closed", sme: true,
     desc: "Renewable energy-linked SME issue.",
     issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹107 – ₹113",
-    dates: "Closes 29 Sep 2026 (today) · BSE SME listing 5 Oct 2026",
-    subscription: "0.23x (as of day 2)", subStyle: "cold",
-    note: "Up from an extremely weak 0.04x day-1 start, but still well under-subscribed heading into today's close."
+    dates: "Closed 29 Sep 2026 · BSE SME listing ~5 Oct 2026",
+    subscription: "4.95x", subStyle: "hot",
+    note: "A strong final-day surge from a weak 0.23x on day 2 - NII led at 9.90x, retail 4.02x, QIB 2.80x. Allotment finalized 30 Sep."
   },
   {
-    name: "Bench Mark Infotech Services", status: "open", sme: true,
+    name: "Bench Mark Infotech Services", status: "closed", sme: true,
     desc: "IT services SME issue.",
     issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹104 – ₹110",
-    dates: "Closes 29 Sep 2026 (today)",
-    subscription: "1.29x (as of day 2)", subStyle: "",
-    note: "Crossed fully subscribed by day 2, up from 0.21x."
+    dates: "Closed 29 Sep 2026 · NSE SME listing ~5 Oct 2026",
+    subscription: "103.12x", subStyle: "hot",
+    note: "A blockbuster final-day jump from 1.29x on day 2 - NII 136.92x, retail 96.90x, QIB 88.62x. Allotment finalized 30 Sep."
   },
   {
-    name: "Himalayan Solar", status: "open", sme: true,
+    name: "Himalayan Solar", status: "closed", sme: true,
     desc: "Solar energy SME issue.",
     issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹98 – ₹103",
-    dates: "Closes 29 Sep 2026 (today)",
-    subscription: "0.71x (as of day 2)", subStyle: "cold",
-    note: "Improved from 0.34x but still short of full subscription heading into today's close."
+    dates: "Closed 29 Sep 2026",
+    subscription: "0.71x", subStyle: "cold",
+    note: "Closed under-subscribed - QIB 1.58x, retail 0.84x, NII just 0.26x. Allotment finalized 30 Sep."
   },
   {
-    name: "Dudani Retail", status: "open", sme: true,
+    name: "Dudani Retail", status: "closed", sme: true,
     desc: "Retail SME issue.",
     issueSize: "Not disclosed in public reporting reviewed", priceBand: "₹29 (fixed price)",
-    dates: "Closes 29 Sep 2026 (today) · Listing ~5 Oct 2026",
-    subscription: "0.28x (as of day 2)", subStyle: "cold",
-    note: ""
+    dates: "Closed 29 Sep 2026 · Listing ~5 Oct 2026",
+    subscription: "1.42x", subStyle: "",
+    note: "Retail carried this one home at 2.31x after a slow start; NII lagged at 0.52x. Allotment finalized 30 Sep."
   },
   {
     name: "Varmora Granito", status: "listed",
