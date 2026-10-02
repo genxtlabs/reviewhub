@@ -12,6 +12,15 @@
 //                      reviewed it (renders a "Read our review" link with its real score/verdict)
 const OTT_RELEASES = [
   {
+    weekLabel: "02 Oct 2026",
+    entries: [
+      { title: "Sardar 2", platform: "Prime Video", language: "Tamil (dubbed Telugu, Kannada, Malayalam, Hindi)", genre: "Spy action thriller", synopsis: "Master spy Sardar is forced out of the shadows once more when a new global threat emerges, facing ruthless enemies in a mission where a single wrong move could be fatal.", existingMovieId: 29 },
+      { title: "Romanchakam", platform: "Netflix", language: "Telugu (dubbed Tamil, Kannada, Malayalam, Hindi)", genre: "Romantic comedy drama", synopsis: "A young entrepreneur who launches a dating startup falls in love with a woman, and their relationship quickly spirals into chaos involving romance, humor, emotion and suspense.", existingMovieId: 25 },
+      { title: "Bethlehem Kudumba Unit", platform: "JioHotstar", language: "Malayalam (dubbed Tamil, Telugu, Hindi, Kannada)", genre: "Romantic comedy drama", synopsis: "Ashley's homecoming from abroad takes an emotional turn when a wedding next door stirs memories of her first love, Justin - a heartwarming rom-com about first love, second chances, and the kind of love worth waiting for.", existingMovieId: 11 },
+      { title: "#Love", platform: "Netflix", language: "Tamil (dubbed Telugu, Hindi, Malayalam, Kannada)", genre: "Romantic comedy series", synopsis: "A Tamil dating-app dramedy series starring Aishwarya Lekshmi and Arjun Das as rival founders of competing dating apps, 'Found' and 'Find My Bae', who've built businesses matching everyone else except themselves." }
+    ]
+  },
+  {
     weekLabel: "25 Sep 2026",
     entries: [
       { title: "Agadha", platform: "ZEE5", language: "Telugu", genre: "Supernatural thriller", synopsis: "A spiritually gifted woman searches for answers after a disturbing death leads her toward a forbidden forest cave and a mysterious dark entity." },
