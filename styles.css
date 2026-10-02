@@ -208,6 +208,9 @@ a:hover { color: var(--accent-solid-hover); }
 .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
 .verdict-label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
 
+.card-witty { font-style: italic; font-size: 12px; line-height: 1.45; color: var(--text-muted); margin-top: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.detail-witty { font-style: italic; font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--border); max-width: 620px; }
+
 .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-muted); }
 .back-link:hover { color: var(--accent-solid-hover); }
 

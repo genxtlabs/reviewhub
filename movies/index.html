@@ -171,6 +171,7 @@
               <span class="dot" style="background:${v.color}"></span>
               <span class="verdict-label">${v.label}</span>
             </div>
+            ${m.witty ? `<div class="card-witty">${m.witty}</div>` : ''}
           </div>
         </div>`;
     }).join('') || `<div class="empty-state" style="grid-column:1 / -1;">No published movies match this filter yet.</div>`;

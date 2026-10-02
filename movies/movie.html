@@ -108,6 +108,7 @@
             <div class="eyebrow">${movie.industry} &middot; ${movie.language} &middot; Released ${movie.releaseDate}</div>
             <h1 class="hero-title">${movie.title}</h1>
             <p class="hero-synopsis">${movie.synopsis} Aggregated from ${videos.length} reviewer videos${VIDEO_LANGS.length > 2 ? ' across ' + VIDEO_LANGS.slice(1).join(', ') + ' channels' : ''}.</p>
+            ${movie.witty ? `<p class="detail-witty">&ldquo;${movie.witty}&rdquo;</p>` : ''}
           </div>
 
           <div class="score-panel">
